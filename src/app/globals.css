@@ -1,26 +1,41 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --ct-blue: #b9d9eb; /* Columbia blue */
+  --ct-blue-soft: #e6f1f8;
+  --ct-navy: #0b2545;
+  --ct-ink: #14213d;
+  --ct-muted: #5b6b82;
+  --ct-line: #d9e3ee;
+  --ct-page: #f3f7fb;
+  --ct-card: #ffffff;
+  --ct-like: #12805c;
+  --ct-pass: #b42318;
+  --ct-save: #9a6700;
 }
 
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+  --color-ct-blue: var(--ct-blue);
+  --color-ct-blue-soft: var(--ct-blue-soft);
+  --color-ct-navy: var(--ct-navy);
+  --color-ct-ink: var(--ct-ink);
+  --color-ct-muted: var(--ct-muted);
+  --color-ct-line: var(--ct-line);
+  --color-ct-page: var(--ct-page);
+  --color-ct-card: var(--ct-card);
+  --color-ct-like: var(--ct-like);
+  --color-ct-pass: var(--ct-pass);
+  --color-ct-save: var(--ct-save);
+  --font-sans: var(--font-geist-sans), ui-sans-serif, system-ui, sans-serif;
+  --font-mono: var(--font-geist-mono), ui-monospace, monospace;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background: var(--ct-page);
+  color: var(--ct-ink);
+}
+
+:focus-visible {
+  outline: 2px solid var(--ct-navy);
+  outline-offset: 2px;
 }

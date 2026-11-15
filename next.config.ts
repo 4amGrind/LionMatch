@@ -1,9 +1,9 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
-  /* config options here */
-  cacheComponents: true,
-  partialPrefetching: true,
+  // Cache Components is off on purpose. Pages fetch fresh data on each
+  // request, which is simpler for a hackathon. Turn it on later if needed.
+  cacheComponents: false,
   turbopack: {
     rules: {
       "*.css": {

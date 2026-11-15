@@ -1,0 +1,319 @@
+[
+  {
+    "id": "demo-you",
+    "full_name": "Demo Student",
+    "role": "student",
+    "headline": "First-year, CS and AI",
+    "school": "Columbia College",
+    "class_year": 2030,
+    "major": "Computer Science",
+    "bio": "This is the demo account. Edit it in src/data/profiles.json to see the match scores change.",
+    "skills": [
+      "Python",
+      "Java",
+      "Machine Learning",
+      "Data Structures",
+      "SQL"
+    ],
+    "interests": [
+      "machine learning",
+      "ai",
+      "software",
+      "finance",
+      "hackathons"
+    ],
+    "looking_for": [
+      "internship",
+      "research",
+      "club"
+    ],
+    "open_to_chat": false,
+    "avatar_url": null,
+    "linkedin_url": null,
+    "is_sample": true
+  },
+  {
+    "id": "sample-maya-okafor",
+    "full_name": "Maya Okafor",
+    "role": "club_lead",
+    "headline": "Rocketry lead, space club",
+    "school": "Columbia Engineering",
+    "class_year": 2028,
+    "major": "Mechanical Engineering",
+    "bio": "I run a rocketry subteam. Happy to talk about joining as a first-year with no build experience.",
+    "skills": [
+      "CAD",
+      "Machining",
+      "Python"
+    ],
+    "interests": [
+      "aerospace",
+      "robotics",
+      "hardware"
+    ],
+    "looking_for": [],
+    "open_to_chat": true,
+    "avatar_url": null,
+    "linkedin_url": null,
+    "is_sample": true
+  },
+  {
+    "id": "sample-daniel-reyes",
+    "full_name": "Daniel Reyes",
+    "role": "club_lead",
+    "headline": "Projects chair, data science club",
+    "school": "Columbia College",
+    "class_year": 2027,
+    "major": "Data Science",
+    "bio": "I match new members to semester projects. Ask me what a good first project looks like.",
+    "skills": [
+      "Python",
+      "SQL",
+      "Statistics",
+      "Machine Learning"
+    ],
+    "interests": [
+      "data science",
+      "machine learning",
+      "analytics"
+    ],
+    "looking_for": [],
+    "open_to_chat": true,
+    "avatar_url": null,
+    "linkedin_url": null,
+    "is_sample": true
+  },
+  {
+    "id": "sample-priya-nair",
+    "full_name": "Priya Nair",
+    "role": "club_lead",
+    "headline": "Quant team, finance club",
+    "school": "Columbia Engineering",
+    "class_year": 2027,
+    "major": "Financial Engineering",
+    "bio": "Interned on a trading desk last summer. I can talk through club recruiting and quant prep.",
+    "skills": [
+      "Python",
+      "Statistics",
+      "Excel",
+      "Financial Modeling"
+    ],
+    "interests": [
+      "finance",
+      "quant",
+      "investing"
+    ],
+    "looking_for": [],
+    "open_to_chat": true,
+    "avatar_url": null,
+    "linkedin_url": null,
+    "is_sample": true
+  },
+  {
+    "id": "sample-hana-kim",
+    "full_name": "Hana Kim",
+    "role": "researcher",
+    "headline": "PhD student, language models",
+    "school": "Columbia Engineering",
+    "class_year": null,
+    "major": "Computer Science",
+    "bio": "I mentor one or two undergrads a term. Email works best, and a short note on what you have built helps.",
+    "skills": [
+      "Python",
+      "PyTorch",
+      "Machine Learning"
+    ],
+    "interests": [
+      "nlp",
+      "machine learning",
+      "ai"
+    ],
+    "looking_for": [],
+    "open_to_chat": true,
+    "avatar_url": null,
+    "linkedin_url": null,
+    "is_sample": true
+  },
+  {
+    "id": "sample-sofia-martinez",
+    "full_name": "Sofia Martinez",
+    "role": "student",
+    "headline": "Junior, past research scholar",
+    "school": "Columbia College",
+    "class_year": 2028,
+    "major": "Neuroscience",
+    "bio": "I did a funded summer research project after first year. Ask me about writing the proposal.",
+    "skills": [
+      "Research",
+      "Writing",
+      "Lab Work"
+    ],
+    "interests": [
+      "research",
+      "science",
+      "leadership"
+    ],
+    "looking_for": [],
+    "open_to_chat": true,
+    "avatar_url": null,
+    "linkedin_url": null,
+    "is_sample": true
+  },
+  {
+    "id": "sample-jordan-lee",
+    "full_name": "Jordan Lee",
+    "role": "alum",
+    "headline": "Software engineer, former first-year intern",
+    "school": "Columbia College",
+    "class_year": 2024,
+    "major": "Computer Science",
+    "bio": "I got my start through a first-year internship program. Glad to share how I prepared.",
+    "skills": [
+      "Java",
+      "Python",
+      "Data Structures",
+      "Algorithms"
+    ],
+    "interests": [
+      "software",
+      "big tech",
+      "mentorship"
+    ],
+    "looking_for": [],
+    "open_to_chat": true,
+    "avatar_url": null,
+    "linkedin_url": null,
+    "is_sample": true
+  },
+  {
+    "id": "sample-amara-chen",
+    "full_name": "Amara Chen",
+    "role": "student",
+    "headline": "Sophomore, building a campus app",
+    "school": "Barnard College",
+    "class_year": 2029,
+    "major": "Computer Science",
+    "bio": "Looking for a design partner and one more engineer for a hackathon team.",
+    "skills": [
+      "JavaScript",
+      "Web Development",
+      "Figma"
+    ],
+    "interests": [
+      "startups",
+      "hackathons",
+      "software"
+    ],
+    "looking_for": [
+      "club",
+      "internship"
+    ],
+    "open_to_chat": true,
+    "avatar_url": null,
+    "linkedin_url": null,
+    "is_sample": true
+  },
+  {
+    "id": "sample-ethan-brooks",
+    "full_name": "Ethan Brooks",
+    "role": "student",
+    "headline": "First-year, economics and math",
+    "school": "Columbia College",
+    "class_year": 2030,
+    "major": "Economics",
+    "bio": "Trying to figure out finance versus consulting. Open to study groups for case prep.",
+    "skills": [
+      "Excel",
+      "Statistics",
+      "Public Speaking"
+    ],
+    "interests": [
+      "finance",
+      "consulting",
+      "economics"
+    ],
+    "looking_for": [
+      "club",
+      "internship"
+    ],
+    "open_to_chat": true,
+    "avatar_url": null,
+    "linkedin_url": null,
+    "is_sample": true
+  },
+  {
+    "id": "sample-lucas-ferreira",
+    "full_name": "Lucas Ferreira",
+    "role": "alum",
+    "headline": "Product manager at a startup",
+    "school": "Columbia College",
+    "class_year": 2022,
+    "major": "Operations Research",
+    "bio": "I hire interns each summer. I can give honest feedback on a resume.",
+    "skills": [
+      "SQL",
+      "Product Management",
+      "Communication"
+    ],
+    "interests": [
+      "startups",
+      "product",
+      "business"
+    ],
+    "looking_for": [],
+    "open_to_chat": true,
+    "avatar_url": null,
+    "linkedin_url": null,
+    "is_sample": true
+  },
+  {
+    "id": "sample-noor-haddad",
+    "full_name": "Noor Haddad",
+    "role": "researcher",
+    "headline": "Postdoc, robot learning",
+    "school": "Columbia Engineering",
+    "class_year": null,
+    "major": "Computer Science",
+    "bio": "Our group takes undergrads who can commit ten hours a week. Some C++ or Python helps.",
+    "skills": [
+      "Python",
+      "C++",
+      "ROS",
+      "PyTorch"
+    ],
+    "interests": [
+      "robotics",
+      "ai",
+      "machine learning"
+    ],
+    "looking_for": [],
+    "open_to_chat": true,
+    "avatar_url": null,
+    "linkedin_url": null,
+    "is_sample": true
+  },
+  {
+    "id": "sample-grace-adeyemi",
+    "full_name": "Grace Adeyemi",
+    "role": "recruiter",
+    "headline": "Campus recruiter, sample company",
+    "school": "Columbia College",
+    "class_year": null,
+    "major": null,
+    "bio": "I run early-career hiring. Ask me what makes a first-year application stand out.",
+    "skills": [
+      "Recruiting",
+      "Communication"
+    ],
+    "interests": [
+      "software",
+      "mentorship",
+      "first-year friendly"
+    ],
+    "looking_for": [],
+    "open_to_chat": true,
+    "avatar_url": null,
+    "linkedin_url": null,
+    "is_sample": true
+  }
+]

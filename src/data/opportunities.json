@@ -1,0 +1,1152 @@
+[
+  {
+    "id": "club-space-initiative",
+    "title": "Join Columbia Space Initiative",
+    "organization": "Columbia Space Initiative",
+    "category": "club",
+    "description": "Student teams work on space projects such as rocketry and satellites, host speakers, and enter NASA challenges.",
+    "tags": [
+      "aerospace",
+      "robotics",
+      "hardware",
+      "engineering"
+    ],
+    "skills": [
+      "CAD",
+      "Python",
+      "C++",
+      "Electronics"
+    ],
+    "majors": [
+      "Mechanical Engineering",
+      "Electrical Engineering",
+      "Computer Engineering",
+      "Computer Science"
+    ],
+    "prerequisites": [],
+    "location": "Morningside campus",
+    "commitment": null,
+    "deadline": null,
+    "url": null,
+    "source_url": "https://www.engineering.columbia.edu/student-life/undergraduate-student-life/engineering-student-organizations",
+    "verified": true,
+    "contact_profile_id": "sample-maya-okafor"
+  },
+  {
+    "id": "club-formula-racing",
+    "title": "Join Columbia University Formula Racing",
+    "organization": "Columbia University Formula Racing",
+    "category": "club",
+    "description": "The team designs, builds, and funds a race car for the Formula SAE competition. Members pick up engineering and management skills.",
+    "tags": [
+      "automotive",
+      "hardware",
+      "engineering"
+    ],
+    "skills": [
+      "CAD",
+      "Machining",
+      "MATLAB",
+      "Electronics"
+    ],
+    "majors": [
+      "Mechanical Engineering",
+      "Electrical Engineering",
+      "Computer Engineering",
+      "Computer Science"
+    ],
+    "prerequisites": [],
+    "location": "Morningside campus",
+    "commitment": null,
+    "deadline": null,
+    "url": null,
+    "source_url": "https://www.engineering.columbia.edu/student-life/undergraduate-student-life/engineering-student-organizations",
+    "verified": true,
+    "contact_profile_id": null
+  },
+  {
+    "id": "club-data-science-society",
+    "title": "Join Columbia Data Science Society",
+    "organization": "Columbia Data Science Society",
+    "category": "club",
+    "description": "A university-wide group for students who are interested in data science and how it is used.",
+    "tags": [
+      "data science",
+      "machine learning",
+      "analytics"
+    ],
+    "skills": [
+      "Python",
+      "SQL",
+      "Statistics",
+      "Machine Learning"
+    ],
+    "majors": [],
+    "prerequisites": [],
+    "location": "Morningside campus",
+    "commitment": null,
+    "deadline": null,
+    "url": null,
+    "source_url": "https://www.engineering.columbia.edu/student-life/undergraduate-student-life/engineering-student-organizations",
+    "verified": true,
+    "contact_profile_id": "sample-daniel-reyes"
+  },
+  {
+    "id": "club-wics",
+    "title": "Join Women in Computer Science",
+    "organization": "Women in Computer Science (WiCS)",
+    "category": "club",
+    "description": "A community with mentorship and events for women and gender-diverse people in computer science. It also runs a yearly hackathon.",
+    "tags": [
+      "computer science",
+      "mentorship",
+      "hackathons",
+      "community"
+    ],
+    "skills": [
+      "Python",
+      "Java",
+      "Web Development"
+    ],
+    "majors": [
+      "Computer Science",
+      "Computer Engineering",
+      "Data Science"
+    ],
+    "prerequisites": [],
+    "location": "Morningside campus",
+    "commitment": null,
+    "deadline": null,
+    "url": null,
+    "source_url": "https://www.engineering.columbia.edu/student-life/undergraduate-student-life/engineering-student-organizations",
+    "verified": true,
+    "contact_profile_id": null
+  },
+  {
+    "id": "club-ewb",
+    "title": "Join Engineers Without Borders",
+    "organization": "Engineers Without Borders, Columbia chapter",
+    "category": "club",
+    "description": "The chapter works on sustainable engineering projects with partner communities abroad.",
+    "tags": [
+      "sustainability",
+      "social impact",
+      "engineering"
+    ],
+    "skills": [
+      "CAD",
+      "Project Management",
+      "Fundraising"
+    ],
+    "majors": [],
+    "prerequisites": [],
+    "location": "Morningside campus",
+    "commitment": null,
+    "deadline": null,
+    "url": null,
+    "source_url": "https://www.engineering.columbia.edu/student-life/undergraduate-student-life/engineering-student-organizations",
+    "verified": true,
+    "contact_profile_id": null
+  },
+  {
+    "id": "club-aiaa",
+    "title": "Join the AIAA Design-Build-Fly team",
+    "organization": "American Institute of Aeronautics and Astronautics, Columbia branch",
+    "category": "club",
+    "description": "The branch designs and builds a plane each year for the Design-Build-Fly competition.",
+    "tags": [
+      "aerospace",
+      "hardware",
+      "engineering"
+    ],
+    "skills": [
+      "CAD",
+      "Machining",
+      "MATLAB"
+    ],
+    "majors": [
+      "Mechanical Engineering",
+      "Electrical Engineering",
+      "Computer Engineering",
+      "Computer Science"
+    ],
+    "prerequisites": [],
+    "location": "Morningside campus",
+    "commitment": null,
+    "deadline": null,
+    "url": null,
+    "source_url": "https://www.engineering.columbia.edu/student-life/undergraduate-student-life/engineering-student-organizations",
+    "verified": true,
+    "contact_profile_id": null
+  },
+  {
+    "id": "club-ieee",
+    "title": "Join IEEE at Columbia",
+    "organization": "Institute of Electrical and Electronics Engineers, Columbia chapter",
+    "category": "club",
+    "description": "A community for electrical and computer engineering students and faculty, with professional events.",
+    "tags": [
+      "electronics",
+      "hardware",
+      "engineering"
+    ],
+    "skills": [
+      "Electronics",
+      "C++",
+      "Embedded Systems"
+    ],
+    "majors": [
+      "Electrical Engineering",
+      "Computer Engineering"
+    ],
+    "prerequisites": [],
+    "location": "Morningside campus",
+    "commitment": null,
+    "deadline": null,
+    "url": null,
+    "source_url": "https://www.engineering.columbia.edu/student-life/undergraduate-student-life/engineering-student-organizations",
+    "verified": true,
+    "contact_profile_id": null
+  },
+  {
+    "id": "club-science-review",
+    "title": "Write for Columbia Science Review",
+    "organization": "Columbia Science Review",
+    "category": "club",
+    "description": "A student publication with science articles written by Columbia undergraduates, published twice a year.",
+    "tags": [
+      "writing",
+      "science",
+      "journalism"
+    ],
+    "skills": [
+      "Writing",
+      "Editing",
+      "Research"
+    ],
+    "majors": [],
+    "prerequisites": [],
+    "location": "Morningside campus",
+    "commitment": null,
+    "deadline": null,
+    "url": null,
+    "source_url": "https://www.engineering.columbia.edu/student-life/undergraduate-student-life/engineering-student-organizations",
+    "verified": true,
+    "contact_profile_id": null
+  },
+  {
+    "id": "club-swe",
+    "title": "Join Society of Women Engineers",
+    "organization": "Society of Women Engineers, Columbia section",
+    "category": "club",
+    "description": "Supports women who are working toward engineering careers and leadership roles.",
+    "tags": [
+      "engineering",
+      "mentorship",
+      "community"
+    ],
+    "skills": [
+      "Leadership",
+      "Networking"
+    ],
+    "majors": [],
+    "prerequisites": [],
+    "location": "Morningside campus",
+    "commitment": null,
+    "deadline": null,
+    "url": null,
+    "source_url": "https://www.engineering.columbia.edu/student-life/undergraduate-student-life/engineering-student-organizations",
+    "verified": true,
+    "contact_profile_id": null
+  },
+  {
+    "id": "club-nsbe",
+    "title": "Join National Society of Black Engineers",
+    "organization": "National Society of Black Engineers, Columbia chapter",
+    "category": "club",
+    "description": "Supports the academic and career success of Black engineering students through training, mentoring, and career services.",
+    "tags": [
+      "engineering",
+      "mentorship",
+      "community"
+    ],
+    "skills": [
+      "Leadership",
+      "Networking"
+    ],
+    "majors": [],
+    "prerequisites": [],
+    "location": "Morningside campus",
+    "commitment": null,
+    "deadline": null,
+    "url": null,
+    "source_url": "https://www.engineering.columbia.edu/student-life/undergraduate-student-life/engineering-student-organizations",
+    "verified": true,
+    "contact_profile_id": null
+  },
+  {
+    "id": "club-shpe",
+    "title": "Join Society of Hispanic Professional Engineers",
+    "organization": "Society of Hispanic Professional Engineers, Columbia chapter",
+    "category": "club",
+    "description": "Runs panels, seminars, and workshops on professional development, leadership, and community outreach.",
+    "tags": [
+      "engineering",
+      "mentorship",
+      "community"
+    ],
+    "skills": [
+      "Leadership",
+      "Networking"
+    ],
+    "majors": [],
+    "prerequisites": [],
+    "location": "Morningside campus",
+    "commitment": null,
+    "deadline": null,
+    "url": null,
+    "source_url": "https://www.engineering.columbia.edu/student-life/undergraduate-student-life/engineering-student-organizations",
+    "verified": true,
+    "contact_profile_id": null
+  },
+  {
+    "id": "club-bmes",
+    "title": "Join Biomedical Engineering Society",
+    "organization": "Biomedical Engineering Society, Columbia chapter",
+    "category": "club",
+    "description": "Runs social and career events for biomedical engineering students and works with faculty on the curriculum.",
+    "tags": [
+      "biomedical",
+      "health",
+      "engineering"
+    ],
+    "skills": [
+      "Biology",
+      "MATLAB",
+      "Lab Work"
+    ],
+    "majors": [
+      "Biomedical Engineering"
+    ],
+    "prerequisites": [],
+    "location": "Morningside campus",
+    "commitment": null,
+    "deadline": null,
+    "url": null,
+    "source_url": "https://www.engineering.columbia.edu/student-life/undergraduate-student-life/engineering-student-organizations",
+    "verified": true,
+    "contact_profile_id": null
+  },
+  {
+    "id": "club-alpha-partners",
+    "title": "Join Columbia Alpha Partners",
+    "organization": "Columbia Alpha Partners",
+    "category": "club",
+    "description": "A student finance group formed from earlier groups, including Columbia University Financial Engineering.",
+    "tags": [
+      "finance",
+      "quant",
+      "investing"
+    ],
+    "skills": [
+      "Excel",
+      "Python",
+      "Statistics",
+      "Financial Modeling"
+    ],
+    "majors": [
+      "Financial Engineering",
+      "Economics",
+      "Applied Mathematics"
+    ],
+    "prerequisites": [],
+    "location": "Morningside campus",
+    "commitment": null,
+    "deadline": null,
+    "url": null,
+    "source_url": "https://www.engineering.columbia.edu/student-life/undergraduate-student-life/engineering-student-organizations",
+    "verified": true,
+    "contact_profile_id": "sample-priya-nair"
+  },
+  {
+    "id": "club-cfig",
+    "title": "Join Columbia Financial Investment Group",
+    "organization": "Columbia Financial Investment Group (CFIG)",
+    "category": "club",
+    "description": "An undergraduate investing group. See the club page for how it recruits.",
+    "tags": [
+      "finance",
+      "investing"
+    ],
+    "skills": [
+      "Excel",
+      "Financial Modeling",
+      "Accounting"
+    ],
+    "majors": [
+      "Economics",
+      "Financial Engineering"
+    ],
+    "prerequisites": [],
+    "location": "Morningside campus",
+    "commitment": null,
+    "deadline": null,
+    "url": "https://www.cc-seas.columbia.edu/node/438360",
+    "source_url": "https://www.cc-seas.columbia.edu/node/438360",
+    "verified": true,
+    "contact_profile_id": null
+  },
+  {
+    "id": "club-economics-society",
+    "title": "Join Columbia Economics Society",
+    "organization": "Columbia Economics Society",
+    "category": "club",
+    "description": "An undergraduate group for students who are interested in economics. See the club page for events.",
+    "tags": [
+      "economics",
+      "finance",
+      "policy"
+    ],
+    "skills": [
+      "Excel",
+      "Statistics",
+      "Writing"
+    ],
+    "majors": [
+      "Economics"
+    ],
+    "prerequisites": [],
+    "location": "Morningside campus",
+    "commitment": null,
+    "deadline": null,
+    "url": "https://www.cc-seas.columbia.edu/student-group/columbia-economics-society",
+    "source_url": "https://www.cc-seas.columbia.edu/student-group/columbia-economics-society",
+    "verified": true,
+    "contact_profile_id": null
+  },
+  {
+    "id": "club-consulting",
+    "title": "Join Columbia Undergraduate Consulting Club",
+    "organization": "Columbia Undergraduate Consulting Club",
+    "category": "club",
+    "description": "An undergraduate group for students who are interested in consulting. See the club page for how to join.",
+    "tags": [
+      "consulting",
+      "business",
+      "strategy"
+    ],
+    "skills": [
+      "Excel",
+      "PowerPoint",
+      "Public Speaking"
+    ],
+    "majors": [],
+    "prerequisites": [],
+    "location": "Morningside campus",
+    "commitment": null,
+    "deadline": null,
+    "url": "https://undergrad.admissions.columbia.edu/node/1558",
+    "source_url": "https://undergrad.admissions.columbia.edu/node/1558",
+    "verified": true,
+    "contact_profile_id": null
+  },
+  {
+    "id": "club-quiz-bowl",
+    "title": "Join Columbia Quiz Bowl",
+    "organization": "Columbia Quiz Bowl",
+    "category": "club",
+    "description": "Competes in academic trivia against other schools in the region and runs contests on campus.",
+    "tags": [
+      "trivia",
+      "community"
+    ],
+    "skills": [
+      "Teamwork"
+    ],
+    "majors": [],
+    "prerequisites": [],
+    "location": "Morningside campus",
+    "commitment": null,
+    "deadline": null,
+    "url": null,
+    "source_url": "https://news.columbia.edu/node/8728",
+    "verified": true,
+    "contact_profile_id": null
+  },
+  {
+    "id": "club-philolexian",
+    "title": "Join the Philolexian Society",
+    "organization": "Philolexian Society",
+    "category": "club",
+    "description": "Columbia's oldest student group, founded in 1802. It is centered on literature and debate.",
+    "tags": [
+      "debate",
+      "writing",
+      "literature"
+    ],
+    "skills": [
+      "Public Speaking",
+      "Writing"
+    ],
+    "majors": [],
+    "prerequisites": [],
+    "location": "Morningside campus",
+    "commitment": null,
+    "deadline": null,
+    "url": null,
+    "source_url": "https://news.columbia.edu/node/8728",
+    "verified": true,
+    "contact_profile_id": null
+  },
+  {
+    "id": "research-nlp",
+    "title": "Research with the Natural Language Processing Group",
+    "organization": "Natural Language Processing Group",
+    "category": "research",
+    "description": "Research on how computers work with human language. The group is listed on the CS department labs page. Check its page for openings before you reach out.",
+    "tags": [
+      "nlp",
+      "machine learning",
+      "ai"
+    ],
+    "skills": [
+      "Python",
+      "PyTorch",
+      "Machine Learning",
+      "Statistics"
+    ],
+    "majors": [
+      "Computer Science",
+      "Computer Engineering",
+      "Data Science"
+    ],
+    "prerequisites": [],
+    "location": "Morningside campus",
+    "commitment": "Varies by lab",
+    "deadline": null,
+    "url": "https://www.cs.columbia.edu/labs/nlp/",
+    "source_url": "https://www.cs.columbia.edu/labs/",
+    "verified": true,
+    "contact_profile_id": "sample-hana-kim"
+  },
+  {
+    "id": "research-ml",
+    "title": "Research with the Machine Learning @ Columbia",
+    "organization": "Machine Learning @ Columbia",
+    "category": "research",
+    "description": "Research across machine learning. The group is listed on the CS department labs page. Check its page for openings before you reach out.",
+    "tags": [
+      "machine learning",
+      "ai",
+      "statistics"
+    ],
+    "skills": [
+      "Python",
+      "PyTorch",
+      "Linear Algebra",
+      "Statistics"
+    ],
+    "majors": [
+      "Computer Science",
+      "Computer Engineering",
+      "Data Science"
+    ],
+    "prerequisites": [],
+    "location": "Morningside campus",
+    "commitment": "Varies by lab",
+    "deadline": null,
+    "url": "https://www.cs.columbia.edu/labs/learning/",
+    "source_url": "https://www.cs.columbia.edu/labs/",
+    "verified": true,
+    "contact_profile_id": null
+  },
+  {
+    "id": "research-robotics",
+    "title": "Research with the Robotics Laboratory",
+    "organization": "Robotics Laboratory",
+    "category": "research",
+    "description": "Research on robots and how they sense and move. The group is listed on the CS department labs page. Check its page for openings before you reach out.",
+    "tags": [
+      "robotics",
+      "ai",
+      "hardware"
+    ],
+    "skills": [
+      "Python",
+      "C++",
+      "ROS",
+      "Electronics"
+    ],
+    "majors": [
+      "Computer Science",
+      "Computer Engineering",
+      "Data Science",
+      "Mechanical Engineering",
+      "Electrical Engineering"
+    ],
+    "prerequisites": [],
+    "location": "Morningside campus",
+    "commitment": "Varies by lab",
+    "deadline": null,
+    "url": "https://www.cs.columbia.edu/labs/robotics/",
+    "source_url": "https://www.cs.columbia.edu/labs/",
+    "verified": true,
+    "contact_profile_id": null
+  },
+  {
+    "id": "research-cair",
+    "title": "Research with the Columbia Artificial Intelligence and Robotics Lab",
+    "organization": "Columbia Artificial Intelligence and Robotics Lab",
+    "category": "research",
+    "description": "Research where AI meets robotics. The group is listed on the CS department labs page. Check its page for openings before you reach out.",
+    "tags": [
+      "robotics",
+      "ai",
+      "machine learning"
+    ],
+    "skills": [
+      "Python",
+      "PyTorch",
+      "C++",
+      "ROS"
+    ],
+    "majors": [
+      "Computer Science",
+      "Computer Engineering",
+      "Data Science"
+    ],
+    "prerequisites": [],
+    "location": "Morningside campus",
+    "commitment": "Varies by lab",
+    "deadline": null,
+    "url": "https://www.cs.columbia.edu/labs/columbia-artificial-intelligence-and-robotics-lab/",
+    "source_url": "https://www.cs.columbia.edu/labs/",
+    "verified": true,
+    "contact_profile_id": null
+  },
+  {
+    "id": "research-causal-ai",
+    "title": "Research with the Causal Artificial Intelligence Lab",
+    "organization": "Causal Artificial Intelligence Lab",
+    "category": "research",
+    "description": "Research on cause and effect in AI systems. The group is listed on the CS department labs page. Check its page for openings before you reach out.",
+    "tags": [
+      "ai",
+      "machine learning",
+      "statistics"
+    ],
+    "skills": [
+      "Python",
+      "Statistics",
+      "Machine Learning"
+    ],
+    "majors": [
+      "Computer Science",
+      "Computer Engineering",
+      "Data Science"
+    ],
+    "prerequisites": [],
+    "location": "Morningside campus",
+    "commitment": "Varies by lab",
+    "deadline": null,
+    "url": "https://www.cs.columbia.edu/labs/causal-artificial-intelligence-lab/",
+    "source_url": "https://www.cs.columbia.edu/labs/",
+    "verified": true,
+    "contact_profile_id": null
+  },
+  {
+    "id": "research-theory",
+    "title": "Research with the Theory of Computing Group",
+    "organization": "Theory of Computing Group",
+    "category": "research",
+    "description": "Research on algorithms, complexity, and the math behind computing. The group is listed on the CS department labs page. Check its page for openings before you reach out.",
+    "tags": [
+      "theory",
+      "algorithms",
+      "math"
+    ],
+    "skills": [
+      "Proofs",
+      "Algorithms",
+      "Discrete Math"
+    ],
+    "majors": [
+      "Computer Science",
+      "Computer Engineering",
+      "Data Science",
+      "Mathematics",
+      "Applied Mathematics"
+    ],
+    "prerequisites": [],
+    "location": "Morningside campus",
+    "commitment": "Varies by lab",
+    "deadline": null,
+    "url": "https://www.cs.columbia.edu/labs/theory/",
+    "source_url": "https://www.cs.columbia.edu/labs/",
+    "verified": true,
+    "contact_profile_id": null
+  },
+  {
+    "id": "research-database",
+    "title": "Research with the Database Research Group",
+    "organization": "Database Research Group",
+    "category": "research",
+    "description": "Research on data systems. The group is listed on the CS department labs page. Check its page for openings before you reach out.",
+    "tags": [
+      "databases",
+      "systems",
+      "data science"
+    ],
+    "skills": [
+      "SQL",
+      "C++",
+      "Python"
+    ],
+    "majors": [
+      "Computer Science",
+      "Computer Engineering",
+      "Data Science"
+    ],
+    "prerequisites": [],
+    "location": "Morningside campus",
+    "commitment": "Varies by lab",
+    "deadline": null,
+    "url": "https://www.cs.columbia.edu/labs/database/",
+    "source_url": "https://www.cs.columbia.edu/labs/",
+    "verified": true,
+    "contact_profile_id": null
+  },
+  {
+    "id": "research-cgui",
+    "title": "Research with the Computer Graphics and User Interfaces Laboratory",
+    "organization": "Computer Graphics and User Interfaces Laboratory",
+    "category": "research",
+    "description": "Research on graphics and how people use computers. The group is listed on the CS department labs page. Check its page for openings before you reach out.",
+    "tags": [
+      "graphics",
+      "hci",
+      "ar/vr"
+    ],
+    "skills": [
+      "C++",
+      "Unity",
+      "JavaScript"
+    ],
+    "majors": [
+      "Computer Science",
+      "Computer Engineering",
+      "Data Science"
+    ],
+    "prerequisites": [],
+    "location": "Morningside campus",
+    "commitment": "Varies by lab",
+    "deadline": null,
+    "url": "https://www.cs.columbia.edu/labs/computer-graphics-and-user-interfaces-laboratory/",
+    "source_url": "https://www.cs.columbia.edu/labs/",
+    "verified": true,
+    "contact_profile_id": null
+  },
+  {
+    "id": "research-spoken-language",
+    "title": "Research with the Spoken Language Processing Group",
+    "organization": "Spoken Language Processing Group",
+    "category": "research",
+    "description": "Research on speech and spoken language. The group is listed on the CS department labs page. Check its page for openings before you reach out.",
+    "tags": [
+      "speech",
+      "nlp",
+      "machine learning"
+    ],
+    "skills": [
+      "Python",
+      "Machine Learning",
+      "Signal Processing"
+    ],
+    "majors": [
+      "Computer Science",
+      "Computer Engineering",
+      "Data Science"
+    ],
+    "prerequisites": [],
+    "location": "Morningside campus",
+    "commitment": "Varies by lab",
+    "deadline": null,
+    "url": "https://www.cs.columbia.edu/labs/spoken-language-processing-group/",
+    "source_url": "https://www.cs.columbia.edu/labs/",
+    "verified": true,
+    "contact_profile_id": null
+  },
+  {
+    "id": "research-software-systems",
+    "title": "Research with the Software Systems Laboratory",
+    "organization": "Software Systems Laboratory",
+    "category": "research",
+    "description": "Research on how software systems are built and run. The group is listed on the CS department labs page. Check its page for openings before you reach out.",
+    "tags": [
+      "systems",
+      "operating systems",
+      "security"
+    ],
+    "skills": [
+      "C",
+      "C++",
+      "Linux"
+    ],
+    "majors": [
+      "Computer Science",
+      "Computer Engineering",
+      "Data Science"
+    ],
+    "prerequisites": [],
+    "location": "Morningside campus",
+    "commitment": "Varies by lab",
+    "deadline": null,
+    "url": "https://www.cs.columbia.edu/labs/software-systems-laboratory/",
+    "source_url": "https://www.cs.columbia.edu/labs/",
+    "verified": true,
+    "contact_profile_id": null
+  },
+  {
+    "id": "research-surf",
+    "title": "Summer Undergraduate Research Fellowship (SURF)",
+    "organization": "Columbia Undergraduate Research and Fellowships",
+    "category": "research",
+    "description": "A Columbia summer research program for undergraduates. Check the program page for who can apply and when.",
+    "tags": [
+      "science",
+      "summer",
+      "funded"
+    ],
+    "skills": [
+      "Lab Work",
+      "Research",
+      "Writing"
+    ],
+    "majors": [],
+    "prerequisites": [],
+    "location": "Morningside campus",
+    "commitment": "Full-time summer",
+    "deadline": null,
+    "url": "https://urf.columbia.edu/fellowship/summer-undergraduate-research-fellowships-surf-columbia-university",
+    "source_url": "https://www.careereducation.columbia.edu/resources/finding-undergraduate-research-position",
+    "verified": true,
+    "contact_profile_id": null
+  },
+  {
+    "id": "research-amgen",
+    "title": "Amgen Scholars Program",
+    "organization": "Columbia Undergraduate Research and Fellowships",
+    "category": "research",
+    "description": "A funded summer research program that Columbia hosts. Check the program page for who can apply and when.",
+    "tags": [
+      "science",
+      "biology",
+      "summer",
+      "funded"
+    ],
+    "skills": [
+      "Lab Work",
+      "Biology",
+      "Research"
+    ],
+    "majors": [],
+    "prerequisites": [],
+    "location": "Morningside campus",
+    "commitment": "Full-time summer",
+    "deadline": null,
+    "url": null,
+    "source_url": "https://www.careereducation.columbia.edu/resources/finding-undergraduate-research-position",
+    "verified": true,
+    "contact_profile_id": null
+  },
+  {
+    "id": "research-nsf-reu",
+    "title": "NSF Research Experiences for Undergraduates (REU)",
+    "organization": "National Science Foundation",
+    "category": "research",
+    "description": "Paid full-time summer research at host sites across the country. Each site has its own application.",
+    "tags": [
+      "science",
+      "engineering",
+      "summer",
+      "funded"
+    ],
+    "skills": [
+      "Research",
+      "Writing"
+    ],
+    "majors": [],
+    "prerequisites": [],
+    "location": "Varies by site",
+    "commitment": "Full-time summer",
+    "deadline": null,
+    "url": null,
+    "source_url": "https://www.careereducation.columbia.edu/resources/finding-undergraduate-research-position",
+    "verified": true,
+    "contact_profile_id": null
+  },
+  {
+    "id": "fellowship-laidlaw",
+    "title": "Laidlaw Scholars Program",
+    "organization": "Columbia Undergraduate Research and Fellowships",
+    "category": "fellowship",
+    "description": "A research and leadership program for undergraduates. Check the program page for who can apply and when.",
+    "tags": [
+      "leadership",
+      "research",
+      "funded"
+    ],
+    "skills": [
+      "Research",
+      "Writing",
+      "Leadership"
+    ],
+    "majors": [],
+    "prerequisites": [],
+    "location": "Morningside campus",
+    "commitment": null,
+    "deadline": null,
+    "url": "https://urf.columbia.edu/fellowship/laidlaw-scholars-program",
+    "source_url": "https://www.careereducation.columbia.edu/resources/finding-undergraduate-research-position",
+    "verified": true,
+    "contact_profile_id": "sample-sofia-martinez"
+  },
+  {
+    "id": "fellowship-rabi",
+    "title": "I.I. Rabi Scholars Program",
+    "organization": "Columbia Undergraduate Research and Fellowships",
+    "category": "fellowship",
+    "description": "A Columbia program that supports undergraduate science research. Check the program page for how scholars are chosen.",
+    "tags": [
+      "science",
+      "research",
+      "funded"
+    ],
+    "skills": [
+      "Research",
+      "Lab Work"
+    ],
+    "majors": [],
+    "prerequisites": [],
+    "location": "Morningside campus",
+    "commitment": null,
+    "deadline": null,
+    "url": "https://urf.columbia.edu/node/4146",
+    "source_url": "https://urf.columbia.edu/node/4146",
+    "verified": true,
+    "contact_profile_id": null
+  },
+  {
+    "id": "fellowship-kluge",
+    "title": "Kluge Fellows Summer Research Program",
+    "organization": "Columbia Undergraduate Research and Fellowships",
+    "category": "fellowship",
+    "description": "A Columbia summer research program. Check with Undergraduate Research and Fellowships for who can apply.",
+    "tags": [
+      "research",
+      "summer",
+      "funded"
+    ],
+    "skills": [
+      "Research",
+      "Writing"
+    ],
+    "majors": [],
+    "prerequisites": [],
+    "location": "Morningside campus",
+    "commitment": "Summer",
+    "deadline": null,
+    "url": null,
+    "source_url": "https://www.careereducation.columbia.edu/resources/finding-undergraduate-research-position",
+    "verified": true,
+    "contact_profile_id": null
+  },
+  {
+    "id": "fellowship-mellon-mays",
+    "title": "Mellon Mays Undergraduate Fellowship",
+    "organization": "Columbia Undergraduate Research and Fellowships",
+    "category": "fellowship",
+    "description": "A fellowship that supports undergraduate research with faculty mentors. Check the program page for who can apply.",
+    "tags": [
+      "humanities",
+      "research",
+      "funded"
+    ],
+    "skills": [
+      "Research",
+      "Writing"
+    ],
+    "majors": [],
+    "prerequisites": [],
+    "location": "Morningside campus",
+    "commitment": null,
+    "deadline": null,
+    "url": null,
+    "source_url": "https://www.careereducation.columbia.edu/resources/finding-undergraduate-research-position",
+    "verified": true,
+    "contact_profile_id": null
+  },
+  {
+    "id": "fellowship-class-of-1939",
+    "title": "Class of 1939 Summer Research Fellowship",
+    "organization": "Columbia Undergraduate Research and Fellowships",
+    "category": "fellowship",
+    "description": "Funds independent undergraduate research over the summer, at a location you pick.",
+    "tags": [
+      "research",
+      "summer",
+      "funded"
+    ],
+    "skills": [
+      "Research",
+      "Writing"
+    ],
+    "majors": [],
+    "prerequisites": [],
+    "location": "Your choice",
+    "commitment": "Summer",
+    "deadline": null,
+    "url": null,
+    "source_url": "https://www.careereducation.columbia.edu/resources/finding-undergraduate-research-position",
+    "verified": true,
+    "contact_profile_id": null
+  },
+  {
+    "id": "internship-google-step",
+    "title": "STEP Internship",
+    "organization": "Google",
+    "category": "internship",
+    "description": "A software internship aimed at first-year and second-year students. Check Google's careers site for this year's dates and rules.",
+    "tags": [
+      "software",
+      "big tech",
+      "first-year friendly"
+    ],
+    "skills": [
+      "Python",
+      "Java",
+      "Data Structures",
+      "Algorithms"
+    ],
+    "majors": [
+      "Computer Science",
+      "Computer Engineering",
+      "Data Science"
+    ],
+    "prerequisites": [],
+    "location": "Varies",
+    "commitment": "Full-time summer",
+    "deadline": null,
+    "url": null,
+    "source_url": null,
+    "verified": false,
+    "contact_profile_id": "sample-jordan-lee"
+  },
+  {
+    "id": "internship-microsoft-explore",
+    "title": "Explore Program",
+    "organization": "Microsoft",
+    "category": "internship",
+    "description": "A summer program aimed at first-year and second-year students who want to try software roles. Check Microsoft's careers site for this year's dates and rules.",
+    "tags": [
+      "software",
+      "big tech",
+      "first-year friendly",
+      "product"
+    ],
+    "skills": [
+      "Python",
+      "Java",
+      "Data Structures"
+    ],
+    "majors": [
+      "Computer Science",
+      "Computer Engineering",
+      "Data Science"
+    ],
+    "prerequisites": [],
+    "location": "Varies",
+    "commitment": "Full-time summer",
+    "deadline": null,
+    "url": null,
+    "source_url": null,
+    "verified": false,
+    "contact_profile_id": null
+  },
+  {
+    "id": "internship-cce-ceo",
+    "title": "Columbia Experience Overseas",
+    "organization": "Columbia Center for Career Education",
+    "category": "internship",
+    "description": "Summer internships abroad arranged through the Center for Career Education. Check CCE for this year's cities and roles.",
+    "tags": [
+      "international",
+      "summer",
+      "business"
+    ],
+    "skills": [
+      "Writing",
+      "Communication"
+    ],
+    "majors": [],
+    "prerequisites": [],
+    "location": "Abroad",
+    "commitment": "Full-time summer",
+    "deadline": null,
+    "url": "https://www.careereducation.columbia.edu",
+    "source_url": null,
+    "verified": false,
+    "contact_profile_id": null
+  },
+  {
+    "id": "internship-cce-startup",
+    "title": "Startup Internship Program",
+    "organization": "Columbia Center for Career Education",
+    "category": "internship",
+    "description": "Internships at startups arranged through the Center for Career Education. Check CCE to see if it runs this year.",
+    "tags": [
+      "startups",
+      "software",
+      "business"
+    ],
+    "skills": [
+      "Web Development",
+      "Communication",
+      "Python"
+    ],
+    "majors": [],
+    "prerequisites": [],
+    "location": "New York City",
+    "commitment": null,
+    "deadline": null,
+    "url": "https://www.careereducation.columbia.edu",
+    "source_url": null,
+    "verified": false,
+    "contact_profile_id": null
+  },
+  {
+    "id": "internship-lionshare",
+    "title": "On-campus and off-campus research positions",
+    "organization": "LionSHARE",
+    "category": "internship",
+    "description": "Columbia's job board lists some paid research and internship positions on and off campus. Search it for current openings.",
+    "tags": [
+      "job board",
+      "research",
+      "part-time"
+    ],
+    "skills": [
+      "Research",
+      "Communication"
+    ],
+    "majors": [],
+    "prerequisites": [],
+    "location": "Varies",
+    "commitment": null,
+    "deadline": null,
+    "url": null,
+    "source_url": "https://www.careereducation.columbia.edu/resources/finding-undergraduate-research-position",
+    "verified": true,
+    "contact_profile_id": null
+  }
+]
