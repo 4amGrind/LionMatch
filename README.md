@@ -17,6 +17,8 @@ npm run dev
 
 Open http://localhost:3000. It works right away with no accounts. Until Supabase is set up, the app reads the seed files in `src/data`.
 
+Run `npm install` again whenever you pull changes that touch `package.json`. The swipe deck uses two packages, `motion` and `canvas-confetti`, and the app will not start without them.
+
 ## Connect Supabase
 
 One person does steps 1 to 3. Everyone does step 4.
@@ -34,7 +36,7 @@ Never commit `.env.local`. The service role key can change anything in the datab
 | --- | --- | --- |
 | Alex | Base app, data, repo | `src/lib/data.ts`, `src/data`, `supabase/schema.sql` |
 | Jun | Match score, preferences, resume import | `src/lib/match.ts`, `src/app/preferences` |
-| Max | Swipe deck and cards | `src/components/SwipeDeck.tsx` |
+| Max | Swipe deck and cards, look and feel | `src/components/SwipeDeck.tsx`, `src/components/DeckCard.tsx`, `src/app/globals.css` |
 | Peter | Explore, search, opportunities, prerequisites | `src/components/ExploreList.tsx`, `src/app/opportunities/[id]` |
 | Ayan | Profiles, outreach, chats, swipe history | `src/app/people/[id]`, `src/components/OutreachBox.tsx`, `src/app/chats`, `src/components/HistoryList.tsx` |
 
@@ -52,6 +54,7 @@ src/lib/swipes.ts   Saving and reading swipes
 src/data/           Seed data as JSON
 supabase/schema.sql Database tables and access rules
 scripts/seed.mjs    Loads the seed data into Supabase
+public/             Wallpaper and the crown logo
 ```
 
 Three rules keep five people from breaking each other's work:
@@ -59,6 +62,18 @@ Three rules keep five people from breaking each other's work:
 1. Read data through `src/lib/data.ts`. Do not call Supabase from a page.
 2. Use the types in `src/lib/types.ts`. If you need a new field, add it to the type, the schema, and the seed file in one pull request.
 3. Use the pieces in `src/components/ui.tsx` so screens look the same.
+
+## Look and feel
+
+The app always has phone proportions. On a laptop it shows inside a phone-shaped frame. Pages sit on a blue wave wallpaper, with glass panels on top. The sun and moon button in the header switches between light and dark mode.
+
+To keep a new screen working in both modes:
+
+- Use the `ct-` colors, like `text-ct-navy`, `text-ct-muted`, and `bg-ct-card`. They change with the mode. Fixed colors like `bg-white` or `text-black` will look wrong in dark mode.
+- For a panel, use `Card` from `ui.tsx`, or the `glass-surface` class. For a small floating control, use `glass`.
+- Outline-only buttons with no background are hard to read over the dark part of the wallpaper. Give them `glass-surface`.
+
+All the colors and glass styles live in `src/app/globals.css`.
 
 ## Working together
 
@@ -88,4 +103,4 @@ Then open a pull request on GitHub and ask one teammate to look at it. Keep pull
 
 - Login. `getCurrentUser()` in `src/lib/data.ts` always returns the demo profile. Swipes are saved in the browser only.
 - Sending messages in the app. The `outreach` and `messages` tables exist but nothing writes to them.
-- Swipe gestures, people cards in the deck, and editing your profile.
+- Editing your profile.
