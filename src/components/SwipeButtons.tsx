@@ -3,10 +3,10 @@
 import { useSwipes } from "@/lib/swipes";
 import type { SwipeDirection, TargetType } from "@/lib/types";
 
-const OPTIONS: { direction: SwipeDirection; label: string; done: string }[] = [
-  { direction: "pass", label: "Pass", done: "Passed" },
-  { direction: "save", label: "Save", done: "Saved" },
-  { direction: "like", label: "Interested", done: "Interested" },
+const OPTIONS: { direction: SwipeDirection; label: string; done: string; activeClass: string }[] = [
+  { direction: "pass", label: "Pass", done: "Passed", activeClass: "bg-ct-pass text-white" },
+  { direction: "save", label: "Save", done: "Saved", activeClass: "bg-ct-save text-white" },
+  { direction: "like", label: "Interested", done: "Interested", activeClass: "bg-ct-like text-white" },
 ];
 
 /** Pass, Save, and Interested buttons for a detail page. Shows the current choice. */
@@ -26,8 +26,8 @@ export default function SwipeButtons({ targetType, targetId }: { targetType: Tar
             onClick={() =>
               active ? removeSwipe(targetType, targetId) : recordSwipe(targetType, targetId, option.direction)
             }
-            className={`rounded-xl border-2 py-3 text-sm font-bold ${
-              active ? "border-ct-navy bg-ct-navy text-white" : "border-ct-line bg-ct-card text-ct-navy"
+            className={`rounded-full py-3 text-sm font-semibold transition-colors active:scale-[0.97] ${
+              active ? option.activeClass : "glass-surface text-ct-navy"
             }`}
           >
             {active ? option.done : option.label}

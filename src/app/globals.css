@@ -1,41 +1,328 @@
 @import "tailwindcss";
 
+/* `dark:` utilities follow the theme toggle, not just the system setting. */
+@custom-variant dark (&:where([data-theme="dark"], [data-theme="dark"] *));
+
+/*
+  Look and feel: liquid glass over a Columbia-blue wave wallpaper.
+  Light mode is Columbia blue with navy ink. Dark mode is deep navy with Columbia-blue ink.
+  Token names stay the same as before, so every screen follows along without changes.
+  The theme is set on <html data-theme> by a small script in layout.tsx before the page paints.
+*/
 :root {
-  --ct-blue: #b9d9eb; /* Columbia blue */
-  --ct-blue-soft: #e6f1f8;
-  --ct-navy: #0b2545;
-  --ct-ink: #14213d;
-  --ct-muted: #5b6b82;
-  --ct-line: #d9e3ee;
-  --ct-page: #f3f7fb;
-  --ct-card: #ffffff;
-  --ct-like: #12805c;
-  --ct-pass: #b42318;
-  --ct-save: #9a6700;
+  color-scheme: light;
+  --ct-blue: #b9d9eb; /* Columbia blue. */
+  --ct-deep: #0c2340; /* Columbia navy in both themes. For text on Columbia blue or gold. */
+  --ct-blue-deep: rgb(12 35 64 / 0.08); /* Hover and pressed wash. */
+  --ct-blue-soft: rgb(255 255 255 / 0.45);
+  --ct-navy: #0c2340; /* Headlines and primary buttons. */
+  --ct-on-navy: #ffffff; /* Text on a primary button. */
+  --ct-ink: #16304f; /* Body text. */
+  --ct-muted: #2f4763; /* Secondary text. Dark enough to read on glass over the navy waves. */
+  --ct-line: rgb(12 35 64 / 0.12);
+  --ct-page: #b9d9eb;
+  --ct-card: rgb(255 255 255 / 0.72); /* Explore and Chats rows. Still see-through, but not so much the waves compete with the text. */
+  --ct-solid: #ffffff;
+  --ct-like: #17845a;
+  --ct-pass: #c4392f;
+  --ct-save: #b07905;
+
+  /* One color per kind of card. Used for the folder tab on deck cards and the category badge. */
+  --ct-cat-internship: #0c2340;
+  --ct-cat-club: #2b67ad;
+  --ct-cat-research: #0e7468;
+  --ct-cat-fellowship: #9c2f55;
+  --ct-cat-person: #d39a12;
+
+  --ct-lift: 0 2px 4px rgb(12 35 64 / 0.08), 0 16px 36px -14px rgb(12 35 64 / 0.5);
+
+  /*
+    Liquid glass.
+    tint: the fill. Kept thin so the waves show through.
+    filter: what happens to whatever is behind (blur, then saturate and brighten, like light bending).
+    rim-top / rim-bottom: the bright edges where light catches the glass.
+    glow: light pooling inside the top edge. shade: the glass getting thicker toward the bottom.
+  */
+  --lg-tint: rgb(255 255 255 / 0.25);
+  --lg-tint-strong: rgb(255 255 255 / 0.4);
+  --lg-tint-surface: rgb(255 255 255 / 0.55);
+  /* Deck cards are solid, so nothing behind shows through. Their glass look comes from the edges. */
+  --lg-card-fill: linear-gradient(180deg, #ffffff 0%, #f5f9fc 55%, #ebf2f8 100%);
+  --lg-card-rim: rgb(255 255 255 / 1);
+  --lg-card-edge: rgb(185 217 235 / 0.75);
+  --lg-card-edge-glow: rgb(185 217 235 / 0.35);
+  --lg-card-shade: rgb(12 35 64 / 0.07);
+  /* The soft highlight in the top-left corner of glass panels. */
+  --lg-corner: rgb(255 255 255 / 0.55);
+  --lg-filter: blur(12px) saturate(1.8) brightness(1.1);
+  --lg-rim-top: rgb(255 255 255 / 0.9);
+  --lg-rim-bottom: rgb(255 255 255 / 0.45);
+  --lg-hair: rgb(255 255 255 / 0.4);
+  --lg-glow: rgb(255 255 255 / 0.55);
+  --lg-shade: rgb(12 35 64 / 0.16);
+
+  /* Shade laid over the wave wallpaper. None in light mode; dark mode darkens it. */
+  --wallpaper-shade: transparent;
+  /* Solid color around the phone frame on wide screens. Matches a light band of the wallpaper. */
+  --ct-outside: #b9cde6;
+}
+
+:root[data-theme="dark"] {
+  color-scheme: dark;
+  --ct-blue-deep: rgb(185 217 235 / 0.12);
+  --ct-blue-soft: rgb(185 217 235 / 0.08);
+  --ct-navy: #e3eff7;
+  --ct-on-navy: #07152a;
+  --ct-ink: #c6d9e7;
+  --ct-muted: #9db4ca;
+  --ct-line: rgb(185 217 235 / 0.14);
+  --ct-page: #06132a;
+  --ct-card: rgb(28 58 96 / 0.45);
+  --ct-solid: #0f2645;
+  --ct-like: #45c58f;
+  --ct-pass: #f36b5f;
+  --ct-save: #f0b73e;
+
+  --ct-cat-internship: #4d79ad;
+  --ct-cat-club: #2f86d6;
+  --ct-cat-research: #189c8b;
+  --ct-cat-fellowship: #c4527f;
+  --ct-cat-person: #e2a629;
+
+  --ct-lift: 0 2px 4px rgb(0 0 0 / 0.3), 0 16px 36px -14px rgb(0 0 0 / 0.8);
+
+  --lg-tint: rgb(255 255 255 / 0.08);
+  --lg-tint-strong: rgb(255 255 255 / 0.13);
+  --lg-tint-surface: rgb(16 40 74 / 0.54);
+  --lg-card-fill: linear-gradient(180deg, #15305a 0%, #112a4f 55%, #0d2244 100%);
+  --lg-card-rim: rgb(185 217 235 / 0.22);
+  --lg-card-edge: rgb(185 217 235 / 0.14);
+  --lg-card-edge-glow: rgb(80 140 210 / 0.1);
+  --lg-card-shade: rgb(0 0 0 / 0.3);
+  /* No white corner highlights in dark mode. */
+  --lg-corner: transparent;
+  --lg-filter: blur(14px) saturate(1.6) brightness(1.1);
+  --lg-rim-top: rgb(255 255 255 / 0.4);
+  --lg-rim-bottom: rgb(255 255 255 / 0.16);
+  --lg-hair: rgb(255 255 255 / 0.12);
+  --lg-glow: rgb(255 255 255 / 0.12);
+  --lg-shade: rgb(0 0 0 / 0.35);
+
+  /* Same waves, sunk into navy. Light text stays readable even on the palest band. */
+  --wallpaper-shade: rgb(4 14 32 / 0.64);
+  --ct-outside: #030b18;
+}
+
+/*
+  The nav, the deck buttons, and the swipe hints always sit over the navy bottom of the wallpaper,
+  in both themes. Inside this scope they use clear glass with light text, the way iOS glass
+  adapts to dark content behind it.
+*/
+.lg-on-dark {
+  --ct-navy: #eef5fb;
+  --ct-ink: #d6e5f0;
+  --ct-muted: #b3c8db;
+  --ct-blue-deep: rgb(255 255 255 / 0.12);
+  /* Smoky navy glass, so the light text stays readable even when light cards scroll underneath. */
+  --lg-tint: rgb(10 28 54 / 0.46);
+  --lg-tint-strong: rgb(10 28 54 / 0.54);
+  --lg-filter: blur(12px) saturate(1.8) brightness(1.05);
+  --lg-rim-top: rgb(255 255 255 / 0.55);
+  --lg-rim-bottom: rgb(255 255 255 / 0.22);
+  --lg-hair: rgb(255 255 255 / 0.16);
+  --lg-glow: rgb(255 255 255 / 0.18);
+  --lg-shade: rgb(0 0 0 / 0.3);
 }
 
 @theme inline {
   --color-ct-blue: var(--ct-blue);
+  --color-ct-deep: var(--ct-deep);
+  --color-ct-blue-deep: var(--ct-blue-deep);
   --color-ct-blue-soft: var(--ct-blue-soft);
   --color-ct-navy: var(--ct-navy);
+  --color-ct-on-navy: var(--ct-on-navy);
   --color-ct-ink: var(--ct-ink);
   --color-ct-muted: var(--ct-muted);
   --color-ct-line: var(--ct-line);
   --color-ct-page: var(--ct-page);
   --color-ct-card: var(--ct-card);
+  --color-ct-solid: var(--ct-solid);
   --color-ct-like: var(--ct-like);
   --color-ct-pass: var(--ct-pass);
   --color-ct-save: var(--ct-save);
-  --font-sans: var(--font-geist-sans), ui-sans-serif, system-ui, sans-serif;
-  --font-mono: var(--font-geist-mono), ui-monospace, monospace;
+  --color-ct-cat-internship: var(--ct-cat-internship);
+  --color-ct-cat-club: var(--ct-cat-club);
+  --color-ct-cat-research: var(--ct-cat-research);
+  --color-ct-cat-fellowship: var(--ct-cat-fellowship);
+  --color-ct-cat-person: var(--ct-cat-person);
+  --shadow-ct-lift: var(--ct-lift);
+  --font-sans: var(--font-instrument), ui-sans-serif, system-ui, sans-serif;
+}
+
+/* Headlines. Same family as the body, set semibold and a little tight. */
+@utility display {
+  font-weight: 600;
+  letter-spacing: -0.025em;
+  line-height: 1.04;
+}
+
+/*
+  Liquid glass, in four strengths. All share the same edges:
+  a bright rim on top, a fainter one on the bottom, a hairline all round,
+  light pooling inside the top, and a little shade inside the bottom.
+  The sheen is a diagonal highlight across the top-left corner.
+*/
+@utility glass {
+  background:
+    linear-gradient(135deg, var(--lg-glow) 0%, transparent 34%, transparent 72%, var(--lg-hair) 100%),
+    var(--lg-tint);
+  -webkit-backdrop-filter: var(--lg-filter);
+  backdrop-filter: var(--lg-filter);
+  box-shadow:
+    inset 0 1px 0.5px var(--lg-rim-top),
+    inset 0 -1px 0.5px var(--lg-rim-bottom),
+    inset 0 0 0 0.5px var(--lg-hair),
+    inset 0 10px 16px -10px var(--lg-glow),
+    inset 0 -12px 18px -12px var(--lg-shade),
+    var(--ct-lift);
+}
+
+/* A little more fill, for small controls that need to stand out from the glass around them. */
+@utility glass-strong {
+  background:
+    linear-gradient(135deg, var(--lg-glow) 0%, transparent 34%, transparent 72%, var(--lg-hair) 100%),
+    var(--lg-tint-strong);
+  -webkit-backdrop-filter: var(--lg-filter);
+  backdrop-filter: var(--lg-filter);
+  box-shadow:
+    inset 0 1px 0.5px var(--lg-rim-top),
+    inset 0 -1px 0.5px var(--lg-rim-bottom),
+    inset 0 0 0 0.5px var(--lg-hair),
+    inset 0 10px 16px -10px var(--lg-glow),
+    inset 0 -12px 18px -12px var(--lg-shade),
+    var(--ct-lift);
+}
+
+/* For panels of text on other screens: enough fill to read paragraphs comfortably. */
+@utility glass-surface {
+  background:
+    linear-gradient(150deg, var(--lg-corner) 0%, transparent 30%),
+    var(--lg-tint-surface);
+  -webkit-backdrop-filter: var(--lg-filter);
+  backdrop-filter: var(--lg-filter);
+  box-shadow:
+    inset 0 1px 0.5px var(--lg-rim-top),
+    inset 0 0 0 0.5px var(--lg-hair),
+    inset 0 12px 20px -12px var(--lg-corner),
+    var(--ct-lift);
+}
+
+/*
+  Deck cards. Solid, so the wallpaper and the cards behind never show through.
+  They still read as glass: a bright top edge, a Columbia-blue tint all the way round the edge
+  (like light catching the thickness of a glass slab), and a little shade toward the bottom.
+  No corner highlights, so dark mode has no white glow.
+*/
+@utility glass-card {
+  background: var(--lg-card-fill);
+  box-shadow:
+    inset 0 1.5px 0.5px var(--lg-card-rim),
+    inset 0 0 0 1px var(--lg-card-edge),
+    inset 0 0 18px var(--lg-card-edge-glow),
+    inset 0 -18px 28px -18px var(--lg-card-shade),
+    var(--ct-lift);
+}
+
+/*
+  Deck cards fit whatever height the phone gives them. On shorter screens the card drops
+  detail in this order: fewer description lines, then the description and facts,
+  then extra reasons. The title and the score always stay.
+*/
+.deck-body {
+  container: deck / size;
+}
+
+@container deck (max-height: 440px) {
+  .deck-desc {
+    -webkit-line-clamp: 2;
+  }
+  .deck-title {
+    font-size: 26px;
+  }
+}
+
+@container deck (max-height: 390px) {
+  .deck-desc,
+  .deck-tags {
+    display: none;
+  }
+}
+
+@container deck (max-height: 330px) {
+  .deck-facts {
+    display: none;
+  }
+  .deck-reasons li:nth-child(n + 4) {
+    display: none;
+  }
+  .deck-title {
+    -webkit-line-clamp: 2;
+  }
+}
+
+@container deck (max-height: 280px) {
+  .deck-reasons li:nth-child(n + 3) {
+    display: none;
+  }
 }
 
 body {
-  background: var(--ct-page);
+  background: var(--ct-outside);
   color: var(--ct-ink);
+}
+
+/*
+  Behind the app: the blue wave wallpaper, light at the top and navy at the bottom, not blurred.
+  It stays put while content scrolls. Dark mode lays a navy shade over the same image.
+  The solid page color shows while the image loads.
+*/
+.ct-backdrop {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background:
+    linear-gradient(var(--wallpaper-shade), var(--wallpaper-shade)),
+    url("/backgrounds/waves.jpg") center / cover no-repeat,
+    var(--ct-page);
+}
+
+/*
+  Primary buttons are bg-ct-navy everywhere. In dark mode that color turns light,
+  so text on it follows --ct-on-navy instead of staying white. This sits outside Tailwind's
+  layers on purpose, so it wins over `text-white` without editing every screen.
+*/
+.bg-ct-navy {
+  color: var(--ct-on-navy);
+}
+
+/* Avatars sit on Columbia blue in both themes, so their text stays navy. */
+.bg-ct-blue {
+  color: var(--ct-deep);
+}
+
+::selection {
+  background: var(--ct-navy);
+  color: var(--ct-on-navy);
 }
 
 :focus-visible {
   outline: 2px solid var(--ct-navy);
   outline-offset: 2px;
+}
+
+/* Theme switches cross-fade instead of snapping. */
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation-duration: 0.35s;
 }

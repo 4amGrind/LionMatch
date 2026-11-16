@@ -35,13 +35,13 @@ export default async function ProfilePage() {
         <div className="grid grid-cols-2 gap-2">
           <Link
             href="/preferences"
-            className="rounded-xl border border-ct-navy py-3 text-center text-sm font-semibold text-ct-navy"
+            className="glass-surface rounded-xl py-3 text-center text-sm font-semibold text-ct-navy"
           >
             Preferences
           </Link>
           <Link
             href="/history"
-            className="rounded-xl border border-ct-navy py-3 text-center text-sm font-semibold text-ct-navy"
+            className="glass-surface rounded-xl py-3 text-center text-sm font-semibold text-ct-navy"
           >
             Swipe history
           </Link>

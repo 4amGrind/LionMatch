@@ -1,5 +1,6 @@
 "use client";
 
+import { motion } from "motion/react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 
@@ -17,29 +18,38 @@ function isActive(pathname: string, href: string) {
   return pathname.startsWith(href) || pathname.startsWith("/preferences") || pathname.startsWith("/history");
 }
 
+/** A floating glass dock. A brighter glass lens slides to whichever tab is open. */
 export default function BottomNav() {
   const pathname = usePathname();
 
   return (
     <nav
       aria-label="Main"
-      className="fixed bottom-0 left-1/2 z-10 w-full max-w-md -translate-x-1/2 border-t border-ct-line bg-ct-card"
+      className="lg-on-dark absolute inset-x-0 bottom-0 z-30 px-4 pb-[max(12px,env(safe-area-inset-bottom))]"
     >
-      <ul className="grid grid-cols-4">
+      <ul className="glass grid grid-cols-4 gap-1 rounded-[26px] p-1.5">
         {TABS.map((tab) => {
           const active = isActive(pathname, tab.href);
           return (
-            <li key={tab.href}>
+            <li key={tab.href} className="relative">
+              {active ? (
+                <motion.span
+                  layoutId="nav-active"
+                  aria-hidden="true"
+                  className="absolute inset-0 rounded-[20px] bg-white/20 shadow-[inset_0_1px_0.5px_rgb(255_255_255/0.7),inset_0_-1px_0.5px_rgb(255_255_255/0.25),inset_0_0_0_0.5px_rgb(255_255_255/0.3),0_6px_16px_-8px_rgb(0_0_0/0.5)]"
+                  transition={{ type: "spring", stiffness: 500, damping: 40 }}
+                />
+              ) : null}
               <Link
                 href={tab.href}
                 aria-current={active ? "page" : undefined}
-                className={`flex flex-col items-center gap-1 py-2.5 text-xs font-medium ${
-                  active ? "text-ct-navy" : "text-ct-muted"
+                className={`relative flex flex-col items-center gap-0.5 rounded-[20px] py-2 text-[11px] font-semibold transition-colors ${
+                  active ? "text-ct-navy" : "text-ct-muted hover:text-ct-navy"
                 }`}
               >
                 <svg
                   viewBox="0 0 24 24"
-                  className="h-6 w-6"
+                  className="h-[22px] w-[22px]"
                   fill="none"
                   stroke="currentColor"
                   strokeWidth={active ? 2.25 : 1.75}
