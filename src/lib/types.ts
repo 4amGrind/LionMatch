@@ -53,6 +53,8 @@ export interface Profile {
   major: string | null;
   bio: string;
   skills: string[];
+  /** Courses taken, like "COMS W3134". Checked against opportunity prerequisites. */
+  courses: string[];
   interests: string[];
   /** Categories this person wants to see in their deck. */
   looking_for: Category[];
