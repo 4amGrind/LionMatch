@@ -1064,13 +1064,17 @@
       "Computer Engineering",
       "Data Science"
     ],
-    "prerequisites": [],
-    "location": "Varies",
-    "commitment": "Full-time summer",
+    "prerequisites": [
+      "Intro to Computer Science (COMS W1004 or equivalent)",
+      "One semester of calculus (MATH UN1101 or equivalent)",
+      "First- or second-year bachelor's student"
+    ],
+    "location": "Redmond, WA or Atlanta, GA",
+    "commitment": "12-week summer internship (U.S.)",
     "deadline": null,
-    "url": null,
-    "source_url": null,
-    "verified": false,
+    "url": "https://careers.microsoft.com/v2/global/en/exploremicrosoft",
+    "source_url": "https://careers.microsoft.com/v2/global/en/exploremicrosoft",
+    "verified": true,
     "contact_profile_id": null
   },
   {
@@ -1148,5 +1152,211 @@
     "source_url": "https://www.careereducation.columbia.edu/resources/finding-undergraduate-research-position",
     "verified": true,
     "contact_profile_id": null
+  },
+  {
+    "tags": [
+      "data science",
+      "research",
+      "machine learning",
+      "health",
+      "first-year friendly"
+    ],
+    "skills": [
+      "Python",
+      "R",
+      "Data Analysis"
+    ],
+    "majors": [],
+    "prerequisites": [
+      "Columbia or Barnard student, at least half-time"
+    ],
+    "location": "Morningside or CUIMC",
+    "commitment": "About 10 hrs/week for a semester, paid hourly",
+    "deadline": null,
+    "url": "https://datascience.columbia.edu/research/dsi-scholars",
+    "verified": true,
+    "contact_profile_id": null,
+    "id": "research-dsi-scholars",
+    "title": "DSI Scholars",
+    "organization": "Columbia Data Science Institute",
+    "category": "research",
+    "description": "Paid research with a Columbia faculty mentor, applying data science to real problems. Projects change each term, and some are open to first-years. Applications for Fall 2027 open in the spring.",
+    "source_url": "https://datascience.columbia.edu/research/dsi-scholars"
+  },
+  {
+    "tags": [
+      "finance",
+      "quant",
+      "software",
+      "trading",
+      "first-year friendly"
+    ],
+    "skills": [
+      "Math",
+      "Python"
+    ],
+    "majors": [],
+    "prerequisites": [
+      "First- or second-year (graduating Dec 2028 to June 2030)",
+      "Resume with cumulative GPA"
+    ],
+    "location": "New York City",
+    "commitment": "2-day event, early April 2027",
+    "deadline": "2027-03-05",
+    "url": "https://www.citadel.com/careers/programs-and-events/discover-citadel/",
+    "verified": true,
+    "contact_profile_id": null,
+    "id": "finance-citadel-discover",
+    "title": "Discover Citadel",
+    "organization": "Citadel and Citadel Securities",
+    "category": "internship",
+    "description": "A two-day event in New York for first- and second-year students. Learn about internships in quant research, software engineering, and trading, meet the teams, and do mock interviews.",
+    "source_url": "https://www.citadel.com/careers/programs-and-events/discover-citadel/"
+  },
+  {
+    "tags": [
+      "finance",
+      "investing",
+      "mentorship",
+      "first-year friendly"
+    ],
+    "skills": [
+      "Excel",
+      "Financial Modeling"
+    ],
+    "majors": [],
+    "prerequisites": [
+      "First-year, sophomore, or junior at a 4-year U.S. college",
+      "GPA 3.2 (3.0 may be considered)",
+      "U.S. work authorization"
+    ],
+    "location": "Partner firms, mostly New York City",
+    "commitment": "Summer internship plus training",
+    "deadline": null,
+    "url": "https://career.seo-usa.org/",
+    "verified": true,
+    "contact_profile_id": null,
+    "id": "finance-seo-career",
+    "title": "SEO Career Internship Program",
+    "organization": "SEO (Sponsors for Educational Opportunity)",
+    "category": "internship",
+    "description": "Places college students in summer internships at partner firms such as investment banks and private equity firms, with training, coaching, and interview prep. Applications are reviewed on a rolling basis, mainly October to April.",
+    "source_url": "https://career.seo-usa.org/"
+  },
+  {
+    "tags": [
+      "law",
+      "policy",
+      "journalism"
+    ],
+    "skills": [
+      "Legal Research",
+      "Writing"
+    ],
+    "majors": [],
+    "prerequisites": [
+      "J.D. or LL.M. student at an accredited U.S. law school",
+      "Finished first year of law school before the internship"
+    ],
+    "location": "Morningside Heights, New York City",
+    "commitment": "Full-time, 10 weeks, summer 2027",
+    "deadline": null,
+    "url": "https://knightcolumbia.org/careers/summer-2027-legal-internship",
+    "verified": true,
+    "contact_profile_id": null,
+    "id": "law-knight-legal-internship",
+    "title": "Summer 2027 Legal Internship",
+    "organization": "Knight First Amendment Institute at Columbia University",
+    "category": "internship",
+    "description": "Full-time summer legal work on free speech and press cases. Stipend up to $10,000 for 10 weeks. Priority deadline was Nov 1, 2026; later applications are reviewed on a rolling basis until the posting closes.",
+    "source_url": "https://knightcolumbia.org/careers/summer-2027-legal-internship"
+  },
+  {
+    "tags": [
+      "law",
+      "international",
+      "social impact",
+      "policy"
+    ],
+    "skills": [
+      "Legal Research",
+      "Writing"
+    ],
+    "majors": [],
+    "prerequisites": [
+      "First- or second-year J.D. student at Columbia Law School"
+    ],
+    "location": "Abroad",
+    "commitment": "10 weeks, summer",
+    "deadline": "2026-11-30",
+    "url": "https://www.law.columbia.edu/social-justice/students/summer-programs-public-service/hrip",
+    "verified": true,
+    "contact_profile_id": null,
+    "id": "law-hrip",
+    "title": "Human Rights Internship Program (HRIP)",
+    "organization": "Columbia Law School",
+    "category": "internship",
+    "description": "Ten weeks of international human rights legal work abroad, with a $9,400 stipend and a round-trip flight.",
+    "source_url": "https://www.law.columbia.edu/social-justice/students/summer-programs-public-service/hrip"
+  },
+  {
+    "tags": [
+      "health",
+      "medicine",
+      "mentorship",
+      "biology"
+    ],
+    "skills": [],
+    "majors": [],
+    "prerequisites": [
+      "Columbia, Barnard, or CUNY undergraduate",
+      "GPA 2.75"
+    ],
+    "location": "CUIMC, Washington Heights",
+    "commitment": "School year, starts in October",
+    "deadline": "2026-09-04",
+    "url": "https://www.vagelos.columbia.edu/education/academic-programs/additional-educational-opportunities/summer-youth-programs/college-post-baccalaureate/gerald-e-thomson-undergraduate-pre-medical-program-get-upp/get-upp-application-information",
+    "verified": true,
+    "contact_profile_id": null,
+    "id": "fellowship-get-upp",
+    "title": "Gerald E. Thomson Undergraduate Pre-Medical Program (GET-UPP)",
+    "organization": "Columbia Vagelos College of Physicians and Surgeons",
+    "category": "fellowship",
+    "description": "A school-year program that supports up to 50 pre-med students, including first-generation students. The program starts each October.",
+    "source_url": "https://www.vagelos.columbia.edu/education/academic-programs/additional-educational-opportunities/summer-youth-programs/college-post-baccalaureate/gerald-e-thomson-undergraduate-pre-medical-program-get-upp/get-upp-application-information"
+  },
+  {
+    "tags": [
+      "biology",
+      "research",
+      "health",
+      "medicine",
+      "summer"
+    ],
+    "skills": [
+      "Lab Skills"
+    ],
+    "majors": [
+      "Biology",
+      "Biochemistry",
+      "Neuroscience"
+    ],
+    "prerequisites": [
+      "Columbia undergraduate in good academic standing",
+      "Introductory Biology I",
+      "Two recommendation letters"
+    ],
+    "location": "Morningside campus",
+    "commitment": "Full-time, 10 weeks, summer",
+    "deadline": "2027-02-01",
+    "url": "https://biology.columbia.edu/content/apply-SURF",
+    "verified": true,
+    "contact_profile_id": null,
+    "id": "research-biology-surf",
+    "title": "Biology SURF",
+    "organization": "Columbia Department of Biological Sciences",
+    "category": "research",
+    "description": "Ten weeks of full-time research in a Columbia biology lab, starting after Memorial Day. Applicants are also considered for the Amgen Scholars Program.",
+    "source_url": "https://biology.columbia.edu/content/apply-SURF"
   }
 ]
