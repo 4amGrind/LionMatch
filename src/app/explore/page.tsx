@@ -2,7 +2,7 @@ import ExploreList, { type ExploreItem, type ExplorePerson, type ExploreTab } fr
 import { PageTitle } from "@/components/ui";
 import { getCurrentUser, getOpportunities, getPeople } from "@/lib/data";
 import { matchOpportunity, matchPerson } from "@/lib/match";
-import { checkPrerequisites, todayIso } from "@/lib/prerequisites";
+import { checkPrerequisites, skillNames, todayIso } from "@/lib/prerequisites";
 
 export const dynamic = "force-dynamic";
 
@@ -10,10 +10,11 @@ export default async function ExplorePage({ searchParams }: PageProps<"/explore"
   const { tab } = await searchParams;
   const [user, opportunities, people] = await Promise.all([getCurrentUser(), getOpportunities(), getPeople()]);
 
+  const skills = skillNames(opportunities);
   const items: ExploreItem[] = opportunities.map((opportunity) => ({
     opportunity,
     match: matchOpportunity(user, opportunity),
-    prerequisites: checkPrerequisites(user, opportunity),
+    prerequisites: checkPrerequisites(user, opportunity, skills),
   }));
   const persons: ExplorePerson[] = people.map((person) => ({ person, match: matchPerson(user, person) }));
   const initialTab: ExploreTab = tab === "people" ? "people" : "opportunities";

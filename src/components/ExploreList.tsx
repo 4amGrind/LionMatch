@@ -121,15 +121,21 @@ function ResultCount({ count }: { count: number }) {
   );
 }
 
-/** "2 of 3 prerequisites met", colored by how close the user is. */
+/** A one-line prerequisite summary, colored by how close the user is. */
 function PrerequisiteSummary({ status }: { status: PrerequisiteStatus }) {
   if (status.total === 0) return null;
-  const color = status.allMet ? "text-ct-like" : status.metCount > 0 ? "text-ct-save" : "text-ct-pass";
+  const toCheck = status.checkCount > 0 ? ` · ${status.checkCount} to check yourself` : "";
+  if (status.missingCount === 0) {
+    if (status.metCount === 0) {
+      const n = status.checkCount;
+      return <p className="text-xs font-semibold text-ct-muted">{n} {n === 1 ? "rule" : "rules"} to check yourself</p>;
+    }
+    return <p className="text-xs font-semibold text-ct-like">You have the course prerequisites{toCheck}</p>;
+  }
   return (
-    <p className={`text-xs font-semibold ${color}`}>
-      {status.allMet
-        ? "You meet every prerequisite"
-        : `${status.metCount} of ${status.total} prerequisites met`}
+    <p className={`text-xs font-semibold ${status.metCount > 0 ? "text-ct-save" : "text-ct-pass"}`}>
+      Missing {status.missingCount} {status.missingCount === 1 ? "prerequisite" : "prerequisites"}
+      {toCheck}
     </p>
   );
 }
