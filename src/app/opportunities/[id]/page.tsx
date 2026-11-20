@@ -4,6 +4,7 @@ import SwipeButtons from "@/components/SwipeButtons";
 import { Card, CategoryBadge, MatchPanel, OwnerNote, TagList } from "@/components/ui";
 import { getCurrentUser, getOpportunity, getProfile } from "@/lib/data";
 import { matchOpportunity } from "@/lib/match";
+import { checkPrerequisites, daysUntil, formatDeadline, todayIso } from "@/lib/prerequisites";
 
 export const dynamic = "force-dynamic";
 
@@ -17,6 +18,23 @@ function Fact({ label, value }: { label: string; value: string | null }) {
   );
 }
 
+/** A check when the user has this prerequisite, an open circle when they do not. */
+function PrerequisiteIcon({ met }: { met: boolean }) {
+  return (
+    <svg
+      viewBox="0 0 16 16"
+      className={`mt-[3px] size-3.5 shrink-0 ${met ? "text-ct-like" : "text-ct-pass"}`}
+      aria-hidden="true"
+    >
+      {met ? (
+        <path d="M3 8.5l3 3 7-7" fill="none" stroke="currentColor" strokeWidth={2.2} strokeLinecap="round" strokeLinejoin="round" />
+      ) : (
+        <circle cx="8" cy="8" r="5.5" fill="none" stroke="currentColor" strokeWidth={1.8} />
+      )}
+    </svg>
+  );
+}
+
 export default async function OpportunityPage({ params }: PageProps<"/opportunities/[id]">) {
   const { id } = await params;
   const [user, opportunity] = await Promise.all([getCurrentUser(), getOpportunity(id)]);
@@ -24,6 +42,11 @@ export default async function OpportunityPage({ params }: PageProps<"/opportunit
 
   const contact = opportunity.contact_profile_id ? await getProfile(opportunity.contact_profile_id) : null;
   const link = opportunity.url ?? opportunity.source_url;
+  const prerequisites = checkPrerequisites(user, opportunity);
+  const today = todayIso();
+  const deadline = opportunity.deadline
+    ? `${formatDeadline(opportunity.deadline)}${daysUntil(opportunity.deadline, today) < 0 ? " (closed)" : ""}`
+    : null;
 
   return (
     <div className="space-y-4">
@@ -41,7 +64,7 @@ export default async function OpportunityPage({ params }: PageProps<"/opportunit
         <dl className="grid grid-cols-2 gap-3">
           <Fact label="Location" value={opportunity.location} />
           <Fact label="Time" value={opportunity.commitment} />
-          <Fact label="Deadline" value={opportunity.deadline} />
+          <Fact label="Deadline" value={deadline} />
           <Fact label="Majors" value={opportunity.majors.length > 0 ? opportunity.majors.join(", ") : "All majors"} />
         </dl>
 
@@ -54,10 +77,27 @@ export default async function OpportunityPage({ params }: PageProps<"/opportunit
 
         <div>
           <h2 className="mb-1.5 text-xs font-medium uppercase tracking-wide text-ct-muted">Prerequisites</h2>
-          {opportunity.prerequisites.length > 0 ? (
-            <TagList items={opportunity.prerequisites} max={10} />
+          {prerequisites.total > 0 ? (
+            <>
+              <ul className="space-y-1.5">
+                {prerequisites.checks.map(({ requirement, met }) => (
+                  <li key={requirement} className="flex items-start gap-2 text-sm">
+                    <PrerequisiteIcon met={met} />
+                    <span>
+                      {requirement}
+                      <span className="sr-only">{met ? " (you have this)" : " (not on your profile)"}</span>
+                    </span>
+                  </li>
+                ))}
+              </ul>
+              <p className="mt-2 text-xs text-ct-muted">
+                {prerequisites.allMet
+                  ? "Your courses and skills cover every prerequisite."
+                  : `You have ${prerequisites.metCount} of ${prerequisites.total}. Checked against the courses and skills on your profile.`}
+              </p>
+            </>
           ) : (
-            <p className="text-sm text-ct-muted">None listed yet.</p>
+            <p className="text-sm text-ct-muted">None listed. Check the official page to be sure.</p>
           )}
         </div>
 
@@ -87,7 +127,7 @@ export default async function OpportunityPage({ params }: PageProps<"/opportunit
       ) : null}
 
       <OwnerNote owner="Peter">
-        Fill in prerequisites and deadlines in the data, then show whether the user meets each one.
+        Prerequisite checks are built. Still to do: fill in prerequisites and deadlines in the data from each official page.
       </OwnerNote>
     </div>
   );
