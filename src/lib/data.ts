@@ -3,8 +3,10 @@
 // With Supabase env vars set, data comes from the database.
 // Without them, data comes from the seed files, so the app always runs.
 
+import { cookies } from "next/headers";
 import seedOpportunities from "@/data/opportunities.json";
 import seedProfiles from "@/data/profiles.json";
+import { PREFERENCES_COOKIE, applyPreferences, parsePreferences } from "./preferences";
 import { getSupabase } from "./supabase";
 import type { Category, Opportunity, Profile } from "./types";
 
@@ -79,7 +81,10 @@ export async function getProfile(id: string): Promise<Profile | null> {
 }
 
 /**
- * The signed-in user. For now this is always the demo profile.
+ * The signed-in user. For now this is always the demo profile, with anything
+ * saved on the Preferences screen laid over it. Jun owns that layer; see
+ * src/lib/preferences.ts.
+ *
  * When login is added, change this one function and the rest of the app follows.
  */
 export async function getCurrentUser(): Promise<Profile> {
@@ -87,5 +92,16 @@ export async function getCurrentUser(): Promise<Profile> {
   if (!profile) {
     throw new Error(`Demo profile "${DEMO_USER_ID}" is missing. Run "npm run seed" or check src/data/profiles.json.`);
   }
-  return profile;
+
+  // Reading cookies makes a page render per request. Every page that calls this
+  // is already "force-dynamic", so nothing changes. Wrapped because cookies()
+  // throws outside a request, and a missing cookie should never break a screen.
+  let saved = null;
+  try {
+    saved = parsePreferences((await cookies()).get(PREFERENCES_COOKIE)?.value);
+  } catch {
+    // No request to read, or cookies are off. Fall back to the sample profile.
+  }
+
+  return applyPreferences(profile, saved);
 }

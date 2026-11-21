@@ -1,31 +1,43 @@
-import { Card, OwnerNote, PageTitle, TagList } from "@/components/ui";
-import { getCurrentUser } from "@/lib/data";
-import { CATEGORY_LABELS } from "@/lib/types";
+import PreferencesForm from "@/components/PreferencesForm";
+import { OwnerNote } from "@/components/ui";
+import { DEMO_USER_ID, getCurrentUser, getOpportunities, getProfile } from "@/lib/data";
+import type { Opportunity } from "@/lib/types";
 
 export const dynamic = "force-dynamic";
 
+/** The values that come up most across the listings, so the form can offer them. */
+function common(opportunities: Opportunity[], field: "skills" | "tags", limit: number): string[] {
+  const counts = new Map<string, number>();
+  for (const opportunity of opportunities) {
+    for (const value of opportunity[field]) {
+      counts.set(value, (counts.get(value) ?? 0) + 1);
+    }
+  }
+  return [...counts.entries()]
+    .sort((a, b) => b[1] - a[1] || a[0].localeCompare(b[0]))
+    .slice(0, limit)
+    .map(([value]) => value);
+}
+
 export default async function PreferencesPage() {
-  const user = await getCurrentUser();
+  const [user, sample, opportunities] = await Promise.all([
+    getCurrentUser(),
+    getProfile(DEMO_USER_ID),
+    getOpportunities(),
+  ]);
 
   return (
     <>
-      <PageTitle title="Preferences" subtitle="What the match score uses about you." />
-      <Card className="space-y-3">
-        <div>
-          <h2 className="mb-1.5 text-xs font-medium uppercase tracking-wide text-ct-muted">Looking for</h2>
-          <TagList items={user.looking_for.map((category) => CATEGORY_LABELS[category])} />
-        </div>
-        <div>
-          <h2 className="mb-1.5 text-xs font-medium uppercase tracking-wide text-ct-muted">Skills</h2>
-          <TagList items={user.skills} max={12} />
-        </div>
-        <div>
-          <h2 className="mb-1.5 text-xs font-medium uppercase tracking-wide text-ct-muted">Interests</h2>
-          <TagList items={user.interests} max={12} />
-        </div>
-      </Card>
+      <PreferencesForm
+        user={user}
+        // getCurrentUser already threw if the demo profile is missing, so by here it exists.
+        sample={sample ?? user}
+        skillSuggestions={common(opportunities, "skills", 16)}
+        interestSuggestions={common(opportunities, "tags", 16)}
+      />
       <OwnerNote owner="Jun">
-        Build the form that edits these, plus resume import. The score lives in src/lib/match.ts.
+        The form is done. Resume and LinkedIn import still to come: both will fill in these same
+        fields through save() in src/lib/usePreferences.ts.
       </OwnerNote>
     </>
   );
