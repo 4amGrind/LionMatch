@@ -115,9 +115,10 @@ Tags only match when they share a word, so "consulting" does not teach the deck 
 
 - `src/data/opportunities.json` has 48 listings. Clubs, labs, and fellowships use real names taken from official Columbia pages on 2026-11-15. Each row has a `source_url`.
 - `verified: true` means the name was checked on an official page. It does not mean the description, deadline, or prerequisites were checked, except for the rows below.
-- 8 rows were checked in full on their official pages on 2026-11-20, including eligibility, prerequisites, and deadlines: DSI Scholars, Discover Citadel, SEO Career, the Knight Institute legal internship, Columbia Law HRIP, GET-UPP, Biology SURF, and Microsoft Explore. Deadlines and prerequisites on the other rows are still empty.
+- 8 rows were checked in full on their official pages on 2026-11-20, including eligibility, prerequisites, and deadlines: DSI Scholars, Discover Citadel, SEO Career, the Knight Institute legal internship, Columbia Law HRIP, GET-UPP, Biology SURF, and Microsoft Explore.
+- Every other row got a deadline and, where the program page lists them, prerequisites on 2026-11-21. Most 2027 dates are not posted yet, so those are placeholders based on last cycle or the usual season, and `deadline_estimated: true` marks them. The app labels them "estimated". When a program posts its real date, update the row and set `deadline_estimated` to false. Rabi Scholars has no deadline because students are chosen at admission.
 - Prerequisites with a course code in capitals, like `COMS W3134`, are checked against the courses on your profile. Other rules, like class year or GPA, show as "check yourself".
-- The internship rows are `verified: false`. Check each one before the demo.
+- One row is still `verified: false`: Career Education's Startup Internship Program, which may not run every year. Check it before relying on it.
 - Being in this list does not mean a club or lab is recruiting. Check the linked page.
 - `src/data/profiles.json` has 12 people. All of them are made up and marked `is_sample`. Do not add real people without their OK.
 - To add a listing, add a row to the JSON file and run `npm run seed`.
