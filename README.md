@@ -21,9 +21,9 @@ To present it, run `npm run demo` instead. It builds the app once and serves the
 
 ## Demo
 
-[![LionMatch demo video](docs/lionmatch-poster.jpg)](docs/lionmatch-demo.mp4)
+[![LionMatch demo video](docs/lionmatch-poster.jpg)](docs/lionmatch-demo.mp4?raw=true)
 
-[Watch the 86-second demo](docs/lionmatch-demo.mp4) (1080p, 60 fps, with sound). The film was made in code from the real app. Its source is in [`lionmatch-video/`](lionmatch-video/).
+[Download the 86-second demo](docs/lionmatch-demo.mp4?raw=true) (MP4, 22 MB, 1080p, 60 fps, with sound). The film was made in code from the real app. Its source is in [`lionmatch-video/`](lionmatch-video/).
 
 ## What you can do
 
