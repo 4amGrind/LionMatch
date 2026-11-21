@@ -15,6 +15,10 @@
       "Data Structures",
       "SQL"
     ],
+    "courses": [
+      "COMS W1004",
+      "MATH UN1101"
+    ],
     "interests": [
       "machine learning",
       "ai",
@@ -46,6 +50,7 @@
       "Machining",
       "Python"
     ],
+    "courses": [],
     "interests": [
       "aerospace",
       "robotics",
@@ -72,6 +77,7 @@
       "Statistics",
       "Machine Learning"
     ],
+    "courses": [],
     "interests": [
       "data science",
       "machine learning",
@@ -98,6 +104,7 @@
       "Excel",
       "Financial Modeling"
     ],
+    "courses": [],
     "interests": [
       "finance",
       "quant",
@@ -123,6 +130,7 @@
       "PyTorch",
       "Machine Learning"
     ],
+    "courses": [],
     "interests": [
       "nlp",
       "machine learning",
@@ -148,6 +156,7 @@
       "Writing",
       "Lab Work"
     ],
+    "courses": [],
     "interests": [
       "research",
       "science",
@@ -174,6 +183,7 @@
       "Data Structures",
       "Algorithms"
     ],
+    "courses": [],
     "interests": [
       "software",
       "big tech",
@@ -199,6 +209,7 @@
       "Web Development",
       "Figma"
     ],
+    "courses": [],
     "interests": [
       "startups",
       "hackathons",
@@ -227,6 +238,7 @@
       "Statistics",
       "Public Speaking"
     ],
+    "courses": [],
     "interests": [
       "finance",
       "consulting",
@@ -255,6 +267,7 @@
       "Product Management",
       "Communication"
     ],
+    "courses": [],
     "interests": [
       "startups",
       "product",
@@ -281,6 +294,7 @@
       "ROS",
       "PyTorch"
     ],
+    "courses": [],
     "interests": [
       "robotics",
       "ai",
@@ -305,6 +319,7 @@
       "Recruiting",
       "Communication"
     ],
+    "courses": [],
     "interests": [
       "software",
       "mentorship",

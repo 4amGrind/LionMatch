@@ -16,6 +16,7 @@ create table if not exists profiles (
   major         text,
   bio           text not null default '',
   skills        text[] not null default '{}',
+  courses       text[] not null default '{}',
   interests     text[] not null default '{}',
   looking_for   text[] not null default '{}',
   open_to_chat  boolean not null default true,
@@ -24,6 +25,9 @@ create table if not exists profiles (
   is_sample     boolean not null default false,
   created_at    timestamptz not null default now()
 );
+
+-- Added after the first version. Safe to run on a database made before this column existed.
+alter table profiles add column if not exists courses text[] not null default '{}';
 
 create table if not exists opportunities (
   id                  text primary key,
