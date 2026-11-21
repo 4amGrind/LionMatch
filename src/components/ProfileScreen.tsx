@@ -98,7 +98,10 @@ export default function ProfileScreen({
       </Card>
 
       <section aria-labelledby="activity-heading">
-        <h2 id="activity-heading" className="mb-2 text-xs font-medium uppercase tracking-wide text-ct-muted">
+        <h2
+          id="activity-heading"
+          className="glass-surface mb-2 w-fit rounded-full px-3 py-1 text-xs font-medium uppercase tracking-wide text-ct-ink"
+        >
           Your activity
         </h2>
         <div className="grid grid-cols-3 gap-2">

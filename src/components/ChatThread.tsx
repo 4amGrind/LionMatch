@@ -75,10 +75,13 @@ export default function ChatThread({ person }: { person: ChatPerson }) {
 
       <ul className="flex flex-1 flex-col justify-end gap-2 py-2" aria-live="polite" aria-label={`Conversation with ${person.full_name}`}>
         {thread.length === 0 && !typingNow ? (
-          <li className="py-6 text-center text-sm text-ct-muted">
-            {person.open_to_chat
-              ? `Nothing here yet. Say hi to ${firstName}.`
-              : `${person.full_name} is not taking coffee chats right now.`}
+          <li className="py-6 text-center">
+            {/* Backed by glass so it reads over the dark part of the wallpaper too. */}
+            <span className="glass-surface inline-block rounded-full px-4 py-2 text-sm text-ct-ink">
+              {person.open_to_chat
+                ? `Nothing here yet. Say hi to ${firstName}.`
+                : `${person.full_name} is not taking coffee chats right now.`}
+            </span>
           </li>
         ) : null}
         {thread.map((message) => {
