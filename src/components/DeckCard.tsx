@@ -4,6 +4,7 @@
 
 import Link from "next/link";
 import type { ReactNode } from "react";
+import { deadlineLabel, todayIso } from "@/lib/prerequisites";
 import { CATEGORY_LABELS, type MatchResult, type Opportunity, type Profile, type ProfileRole } from "@/lib/types";
 import { CATEGORY_BG, MatchPanel, SampleBadge, TagList } from "./ui";
 
@@ -48,6 +49,15 @@ function DetailLink({ href, children }: { href: string; children: string }) {
       {children}
     </Link>
   );
+}
+
+/**
+ * "Due Feb 1, 2027", with "(est.)" when the date is a placeholder rather than from an official page.
+ * The deck only draws in the browser (see SwipeDeck), so today's date here matches the person's clock.
+ */
+function dueLabel(opportunity: Opportunity): string | null {
+  const label = deadlineLabel(opportunity.deadline, todayIso());
+  return label && opportunity.deadline_estimated ? `${label} (est.)` : label;
 }
 
 /** Short facts in a row, like where and how much time. */
@@ -167,7 +177,7 @@ export default function DeckCard({ item, overlay, depth = 0 }: { item: DeckItem;
       <div>
         <h2 className="deck-title display line-clamp-3 text-[30px] text-ct-navy">{opportunity.title}</h2>
         <p className="mt-2 text-sm font-semibold text-ct-ink">{opportunity.organization}</p>
-        <Facts items={[opportunity.location, opportunity.commitment]} />
+        <Facts items={[dueLabel(opportunity), opportunity.location, opportunity.commitment]} />
       </div>
 
       <p className="deck-desc line-clamp-3 text-[15px] leading-relaxed">{opportunity.description}</p>

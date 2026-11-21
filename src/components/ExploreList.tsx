@@ -228,7 +228,7 @@ function OpportunitiesTab({ items, today }: { items: ExploreItem[]; today: strin
       ) : (
         <ul className="space-y-3">
           {visible.map(({ opportunity: o, match, prerequisites }) => {
-            const due = deadlineLabel(o.deadline, today);
+            const due = deadlineLabel(o.deadline, today, o.deadline_estimated);
             return (
               <li key={o.id}>
                 <Link

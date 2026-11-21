@@ -51,7 +51,9 @@ export default async function OpportunityPage({ params }: PageProps<"/opportunit
   const prerequisites = checkPrerequisites(user, opportunity, skillNames(all));
   const today = todayIso();
   const deadline = opportunity.deadline
-    ? `${formatDeadline(opportunity.deadline)}${daysUntil(opportunity.deadline, today) < 0 ? " (closed)" : ""}`
+    ? `${formatDeadline(opportunity.deadline)}${daysUntil(opportunity.deadline, today) < 0 ? " (closed)" : ""}${
+        opportunity.deadline_estimated ? " (estimated, check the official page)" : ""
+      }`
     : null;
 
   return (
@@ -137,7 +139,8 @@ export default async function OpportunityPage({ params }: PageProps<"/opportunit
       ) : null}
 
       <OwnerNote owner="Peter">
-        Prerequisite checks are built. Still to do: fill in prerequisites and deadlines for the older listings from each official page.
+        Deadlines and prerequisites are filled in. Dates marked estimated are placeholders: when each program posts its
+        2027 date, put it in src/data/opportunities.json and set deadline_estimated to false.
       </OwnerNote>
     </div>
   );

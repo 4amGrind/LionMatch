@@ -35,6 +35,8 @@ export interface Opportunity {
   commitment: string | null;
   /** ISO date, like "2027-02-01". Null when unknown. */
   deadline: string | null;
+  /** True when the deadline is our best guess, not taken from an official page. Screens label it "estimated". */
+  deadline_estimated: boolean;
   url: string | null;
   /** Page where we found this listing. */
   source_url: string | null;

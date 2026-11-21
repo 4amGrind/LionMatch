@@ -104,12 +104,20 @@ export function formatDeadline(deadline: string): string {
   });
 }
 
-/** A short label like "Due in 5 days" or "Closed", or null when there is no deadline. */
-export function deadlineLabel(deadline: string | null, today: string): string | null {
+/**
+ * A short label like "Due in 5 days" or "Closed", or null when there is no deadline.
+ * Pass `estimated` for a date that is our best guess, not from an official page, and the label says so.
+ */
+export function deadlineLabel(deadline: string | null, today: string, estimated = false): string | null {
   if (!deadline) return null;
   const days = daysUntil(deadline, today);
-  if (days < 0) return `Closed ${formatDeadline(deadline)}`;
-  if (days === 0) return "Due today";
-  if (days <= 30) return `Due in ${days} ${days === 1 ? "day" : "days"}`;
-  return `Due ${formatDeadline(deadline)}`;
+  const label =
+    days < 0
+      ? `Closed ${formatDeadline(deadline)}`
+      : days === 0
+        ? "Due today"
+        : days <= 30
+          ? `Due in ${days} ${days === 1 ? "day" : "days"}`
+          : `Due ${formatDeadline(deadline)}`;
+  return estimated ? `${label} (estimated)` : label;
 }
