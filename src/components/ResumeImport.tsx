@@ -35,7 +35,9 @@ type Phase =
   | { kind: "done"; findings: ResumeFindings; known: number };
 
 export default function ResumeImport({ vocabulary, current, onApply }: ResumeImportProps) {
-  const [open, setOpen] = useState(false);
+  // Open to begin with. Collapsed it was a one-line strip at the top of a long
+  // form, and nobody found it. Close puts it away for the visit.
+  const [open, setOpen] = useState(true);
   const [paste, setPaste] = useState("");
   const [phase, setPhase] = useState<Phase>({ kind: "idle" });
   const [picked, setPicked] = useState<{ skills: Set<string>; interests: Set<string>; major: boolean }>({
