@@ -1,0 +1,18 @@
+{
+  "textarea": {
+    "x": 32,
+    "y": 537.609375,
+    "w": 338,
+    "h": 162.5
+  },
+  "padding": 12,
+  "paddingLeft": 12,
+  "lineHeight": 22.75,
+  "send": {
+    "x": 32,
+    "y": 718.109375,
+    "w": 263.203125,
+    "h": 44
+  },
+  "message": "Hi Hana, I'm Demo Student (First-year, CS and AI). I saw we are both into machine learning. Would you have 15 minutes for a coffee chat in the next two weeks? I'd like to hear how you got started."
+}

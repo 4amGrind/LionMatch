@@ -15,6 +15,8 @@ const eslintConfig = defineConfig([
     // The pdf.js worker is minified vendor code, copied in on install by
     // scripts/copy-pdf-worker.mjs. Not ours to lint.
     "public/pdf.worker.min.mjs",
+    // The launch film is its own Remotion project with its own config.
+    "lionmatch-video/**",
   ]),
 ]);
 

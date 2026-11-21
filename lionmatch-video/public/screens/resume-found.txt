@@ -1,0 +1,86 @@
+LionMatch
+History
+Preferences
+
+What the match score uses about you.
+
+Import from your resume
+
+Read in your browser. The file is never uploaded and nothing is kept.
+
+Close
+Choose a PDF
+Scan pasted text
+Paste your resume text
+
+For LinkedIn: open your profile, press More, then Save to PDF, and choose that file. The site itself cannot be read without your login, and its terms say not to.
+
+Tap anything you do not want. 5 more were already on your list.
+
+Skills
+Electronics
+ROS
+PyTorch
+Lab Work
+Statistics
+Interests
+computer science
+robotics
+research
+Add 8 to the form
+Looking for
+
+Picking a kind of listing adds a point to everything in it. Pick none to see everything evenly.
+
+Internship
+Club
+Research
+Fellowship
+Major
+
+Worth a point and a half when a listing names your major. Listings open to everyone score for everyone.
+
+Skills
+Python
+Java
+Machine Learning
+Data Structures
+SQL
+Add
+Common:
++ Writing
++ Research
++ C++
++ Statistics
++ Excel
++ CAD
++ Electronics
++ Lab Work
+
+The biggest part of the score. Shared skills are worth up to three points.
+
+Interests
+machine learning
+ai
+software
+finance
+hackathons
+Add
+Common:
++ engineering
++ funded
++ research
++ summer
++ mentorship
++ community
++ first-year friendly
++ hardware
+
+Matched against the topic tags on each listing, for up to two points.
+
+Saved
+Start over
+Swipe
+Explore
+Chats
+Profile
