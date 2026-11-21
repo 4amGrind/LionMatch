@@ -7,7 +7,7 @@
     "school": "Columbia College",
     "class_year": 2030,
     "major": "Computer Science",
-    "bio": "This is the demo account. Edit it in src/data/profiles.json to see the match scores change.",
+    "bio": "This is the demo account. Tap Edit profile to see the match scores change.",
     "skills": [
       "Python",
       "Java",

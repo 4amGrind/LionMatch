@@ -16,10 +16,13 @@ import {
   type PanInfo,
 } from "motion/react";
 import { useEffect, useEffectEvent, useMemo, useRef, useState, useSyncExternalStore } from "react";
+import { countByFilter, filterIdOf, useDeckFilter } from "@/lib/deckFilter";
+import { buildTaste, itemCandidate, rankDeck } from "@/lib/recommend";
 import { useSwipes } from "@/lib/swipes";
 import type confetti from "canvas-confetti";
 import type { SwipeDirection } from "@/lib/types";
 import DeckCard, { deckKey, deckTargetId, type DeckItem } from "./DeckCard";
+import DeckFilter from "./DeckFilter";
 
 export type { DeckItem };
 
@@ -63,6 +66,8 @@ interface Exit {
   direction: SwipeDirection;
   /** True when a drag let go of the card. False for buttons and keys, which need a push. */
   thrown: boolean;
+  /** True when the card leaves because the category filter changed, not because of a swipe. It fades out instead of flying off. */
+  fade?: boolean;
 }
 
 /**
@@ -71,6 +76,7 @@ interface Exit {
  */
 const cardVariants = {
   exit: (exit: Exit | undefined) => {
+    if (exit?.fade) return { opacity: 0, scale: 0.94, zIndex: 50, transition: { duration: 0.2 } };
     const { direction, thrown } = exit ?? { direction: "pass" as const, thrown: false };
     const fly = { type: "spring" as const, stiffness: 120, damping: 20, restDelta: 4, restSpeed: 60 };
     // Buttons and keys start from rest, so push the card along the axis it leaves on.
@@ -137,7 +143,7 @@ function celebrate() {
 const noopSubscribe = () => () => {};
 
 export default function SwipeDeck({ items }: { items: DeckItem[] }) {
-  const { swipes, recordSwipe, removeSwipe, clearSwipes } = useSwipes();
+  const { swipes, events, recordSwipe, removeSwipe, clearSwipes } = useSwipes();
   // Swipes live in the browser, so wait until we are in the browser before drawing the stack.
   // Otherwise cards you already swiped would flash and fly off on every page load.
   const hydrated = useSyncExternalStore(noopSubscribe, () => true, () => false);
@@ -146,17 +152,47 @@ export default function SwipeDeck({ items }: { items: DeckItem[] }) {
   const [returning, setReturning] = useState<{ key: string; direction: SwipeDirection } | null>(null);
   const [celebration, setCelebration] = useState<{ key: string; score: number } | null>(null);
 
+  // Cards kept at the front in a fixed order. A swipe re-ranks the deck (see recommend.ts),
+  // so the cards already on screen are pinned and only the cards behind them can change.
+  const [pinned, setPinned] = useState<string[]>([]);
+
   const itemKeys = useMemo(() => new Set(items.map(deckKey)), [items]);
-  const seen = new Set(swipes.map((s) => `${s.target_type}:${s.target_id}`));
-  const remaining = items.filter((item) => !seen.has(deckKey(item)));
+  const taste = useMemo(() => buildTaste(items.map(itemCandidate), swipes, events), [items, swipes, events]);
+  // `unseen` is every card you have not swiped. `remaining` is those that pass the category filter, in deck order.
+  const { hidden, toggle, showAll, reveal } = useDeckFilter();
+  const unseen = useMemo(() => {
+    const seen = new Set(swipes.map((s) => `${s.target_type}:${s.target_id}`));
+    return items.filter((item) => !seen.has(deckKey(item)));
+  }, [items, swipes]);
+  const counts = useMemo(() => countByFilter(unseen), [unseen]);
+  const remaining = useMemo(
+    () =>
+      rankDeck(
+        unseen.filter((item) => !hidden.includes(filterIdOf(item))),
+        taste,
+        pinned,
+      ),
+    [unseen, hidden, taste, pinned],
+  );
   const top = remaining[0];
+
+  // A card the filter removes should fade away, not fly off as if you had passed on it.
+  function changeFilter(change: () => void) {
+    setExit({ direction: "pass", thrown: false, fade: true });
+    change();
+  }
   // Newest first, so this is the last card swiped in the deck.
   const lastSwipe = swipes.find((s) => itemKeys.has(`${s.target_type}:${s.target_id}`));
 
   function swipe(direction: SwipeDirection, thrown = false) {
     if (!top) return;
     setExit({ direction, thrown });
-    recordSwipe(top.kind, deckTargetId(top), direction);
+    setPinned(remaining.slice(1, VISIBLE + 1).map(deckKey));
+    recordSwipe(top.kind, deckTargetId(top), direction, {
+      match_score: top.match.score,
+      position: items.length - remaining.length + 1,
+      source: "deck",
+    });
     navigator.vibrate?.(10);
     if (direction === "like" && top.match.score >= CELEBRATE_SCORE) {
       setCelebration({ key: deckKey(top), score: top.match.score });
@@ -166,8 +202,13 @@ export default function SwipeDeck({ items }: { items: DeckItem[] }) {
 
   function undo() {
     if (!lastSwipe) return;
-    setReturning({ key: `${lastSwipe.target_type}:${lastSwipe.target_id}`, direction: lastSwipe.direction });
-    removeSwipe(lastSwipe.target_type, lastSwipe.target_id);
+    const key = `${lastSwipe.target_type}:${lastSwipe.target_id}`;
+    // If that kind of card is filtered out now, show it again, or the card would come back out of sight.
+    const card = items.find((item) => deckKey(item) === key);
+    if (card) reveal(filterIdOf(card));
+    setReturning({ key, direction: lastSwipe.direction });
+    setPinned([key, ...remaining.slice(0, VISIBLE).map(deckKey)]);
+    removeSwipe(lastSwipe.target_type, lastSwipe.target_id, { source: "deck" });
   }
 
   useEffect(() => {
@@ -207,6 +248,7 @@ export default function SwipeDeck({ items }: { items: DeckItem[] }) {
         <div className="mb-2 flex min-h-8 items-center justify-between gap-3">
           <p className="text-sm text-ct-muted">
             <span className="font-semibold tabular-nums text-ct-navy">{remaining.length}</span> to go
+            {hidden.length > 0 ? " · filtered" : ""}
           </p>
           <AnimatePresence initial={false}>
             {lastSwipe ? (
@@ -237,8 +279,25 @@ export default function SwipeDeck({ items }: { items: DeckItem[] }) {
           </AnimatePresence>
         </div>
 
+        <DeckFilter
+          counts={counts}
+          hidden={hidden}
+          onToggle={(id) => changeFilter(() => toggle(id))}
+          onShowAll={() => changeFilter(showAll)}
+        />
+
         <div className="relative min-h-0 flex-1">
-          {remaining.length === 0 ? <DoneState onStartOver={clearSwipes} /> : null}
+          {remaining.length === 0 && unseen.length === 0 ? (
+            <DoneState
+              onStartOver={() => {
+                setPinned([]);
+                clearSwipes();
+              }}
+            />
+          ) : null}
+          {remaining.length === 0 && unseen.length > 0 ? (
+            <FilteredEmpty hiddenCount={unseen.length} onShowAll={showAll} />
+          ) : null}
 
           <AnimatePresence custom={exit} initial={false}>
             {stack.map(({ item, depth }) => {
@@ -499,10 +558,36 @@ function DoneState({ onStartOver }: { onStartOver: () => void }) {
   );
 }
 
+/** Shown when the filter hides every card that is left. */
+function FilteredEmpty({ hiddenCount, onShowAll }: { hiddenCount: number; onShowAll: () => void }) {
+  return (
+    <motion.div
+      initial={{ opacity: 0, y: 12 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={SETTLE}
+      className="glass-surface absolute inset-x-0 bottom-9 top-8 flex flex-col items-start justify-end gap-3 rounded-[26px] p-6"
+    >
+      <p className="display text-[34px] text-ct-navy">Nothing left in these.</p>
+      <p className="max-w-[30ch] text-[15px] text-ct-muted">
+        {hiddenCount} more {hiddenCount === 1 ? "card is" : "cards are"} hidden by your filter.
+      </p>
+      <motion.button
+        type="button"
+        onClick={onShowAll}
+        whileTap={{ scale: 0.96 }}
+        className="mt-2 rounded-full bg-ct-navy px-5 py-3 text-sm font-semibold text-ct-on-navy"
+      >
+        Show everything
+      </motion.button>
+    </motion.div>
+  );
+}
+
 function DeckSkeleton() {
   return (
     <div className="flex min-h-0 flex-1 flex-col" aria-busy="true">
       <div className="mb-2 min-h-8" />
+      <div className="mb-2 h-[30px]" />
       <div className="relative min-h-0 flex-1">
         <div className="absolute inset-x-0 bottom-9 top-0 flex flex-col">
           <div className="glass-surface h-8 w-24 rounded-t-2xl opacity-60" />

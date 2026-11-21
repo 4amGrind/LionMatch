@@ -3,16 +3,18 @@
 // With Supabase env vars set, data comes from the database.
 // Without them, data comes from the seed files, so the app always runs.
 
+import { cookies } from "next/headers";
 import seedOpportunities from "@/data/opportunities.json";
 import seedProfiles from "@/data/profiles.json";
+import { applyProfileEdits, parseProfileCookie, PROFILE_COOKIE } from "./profile-edits";
 import { getSupabase } from "./supabase";
-import type { Category, Opportunity, Profile } from "./types";
+import { DEMO_USER_ID, type Category, type Opportunity, type Profile } from "./types";
 
 const localOpportunities = seedOpportunities as Opportunity[];
 const localProfiles = seedProfiles as Profile[];
 
-/** The profile used as "you" until real login is added. */
-export const DEMO_USER_ID = "demo-you";
+// Lives in types.ts so browser code (chats) can use it too. Still importable from here.
+export { DEMO_USER_ID };
 
 export interface OpportunityFilters {
   category?: Category;
@@ -79,7 +81,8 @@ export async function getProfile(id: string): Promise<Profile | null> {
 }
 
 /**
- * The signed-in user. For now this is always the demo profile.
+ * The signed-in user. For now this is always the demo profile, plus any edits saved from the
+ * Profile or Preferences screen (kept in a cookie, see profile-edits.ts).
  * When login is added, change this one function and the rest of the app follows.
  */
 export async function getCurrentUser(): Promise<Profile> {
@@ -87,5 +90,25 @@ export async function getCurrentUser(): Promise<Profile> {
   if (!profile) {
     throw new Error(`Demo profile "${DEMO_USER_ID}" is missing. Run "npm run seed" or check src/data/profiles.json.`);
   }
-  return profile;
+  const store = await cookies();
+  return applyProfileEdits(profile, parseProfileCookie(store.get(PROFILE_COOKIE)?.value));
+}
+
+/** Every skill and interest used in the data, most common first. Offered as suggestions when editing a profile. */
+export async function getVocabulary(): Promise<{ skills: string[]; interests: string[] }> {
+  const [opportunities, people] = await Promise.all([getOpportunities(), getPeople()]);
+  const rank = (lists: string[][]) => {
+    const counts = new Map<string, { label: string; n: number }>();
+    for (const item of lists.flat()) {
+      const key = item.toLowerCase();
+      const entry = counts.get(key) ?? { label: item, n: 0 };
+      entry.n++;
+      counts.set(key, entry);
+    }
+    return [...counts.values()].sort((a, b) => b.n - a.n || a.label.localeCompare(b.label)).map((e) => e.label);
+  };
+  return {
+    skills: rank([...opportunities.map((o) => o.skills), ...people.map((p) => p.skills)]),
+    interests: rank([...opportunities.map((o) => o.tags), ...people.map((p) => p.interests)]),
+  };
 }

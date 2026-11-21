@@ -3,6 +3,9 @@
 // so a database row can be used as one of these types directly.
 // If you change a field here, change the schema and the seed files too.
 
+/** The profile used as "you" until real login is added. */
+export const DEMO_USER_ID = "demo-you";
+
 export const CATEGORIES = ["internship", "club", "research", "fellowship"] as const;
 export type Category = (typeof CATEGORIES)[number];
 
@@ -71,6 +74,38 @@ export interface Swipe {
   target_type: TargetType;
   target_id: string;
   direction: SwipeDirection;
+  /** ISO timestamp. */
+  created_at: string;
+}
+
+/** Where a swipe came from. "demo" marks history loaded from a sample taste. */
+export type SwipeSource = "deck" | "detail" | "history" | "demo";
+
+/**
+ * One thing that happened, kept forever. `swipes` holds only the latest choice per card,
+ * so this log is what lets the recommender see changes of mind and what the score was at the time.
+ */
+export interface SwipeEvent {
+  id: string;
+  target_type: TargetType;
+  target_id: string;
+  /** "undo" cancels the swipe before it. */
+  action: SwipeDirection | "undo";
+  /** ISO timestamp. */
+  created_at: string;
+  /** The score on the card when it was swiped. Null when unknown. */
+  match_score: number | null;
+  /** How many cards into the deck this was. Null outside the deck. */
+  position: number | null;
+  source: SwipeSource;
+}
+
+/** A chat message between two profiles. Matches the `messages` table. */
+export interface Message {
+  id: string;
+  from_profile_id: string;
+  to_profile_id: string;
+  body: string;
   /** ISO timestamp. */
   created_at: string;
 }
