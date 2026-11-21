@@ -1,0 +1,30 @@
+[
+  {
+    "before": "Join Women in Computer Science",
+    "key": "ArrowRight"
+  },
+  {
+    "before": "Research with the Natural Language Processing Group",
+    "key": "ArrowRight"
+  },
+  {
+    "before": "Research with the Causal Artificial Intelligence Lab",
+    "key": "ArrowLeft"
+  },
+  {
+    "before": "Research with the Causal Artificial Intelligence Lab",
+    "key": "ArrowUp"
+  },
+  {
+    "before": "Research with the Causal Artificial Intelligence Lab",
+    "key": "ArrowRight"
+  },
+  {
+    "before": "Research with the Spoken Language Processing Group",
+    "key": "ArrowLeft"
+  },
+  {
+    "before": "Research with the Spoken Language Processing Group",
+    "key": "ArrowRight"
+  }
+]
