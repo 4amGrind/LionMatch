@@ -17,7 +17,7 @@ npm run dev
 
 Open http://localhost:3000. It works right away with no accounts. Until Supabase is set up, the app reads the seed files in `src/data`.
 
-Run `npm install` again whenever you pull changes that touch `package.json`. The swipe deck uses two packages, `motion` and `canvas-confetti`, and the app will not start without them.
+Run `npm install` again whenever you pull changes that touch `package.json`. The swipe deck uses two packages, `motion` and `canvas-confetti`, and the app will not start without them. Resume import adds `pdfjs-dist`, and installing also copies its worker to `public/pdf.worker.min.mjs`. That copy is gitignored, so PDF import is the one thing that breaks if you skip the install.
 
 ## Connect Supabase
 

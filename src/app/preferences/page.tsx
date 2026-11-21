@@ -1,5 +1,5 @@
 import PreferencesForm from "@/components/PreferencesForm";
-import { DEMO_USER_ID, getCurrentUser, getOpportunities, getPeople, getProfile, getVocabulary } from "@/lib/data";
+import { DEMO_USER_ID, getCurrentUser, getOpportunities, getProfile } from "@/lib/data";
 import type { Opportunity } from "@/lib/types";
 
 export const dynamic = "force-dynamic";
@@ -18,28 +18,32 @@ function common(opportunities: Opportunity[], field: "skills" | "tags", limit: n
     .map(([value]) => value);
 }
 
+/** Every value the listings use. The resume import can only look for these. */
+function allValues(opportunities: Opportunity[], field: "skills" | "tags" | "majors"): string[] {
+  return [...new Set(opportunities.flatMap((opportunity) => opportunity[field]))].sort();
+}
+
 export default async function PreferencesPage() {
-  const [user, sample, opportunities, people, vocabulary] = await Promise.all([
+  const [user, sample, opportunities] = await Promise.all([
     getCurrentUser(),
     getProfile(DEMO_USER_ID),
     getOpportunities(),
-    getPeople(),
-    getVocabulary(),
   ]);
 
-  // Every major a listing or person names, so resume import can recognise yours.
-  const majors = [
-    ...new Set([...opportunities.flatMap((o) => o.majors), ...people.map((p) => p.major).filter((m): m is string => !!m)]),
-  ];
-
   return (
-    <PreferencesForm
-      user={user}
-      // getCurrentUser already threw if the demo profile is missing, so by here it exists.
-      sample={sample ?? user}
-      skillSuggestions={common(opportunities, "skills", 16)}
-      interestSuggestions={common(opportunities, "tags", 16)}
-      vocabulary={{ skills: vocabulary.skills, interests: vocabulary.interests, majors }}
-    />
+    <>
+      <PreferencesForm
+        user={user}
+        // getCurrentUser already threw if the demo profile is missing, so by here it exists.
+        sample={sample ?? user}
+        skillSuggestions={common(opportunities, "skills", 16)}
+        interestSuggestions={common(opportunities, "tags", 16)}
+        vocabulary={{
+          skills: allValues(opportunities, "skills"),
+          interests: allValues(opportunities, "tags"),
+          majors: allValues(opportunities, "majors"),
+        }}
+      />
+    </>
   );
 }

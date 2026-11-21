@@ -9,7 +9,7 @@
 // the server components, which is what re-ranks the deck and Explore.
 // See src/lib/preferences.ts and src/lib/profile-edits.ts.
 //
-// Resume import (lower on this screen) fills the same draft, so you can check it before saving.
+// Resume import (top of this screen) fills the same draft, so you can check it before saving.
 
 import { motion } from "motion/react";
 import { useRouter } from "next/navigation";
@@ -25,9 +25,9 @@ import {
   savePreferencesInBrowser,
   type Preferences,
 } from "@/lib/preferences";
+import type { Vocabulary } from "@/lib/resume";
 import { CATEGORIES, CATEGORY_LABELS, type Category, type Profile } from "@/lib/types";
 import ResumeImport from "./ResumeImport";
-import type { Vocabulary } from "@/lib/resume";
 import { Card, PageTitle } from "./ui";
 
 type Status = { kind: "saved" | "reset" | "error"; message: string } | null;
@@ -41,7 +41,7 @@ export interface PreferencesFormProps {
   skillSuggestions: string[];
   /** Common topics across the listings. */
   interestSuggestions: string[];
-  /** Every skill, interest, and major the app knows, for reading a resume. */
+  /** Everything the listings mention, which is all the resume import can look for. */
   vocabulary: Vocabulary;
 }
 
@@ -106,6 +106,19 @@ export default function PreferencesForm({
       <PageTitle title="Preferences" subtitle="What the match score uses about you." />
 
       <div className="space-y-3">
+        <ResumeImport
+          vocabulary={vocabulary}
+          current={draft}
+          onApply={(picked) =>
+            update({
+              // cleanList drops the repeats, so importing twice is harmless.
+              skills: cleanList([...draft.skills, ...picked.skills]),
+              interests: cleanList([...draft.interests, ...picked.interests]),
+              major: picked.major ?? draft.major,
+            })
+          }
+        />
+
         <Card className="space-y-2">
           <FieldLabel>Looking for</FieldLabel>
           <p className="text-xs text-ct-muted">
@@ -170,17 +183,6 @@ export default function PreferencesForm({
           onChange={(interests) => update({ interests })}
         />
 
-        <ResumeImport
-          vocabulary={vocabulary}
-          onImport={(found) =>
-            update({
-              skills: cleanList([...draft.skills, ...found.skills]),
-              interests: cleanList([...draft.interests, ...found.interests]),
-              // Keep a major you typed. Fill it in only when it is empty.
-              major: draft.major?.trim() ? draft.major : found.major,
-            })
-          }
-        />
       </div>
 
       {/* The bar stays put at the bottom of the scroller so Save is always in reach. */}
