@@ -3,7 +3,7 @@ import OutreachBox from "@/components/OutreachBox";
 import PersonalMatchPanel from "@/components/PersonalMatchPanel";
 import SwipeButtons from "@/components/SwipeButtons";
 import { Card, SampleBadge, TagList } from "@/components/ui";
-import { toChatPerson } from "@/lib/chat-person";
+import { inSentence, toChatPerson } from "@/lib/chat-person";
 import { getCurrentUser, getOpportunities, getPeople, getProfile } from "@/lib/data";
 import { matchPerson } from "@/lib/match";
 
@@ -28,10 +28,10 @@ export default async function PersonPage({ params }: PageProps<"/people/[id]">) 
   if (!person) notFound();
 
   const match = matchPerson(user, person);
-  const sharedTopic =
-    person.interests.find((interest) =>
-      user.interests.some((mine) => mine.toLowerCase() === interest.toLowerCase()),
-    ) ?? null;
+  const shared = person.interests.find((interest) =>
+    user.interests.some((mine) => mine.toLowerCase() === interest.toLowerCase()),
+  );
+  const sharedTopic = shared ? inSentence(shared) : null;
   const facts = [ROLE_LABELS[person.role], person.school, person.major, person.class_year ? `Class of ${person.class_year}` : null]
     .filter(Boolean)
     .join(" · ");
@@ -78,7 +78,6 @@ export default async function PersonPage({ params }: PageProps<"/people/[id]">) 
           <p className="text-sm text-ct-muted">{person.full_name} is not taking coffee chats right now.</p>
         </Card>
       )}
-
     </div>
   );
 }

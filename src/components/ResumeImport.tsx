@@ -17,7 +17,7 @@
 import { motion } from "motion/react";
 import { useRef, useState } from "react";
 import { ACCEPTED_FILE_TYPES, DocumentReadError, readDocument } from "@/lib/readDocument";
-import type { Preferences } from "@/lib/preferences";
+import { MAX_ITEMS, type Preferences } from "@/lib/preferences";
 import { hasFindings, readResume, type ResumeFindings, type Vocabulary } from "@/lib/resume";
 import { Card } from "./ui";
 
@@ -45,6 +45,13 @@ export default function ResumeImport({ vocabulary, current, onApply }: ResumeImp
   });
   const fileInput = useRef<HTMLInputElement>(null);
 
+  // How many more each list can take. The cap is shared with the Profile
+  // screen (LIMITS.tags), so a resume can easily find more than will fit.
+  const room = {
+    skills: Math.max(0, MAX_ITEMS - current.skills.length),
+    interests: Math.max(0, MAX_ITEMS - current.interests.length),
+  };
+
   function scan(text: string) {
     const found = readResume(text, vocabulary);
 
@@ -56,7 +63,14 @@ export default function ResumeImport({ vocabulary, current, onApply }: ResumeImp
     const major = found.major && found.major !== current.major ? found.major : null;
     const known = found.skills.length + found.interests.length - skills.length - interests.length;
 
-    setPicked({ skills: new Set(skills), interests: new Set(interests), major: major !== null });
+    // Tick only what actually fits, in the order the resume mentioned them.
+    // Ticking everything and trimming on the way out would promise more than
+    // it delivers, which is how the button came to offer "Add 22" and add 12.
+    setPicked({
+      skills: new Set(skills.slice(0, room.skills)),
+      interests: new Set(interests.slice(0, room.interests)),
+      major: major !== null,
+    });
     setPhase({ kind: "done", findings: { skills, interests, major }, known });
   }
 
@@ -80,6 +94,7 @@ export default function ResumeImport({ vocabulary, current, onApply }: ResumeImp
     setPicked((p) => {
       const next = new Set(p[group]);
       if (next.has(value)) next.delete(value);
+      else if (next.size >= room[group]) return p; // Full. Untick something first.
       else next.add(value);
       return { ...p, [group]: next };
     });
@@ -205,6 +220,9 @@ export default function ResumeImport({ vocabulary, current, onApply }: ResumeImp
                 items={[phase.findings.major]}
                 isPicked={() => picked.major}
                 onToggle={() => setPicked((p) => ({ ...p, major: !p.major }))}
+                // One major replaces another, so there is nothing to run out of.
+                full={false}
+                note={null}
               />
             ) : null}
 
@@ -214,6 +232,8 @@ export default function ResumeImport({ vocabulary, current, onApply }: ResumeImp
                 items={phase.findings.skills}
                 isPicked={(item) => picked.skills.has(item)}
                 onToggle={(item) => toggle("skills", item)}
+                full={picked.skills.size >= room.skills}
+                note={capNote("skills", phase.findings.skills.length, room.skills)}
               />
             ) : null}
 
@@ -223,6 +243,8 @@ export default function ResumeImport({ vocabulary, current, onApply }: ResumeImp
                 items={phase.findings.interests}
                 isPicked={(item) => picked.interests.has(item)}
                 onToggle={(item) => toggle("interests", item)}
+                full={picked.interests.size >= room.interests}
+                note={capNote("interests", phase.findings.interests.length, room.interests)}
               />
             ) : null}
 
@@ -248,30 +270,45 @@ export default function ResumeImport({ vocabulary, current, onApply }: ResumeImp
   );
 }
 
+/** Says why not everything found can be taken, when that is the case. */
+function capNote(group: "skills" | "interests", found: number, room: number): string | null {
+  if (found <= room) return null;
+  if (room === 0) {
+    return `Your ${group} list is already full at ${MAX_ITEMS}. Remove one below to make space.`;
+  }
+  return `Your ${group} list holds ${MAX_ITEMS}, so only ${room} of these fit. Untick one to swap another in.`;
+}
+
 interface FoundProps {
   label: string;
   items: string[];
   isPicked: (item: string) => boolean;
   onToggle: (item: string) => void;
+  /** No room for another, so the unticked ones cannot be ticked. */
+  full: boolean;
+  note: string | null;
 }
 
-function Found({ label, items, isPicked, onToggle }: FoundProps) {
+function Found({ label, items, isPicked, onToggle, full, note }: FoundProps) {
   return (
     <div>
       <h3 className="mb-1.5 text-xs font-semibold text-ct-muted">{label}</h3>
       <ul className="flex flex-wrap gap-1.5">
         {items.map((item) => {
           const on = isPicked(item);
+          const locked = full && !on;
           return (
             <li key={item}>
               <button
                 type="button"
                 aria-pressed={on}
+                disabled={locked}
+                title={locked ? "Untick another one first" : undefined}
                 onClick={() => onToggle(item)}
                 className={`rounded-full border px-2.5 py-0.5 text-xs font-medium transition-colors ${
                   on
                     ? "border-ct-navy bg-ct-navy text-ct-on-navy"
-                    : "border-ct-line bg-ct-card text-ct-muted line-through"
+                    : `border-ct-line bg-ct-card text-ct-muted line-through ${locked ? "opacity-50" : ""}`
                 }`}
               >
                 {item}
@@ -280,6 +317,7 @@ function Found({ label, items, isPicked, onToggle }: FoundProps) {
           );
         })}
       </ul>
+      {note ? <p className="mt-1.5 text-xs text-ct-muted">{note}</p> : null}
     </div>
   );
 }

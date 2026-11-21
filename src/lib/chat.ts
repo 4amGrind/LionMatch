@@ -9,7 +9,7 @@
 // (see scriptedReply) and the chat screen says so.
 
 import { useSyncExternalStore } from "react";
-import type { ChatPerson } from "./chat-person";
+import { chatTopic, type ChatPerson } from "./chat-person";
 import { createLocalStore, newId } from "./localStore";
 import { DEMO_USER_ID, type Message, type Outreach, type OutreachKind, type ProfileRole } from "./types";
 
@@ -60,7 +60,7 @@ const CLOSING = "Sounds good. Talk soon!";
 
 /** The next reply from a made-up person. It depends on their role and how many replies they have sent. */
 export function scriptedReply(person: ChatPerson, repliesSoFar: number): string {
-  const topic = person.interests[0] ?? "that";
+  const topic = chatTopic(person, "that");
   const lines = REPLIES[person.role](topic);
   return lines[repliesSoFar] ?? CLOSING;
 }

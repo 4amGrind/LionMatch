@@ -276,6 +276,11 @@
   }
 }
 
+/* Parts a card hid because they did not fit. Set by fitContent() in DeckCard.tsx. */
+[data-fit-hidden] {
+  display: none !important;
+}
+
 body {
   background: var(--ct-outside);
   color: var(--ct-ink);
@@ -316,9 +321,15 @@ body {
   color: var(--ct-on-navy);
 }
 
-:focus-visible {
-  outline: 2px solid var(--ct-navy);
-  outline-offset: 2px;
+/*
+  In the base layer so a `focus:outline-none` utility can turn it off. Outside a layer it beat every
+  utility, which drew a square outline inside the round chat box.
+*/
+@layer base {
+  :focus-visible {
+    outline: 2px solid var(--ct-navy);
+    outline-offset: 2px;
+  }
 }
 
 /* Theme switches cross-fade instead of snapping. */

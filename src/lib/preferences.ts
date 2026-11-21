@@ -53,9 +53,14 @@ export function preferencesFromProfile(profile: Profile): Preferences {
 
 export function samePreferences(a: Preferences, b: Preferences): boolean {
   const sameList = (x: string[], y: string[]) => x.length === y.length && x.every((v, i) => v === y[i]);
+  // Categories are compared as a set, not a list. Saving puts them back in
+  // CATEGORIES order (see sanitize() in profile-edits.ts) while the sample
+  // profile lists them in its own, so comparing by position said "changed"
+  // forever and the Save button never settled back to "Saved".
+  const sameSet = (x: string[], y: string[]) => x.length === y.length && x.every((v) => y.includes(v));
   return (
     (a.major ?? null) === (b.major ?? null) &&
-    sameList(a.looking_for, b.looking_for) &&
+    sameSet(a.looking_for, b.looking_for) &&
     sameList(a.skills, b.skills) &&
     sameList(a.interests, b.interests)
   );

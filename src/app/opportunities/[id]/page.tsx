@@ -2,7 +2,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import PersonalMatchPanel from "@/components/PersonalMatchPanel";
 import SwipeButtons from "@/components/SwipeButtons";
-import { Card, CategoryBadge, OwnerNote, TagList } from "@/components/ui";
+import { Card, CategoryBadge, TagList } from "@/components/ui";
 import { getCurrentUser, getOpportunities, getOpportunity, getPeople, getProfile } from "@/lib/data";
 import { matchOpportunity } from "@/lib/match";
 import { checkPrerequisites, daysUntil, formatDeadline, skillNames, todayIso, type PrerequisiteState } from "@/lib/prerequisites";
@@ -143,11 +143,6 @@ export default async function OpportunityPage({ params }: PageProps<"/opportunit
           </Link>
         </Card>
       ) : null}
-
-      <OwnerNote owner="Peter">
-        Deadlines and prerequisites are filled in. Dates marked estimated are placeholders: when each program posts its
-        2027 date, put it in src/data/opportunities.json and set deadline_estimated to false.
-      </OwnerNote>
     </div>
   );
 }

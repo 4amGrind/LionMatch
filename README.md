@@ -17,6 +17,8 @@ npm run dev
 
 Open http://localhost:3000. If port 3000 is busy, Next.js picks another port and prints it. The app works right away with no accounts, using the data in `src/data`.
 
+To present it, run `npm run demo` instead. It builds the app once and serves the fast version, so pages open instantly, the Next.js dev badge doesn't show, and it needs no internet after `npm install`. Open it in a private window to start from a clean slate. If port 3000 is taken, run `npx next start -p 3001` after the build and open http://localhost:3001.
+
 ## Demo
 
 [![LionMatch demo video](docs/lionmatch-poster.jpg)](docs/lionmatch-demo.mp4)
@@ -86,6 +88,8 @@ Keep `.env.local` out of git. The service role key can change anything in the da
 
 - Next.js 16 (App Router) and React 19, in TypeScript.
 - Tailwind CSS 4, with a liquid-glass theme over a Columbia-blue wave wallpaper (`src/app/globals.css`).
+- Instrument Sans, bundled in `src/app/fonts` with its license, so the app builds with no internet.
+- Deck cards fit their content to the space they get. If a card has more to say than fits, `fitContent()` in `DeckCard.tsx` hides extras in a set order, so the last reason and the link to the details are never cut off.
 - Motion for the swipe physics, and canvas-confetti for strong matches.
 - pdf.js for reading resumes in the browser.
 - Supabase, optional, for data.
