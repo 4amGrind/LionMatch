@@ -94,7 +94,7 @@ export default function HistoryList({
         <EmptyState>No swipes yet. Head to the Swipe tab to start.</EmptyState>
       ) : (
         <>
-          <div role="tablist" aria-label="Filter history" className="glass mb-3 grid grid-cols-4 gap-1 rounded-2xl p-1">
+          <div role="tablist" aria-label="Filter history" className="glass-surface mb-3 grid grid-cols-4 gap-1 rounded-2xl p-1">
             {tabs.map((tab) => {
               const active = filter === tab.id;
               return (
@@ -105,7 +105,7 @@ export default function HistoryList({
                   aria-selected={active}
                   onClick={() => setFilter(tab.id)}
                   className={`rounded-xl px-1 py-2 text-xs font-semibold transition-colors ${
-                    active ? "bg-ct-navy text-ct-on-navy" : "text-ct-muted hover:text-ct-navy"
+                    active ? "bg-ct-navy text-ct-on-navy" : "text-ct-ink hover:text-ct-navy"
                   }`}
                 >
                   {tab.label} <span className="tabular-nums opacity-70">{counts[tab.id]}</span>

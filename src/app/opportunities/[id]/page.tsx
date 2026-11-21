@@ -1,8 +1,9 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
+import PersonalMatchPanel from "@/components/PersonalMatchPanel";
 import SwipeButtons from "@/components/SwipeButtons";
-import { Card, CategoryBadge, MatchPanel, OwnerNote, TagList } from "@/components/ui";
-import { getCurrentUser, getOpportunities, getOpportunity, getProfile } from "@/lib/data";
+import { Card, CategoryBadge, OwnerNote, TagList } from "@/components/ui";
+import { getCurrentUser, getOpportunities, getOpportunity, getPeople, getProfile } from "@/lib/data";
 import { matchOpportunity } from "@/lib/match";
 import { checkPrerequisites, daysUntil, formatDeadline, skillNames, todayIso, type PrerequisiteState } from "@/lib/prerequisites";
 
@@ -42,7 +43,12 @@ function PrerequisiteIcon({ state }: { state: PrerequisiteState }) {
 
 export default async function OpportunityPage({ params }: PageProps<"/opportunities/[id]">) {
   const { id } = await params;
-  const [user, opportunity, all] = await Promise.all([getCurrentUser(), getOpportunity(id), getOpportunities()]);
+  const [user, opportunity, all, people] = await Promise.all([
+    getCurrentUser(),
+    getOpportunity(id),
+    getOpportunities(),
+    getPeople(),
+  ]);
   if (!opportunity) notFound();
 
   const match = matchOpportunity(user, opportunity);
@@ -51,7 +57,9 @@ export default async function OpportunityPage({ params }: PageProps<"/opportunit
   const prerequisites = checkPrerequisites(user, opportunity, skillNames(all));
   const today = todayIso();
   const deadline = opportunity.deadline
-    ? `${formatDeadline(opportunity.deadline)}${daysUntil(opportunity.deadline, today) < 0 ? " (closed)" : ""}`
+    ? `${formatDeadline(opportunity.deadline)}${daysUntil(opportunity.deadline, today) < 0 ? " (closed)" : ""}${
+        opportunity.deadline_estimated ? " (estimated, check the official page)" : ""
+      }`
     : null;
 
   return (
@@ -62,7 +70,7 @@ export default async function OpportunityPage({ params }: PageProps<"/opportunit
         <p className="mt-1 text-sm font-medium text-ct-muted">{opportunity.organization}</p>
       </div>
 
-      <MatchPanel match={match} />
+      <PersonalMatchPanel match={match} target={{ kind: "opportunity", opportunity }} opportunities={all} people={people} />
       <SwipeButtons targetType="opportunity" targetId={opportunity.id} matchScore={match.score} />
 
       <Card className="space-y-4">
@@ -137,7 +145,8 @@ export default async function OpportunityPage({ params }: PageProps<"/opportunit
       ) : null}
 
       <OwnerNote owner="Peter">
-        Prerequisite checks are built. Still to do: fill in prerequisites and deadlines for the older listings from each official page.
+        Deadlines and prerequisites are filled in. Dates marked estimated are placeholders: when each program posts its
+        2027 date, put it in src/data/opportunities.json and set deadline_estimated to false.
       </OwnerNote>
     </div>
   );

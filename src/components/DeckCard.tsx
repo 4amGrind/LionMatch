@@ -4,6 +4,7 @@
 
 import Link from "next/link";
 import type { ReactNode } from "react";
+import { deadlineLabel, todayIso } from "@/lib/prerequisites";
 import { CATEGORY_LABELS, type MatchResult, type Opportunity, type Profile, type ProfileRole } from "@/lib/types";
 import { CATEGORY_BG, MatchPanel, SampleBadge, TagList } from "./ui";
 
@@ -50,6 +51,15 @@ function DetailLink({ href, children }: { href: string; children: string }) {
   );
 }
 
+/**
+ * "Due Feb 1, 2027", with "(est.)" when the date is a placeholder rather than from an official page.
+ * The deck only draws in the browser (see SwipeDeck), so today's date here matches the person's clock.
+ */
+function dueLabel(opportunity: Opportunity): string | null {
+  const label = deadlineLabel(opportunity.deadline, todayIso());
+  return label && opportunity.deadline_estimated ? `${label} (est.)` : label;
+}
+
 /** Short facts in a row, like where and how much time. */
 function Facts({ items }: { items: (string | null | undefined)[] }) {
   const shown = items.filter(Boolean) as string[];
@@ -70,6 +80,13 @@ function Facts({ items }: { items: (string | null | undefined)[] }) {
  */
 const DEPTH_TEXT = ["opacity-100", "opacity-40", "opacity-15", "opacity-0"];
 const DEPTH_TAB = ["opacity-100", "opacity-70", "opacity-35", "opacity-0"];
+
+/**
+ * Cards behind the top one sit a little lower, so their bottom edge always peeks out under it.
+ * Fade the bottom of their text so that strip shows a clean edge, not a ghost "See full details".
+ * The rest of the faint preview is still there while you drag the top card away.
+ */
+const BACK_CARD_FADE = "linear-gradient(to bottom, black calc(100% - 96px), transparent calc(100% - 36px))";
 
 function Shell({
   tab,
@@ -96,6 +113,7 @@ function Shell({
       <div className="glass-card deck-body relative min-h-0 flex-1 overflow-hidden rounded-[26px] rounded-tl-none">
         <div
           className={`flex h-full flex-col gap-3 p-5 transition-opacity duration-300 [&>*]:shrink-0 ${DEPTH_TEXT[level]}`}
+          style={level > 0 ? { maskImage: BACK_CARD_FADE, WebkitMaskImage: BACK_CARD_FADE } : undefined}
         >
           {children}
         </div>
@@ -159,7 +177,7 @@ export default function DeckCard({ item, overlay, depth = 0 }: { item: DeckItem;
       <div>
         <h2 className="deck-title display line-clamp-3 text-[30px] text-ct-navy">{opportunity.title}</h2>
         <p className="mt-2 text-sm font-semibold text-ct-ink">{opportunity.organization}</p>
-        <Facts items={[opportunity.location, opportunity.commitment]} />
+        <Facts items={[dueLabel(opportunity), opportunity.location, opportunity.commitment]} />
       </div>
 
       <p className="deck-desc line-clamp-3 text-[15px] leading-relaxed">{opportunity.description}</p>

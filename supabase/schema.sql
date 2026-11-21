@@ -43,6 +43,7 @@ create table if not exists opportunities (
   location            text,
   commitment          text,
   deadline            date,
+  deadline_estimated  boolean not null default false,
   url                 text,
   source_url          text,
   verified            boolean not null default false,
@@ -51,6 +52,9 @@ create table if not exists opportunities (
 );
 
 create index if not exists opportunities_category_idx on opportunities (category);
+
+-- Added after the first version of this table. Safe to run again on a database that already has it.
+alter table opportunities add column if not exists deadline_estimated boolean not null default false;
 
 -- One row per user per target. A new swipe replaces the old one.
 create table if not exists swipes (

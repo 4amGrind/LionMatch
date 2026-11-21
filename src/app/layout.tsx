@@ -17,6 +17,8 @@ const instrument = Instrument_Sans({
 export const metadata: Metadata = {
   title: "Columbia Tinder",
   description: "Swipe on internships, clubs, and research at Columbia.",
+  // Opened from an iPhone home screen, the app fills the screen with no browser bars.
+  appleWebApp: { capable: true, title: "Columbia Tinder", statusBarStyle: "default" },
 };
 
 export const viewport: Viewport = {

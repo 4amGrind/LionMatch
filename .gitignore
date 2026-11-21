@@ -42,3 +42,6 @@ next-env.d.ts
 
 # keep the example env file in git
 !.env.example
+
+# Copied out of node_modules by scripts/copy-pdf-worker.mjs on install.
+/public/pdf.worker.min.mjs

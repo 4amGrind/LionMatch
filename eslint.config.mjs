@@ -12,6 +12,9 @@ const eslintConfig = defineConfig([
     "out/**",
     "build/**",
     "next-env.d.ts",
+    // The pdf.js worker is minified vendor code, copied in on install by
+    // scripts/copy-pdf-worker.mjs. Not ours to lint.
+    "public/pdf.worker.min.mjs",
   ]),
 ]);
 
