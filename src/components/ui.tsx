@@ -26,7 +26,7 @@ export function Card({ children, className = "" }: { children: ReactNode; classN
 
 export function CategoryBadge({ category }: { category: Category }) {
   return (
-    <span className={`rounded-full px-2.5 py-1 text-xs font-semibold text-white ${CATEGORY_BG[category]}`}>
+    <span className={`rounded-full px-2.5 py-1 text-xs font-semibold text-ct-deep ${CATEGORY_BG[category]}`}>
       {CATEGORY_LABELS[category]}
     </span>
   );
