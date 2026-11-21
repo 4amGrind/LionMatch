@@ -32,9 +32,9 @@
   --ct-on-navy: #ffffff;
   --ct-ink: #000c29; /* Body text. 19:1 on white. */
   --ct-muted: #3a6596; /* Secondary text. 6.4:1 on white. */
-  --ct-line: #d9e2ec;
+  --ct-line: rgb(105 142 184 / 0.22);
   --ct-page: #eef2f7;
-  --ct-card: #ffffff;
+  --ct-card: rgb(255 255 255 / 0.72);
   --ct-solid: #ffffff;
 
   /*
@@ -72,10 +72,13 @@
   --lg-tint-strong: rgb(255 255 255 / 0.82);
   --lg-filter: blur(20px) saturate(1.6);
   --lg-tint-surface: rgb(255 255 255 / 0.8);
-  --lg-card-fill: rgb(255 255 255 / 0.88);
-  --lg-card-filter: blur(24px) saturate(1.5);
+  --lg-card-fill: rgb(255 255 255 / 0.66);
+  --lg-card-filter: blur(30px) saturate(1.9) brightness(1.04);
   --lg-hair: rgb(105 142 184 / 0.3);
-  --lg-card-edge: rgb(105 142 184 / 0.26);
+  --lg-card-edge: rgb(105 142 184 / 0.3);
+  /* Where light catches the slab: bright along the top, shaded underneath. */
+  --lg-card-rim: rgb(255 255 255 / 0.95);
+  --lg-card-under: rgb(15 48 125 / 0.1);
 
   /* Around the phone frame on wide screens. */
   --ct-outside: #dfe6ef;
@@ -94,9 +97,9 @@
   --ct-on-navy: #0b0c0e; /* Text on a primary button. */
   --ct-ink: #f1f2f4; /* Body text. 14.9:1 on the card. */
   --ct-muted: #a7aeb8; /* Secondary text. 7.1:1 on the card. */
-  --ct-line: rgb(255 255 255 / 0.12);
+  --ct-line: rgb(255 255 255 / 0.09);
   --ct-page: #0b0c0e; /* Near-black, not navy. */
-  --ct-card: #17181b; /* Dark grey. */
+  --ct-card: rgb(28 30 34 / 0.72); /* Dark grey, see-through. */
   --ct-solid: #17181b;
 
   /* The three swipe actions, still only the palette, still only depth apart. */
@@ -117,9 +120,11 @@
   --lg-tint: rgb(23 24 27 / 0.72);
   --lg-tint-strong: rgb(32 34 38 / 0.82);
   --lg-tint-surface: rgb(23 24 27 / 0.82);
-  --lg-card-fill: rgb(23 24 27 / 0.9);
+  --lg-card-fill: rgb(28 30 34 / 0.7);
   --lg-hair: rgb(255 255 255 / 0.1);
-  --lg-card-edge: rgb(255 255 255 / 0.09);
+  --lg-card-edge: rgb(255 255 255 / 0.12);
+  --lg-card-rim: rgb(255 255 255 / 0.22);
+  --lg-card-under: rgb(0 0 0 / 0.4);
   --ct-outside: #000000;
 }
 
@@ -219,16 +224,27 @@
 }
 
 /*
-  Deck cards. The densest fill and the strongest blur of the four, because the
-  next card in the stack sits directly under this one: at a lighter fill its
-  heading reads straight through the card you are looking at.
+  Deck cards, as a slab of glass.
+
+  Three things make it read as glass rather than as a pale rectangle, and all
+  three are needed: a fill thin enough that the card behind shows through, a
+  blur wide enough that what shows through is colour and not legible text, and
+  an edge that catches light. The edge is the part people actually recognise:
+  a bright line along the top where light meets the slab, a shadow inside the
+  bottom where the glass is thicker. Both are inset shadows, not gradients.
+
+  What it sees through to is the next card in the stack. With no photograph
+  behind it that is all there is, which is why the fill can only go so thin
+  before the words on top start to suffer.
 */
 @utility glass-card {
   background: var(--lg-card-fill);
   -webkit-backdrop-filter: var(--lg-card-filter);
   backdrop-filter: var(--lg-card-filter);
   box-shadow:
+    inset 0 1.5px 0 var(--lg-card-rim),
     inset 0 0 0 1px var(--lg-card-edge),
+    inset 0 -14px 22px -16px var(--lg-card-under),
     var(--ct-card-lift);
 }
 
@@ -292,6 +308,16 @@
 */
 .bg-ct-navy {
   color: var(--ct-on-navy);
+}
+
+/*
+  Rows, inputs and tiles are glass as well, not just deck cards. Without the
+  blur they were flat white cut-outs on a tinted page, which is what made the
+  list screens look hard. Paired with --ct-card, which is translucent.
+*/
+.bg-ct-card {
+  -webkit-backdrop-filter: blur(16px) saturate(1.6);
+  backdrop-filter: blur(16px) saturate(1.6);
 }
 
 /* Avatars sit on Columbia blue in both themes, so their text stays navy. */
