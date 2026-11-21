@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from "next";
-import { Instrument_Sans } from "next/font/google";
+import localFont from "next/font/local";
 import Link from "next/link";
 import BottomNav from "@/components/BottomNav";
 import InlineScript from "@/components/InlineScript";
@@ -8,8 +8,12 @@ import ThemeToggle from "@/components/ThemeToggle";
 import "./globals.css";
 
 // One family for the whole app: clean and regular, set semibold for headlines.
-const instrument = Instrument_Sans({
-  subsets: ["latin"],
+// The font file is in the repo (src/app/fonts), so the app builds and runs with no internet.
+// Loading it from Google Fonts made `npm run build` fail on bad Wi-Fi.
+const instrument = localFont({
+  src: "./fonts/InstrumentSans-latin-wght.woff2",
+  weight: "400 700",
+  style: "normal",
   variable: "--font-instrument",
   display: "swap",
 });

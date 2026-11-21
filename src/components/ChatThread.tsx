@@ -6,6 +6,7 @@
 import Link from "next/link";
 import { useEffect, useMemo, useRef, useState } from "react";
 import { ensureReply, markRead, sendMessage, threadWith, useMessages, useOutreach, useTyping, type ChatPerson } from "@/lib/chat";
+import { chatTopic } from "@/lib/chat-person";
 import { DEMO_USER_ID } from "@/lib/types";
 import { Avatar } from "./ui";
 
@@ -37,7 +38,7 @@ export default function ChatThread({ person }: { person: ChatPerson }) {
   const starters = [
     `Hi ${firstName}, would you have 15 minutes for a coffee chat in the next two weeks?`,
     `Hi ${firstName}, I'd love to hear how you got started. Could I ask you a few questions?`,
-    `Hi ${firstName}, I'm new here and interested in ${person.interests[0] ?? "what you do"}. Any advice?`,
+    `Hi ${firstName}, I'm new here and interested in ${chatTopic(person, "what you do")}. Any advice?`,
   ];
 
   function submit() {
@@ -133,7 +134,7 @@ export default function ChatThread({ person }: { person: ChatPerson }) {
             </ul>
           ) : null}
           <form
-            className="glass flex items-center gap-2 rounded-full py-1.5 pl-4 pr-1.5"
+            className="glass flex items-center gap-2 rounded-full py-1.5 pl-4 pr-1.5 focus-within:outline-2 focus-within:outline-offset-2 focus-within:outline-ct-navy/60"
             onSubmit={(event) => {
               event.preventDefault();
               submit();

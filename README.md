@@ -32,6 +32,8 @@ Every `npm` command has to run inside the project folder (the one with `package.
 
 Open http://localhost:3000. If something else is already using port 3000, Next picks another port and prints it, so use the address it shows. The app works right away with no accounts. Until Supabase is set up, it reads the seed files in `src/data`.
 
+**For the presentation,** run `npm run demo` instead of `npm run dev`. It builds the app once and serves the fast version: pages open instantly and the Next.js dev badge does not show. It needs no internet once `npm install` is done. To present from a clean slate, open it in a private browser window, so swipes, chats, and profile edits from practice runs do not show. If port 3000 is taken, run `npx next start -p 3001` after the build and open http://localhost:3001.
+
 The app is called LionMatch. The GitHub repo still has its first name, `columbia-tinder`, until the owner renames it in the repo settings.
 
 Run `npm install` again whenever you pull changes that touch `package.json`. The swipe deck uses `motion` and `canvas-confetti`, and the app will not start without them. Resume import adds `pdfjs-dist`, and installing also copies its worker to `public/pdf.worker.min.mjs`. That copy is gitignored, so PDF import is the one thing that breaks if you skip the install.
@@ -56,8 +58,6 @@ Never commit `.env.local`. The service role key can change anything in the datab
 | Max | Swipe deck and cards, look and feel | `src/components/SwipeDeck.tsx`, `src/components/DeckCard.tsx`, `src/app/globals.css` |
 | Peter | Explore, search, opportunities, prerequisites | `src/components/ExploreList.tsx`, `src/app/opportunities/[id]` |
 | Ayan | Profiles, outreach, chats, swipe history | `src/app/people/[id]`, `src/components/OutreachBox.tsx`, `src/app/chats`, `src/components/HistoryList.tsx` |
-
-Each screen has a dashed "Owner" note that says what is left. Delete the note when the screen is done.
 
 ## How the code is laid out
 
@@ -94,6 +94,10 @@ To keep a new screen working in both modes:
 - Outline-only buttons with no background are hard to read over the dark part of the wallpaper. Give them `glass-surface`.
 
 All the colors and glass styles live in `src/app/globals.css`.
+
+The font, Instrument Sans, is a file in `src/app/fonts` (with its license), not a Google Fonts download, so the app builds with no internet.
+
+Deck cards fit their content to the space they get. If a card has more to say than fits, `fitContent()` in `DeckCard.tsx` hides extras in a set order (the fourth reason, then tags, then the third reason, then the description), so the bottom link never gets cut off.
 
 ## Working together
 
