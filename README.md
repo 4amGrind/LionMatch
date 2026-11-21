@@ -1,6 +1,6 @@
 # LionMatch
 
-**Try it live: [lionmatch.vercel.app](https://lionmatch.vercel.app)** (best on a phone)
+**Try it live: [lionmatch.vercel.app](https://lionmatch.vercel.app)**
 
 Swipe through internships, clubs, research and fellowships at Columbia. Every card shows a match score out of 10 and the reasons behind it, and the deck learns from what you swipe. When something fits, you can read the details, find someone to talk to, and send a coffee chat in a few taps.
 
