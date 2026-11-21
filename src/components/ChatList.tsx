@@ -59,7 +59,7 @@ export default function ChatList({ people }: { people: ChatPerson[] }) {
   return (
     <div className="space-y-6">
       <section aria-labelledby="threads-heading">
-        <h2 id="threads-heading" className="mb-2 text-xs font-medium uppercase tracking-wide text-ct-muted">
+        <h2 id="threads-heading" className="mb-2 text-xs font-semibold text-ct-muted">
           Conversations
         </h2>
         {threads.length === 0 ? (
@@ -110,7 +110,7 @@ export default function ChatList({ people }: { people: ChatPerson[] }) {
       </section>
 
       <section aria-labelledby="starters-heading">
-        <h2 id="starters-heading" className="mb-2 text-xs font-medium uppercase tracking-wide text-ct-muted">
+        <h2 id="starters-heading" className="mb-2 text-xs font-semibold text-ct-muted">
           Start a chat
         </h2>
         {starters.length === 0 ? (

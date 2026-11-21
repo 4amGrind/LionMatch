@@ -15,10 +15,10 @@ const instrument = Instrument_Sans({
 });
 
 export const metadata: Metadata = {
-  title: "Columbia Tinder",
+  title: "LionMatch",
   description: "Swipe on internships, clubs, and research at Columbia.",
   // Opened from an iPhone home screen, the app fills the screen with no browser bars.
-  appleWebApp: { capable: true, title: "Columbia Tinder", statusBarStyle: "default" },
+  appleWebApp: { capable: true, title: "LionMatch", statusBarStyle: "default" },
 };
 
 export const viewport: Viewport = {
@@ -60,7 +60,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
                     aria-hidden="true"
                     className="size-[30px] -my-1 shrink-0 bg-current [mask:url(/brand/crown.png)_center/contain_no-repeat]"
                   />
-                  Columbia Tinder
+                  LionMatch
                 </Link>
                 <div className="flex items-center gap-0.5">
                   <ThemeToggle />

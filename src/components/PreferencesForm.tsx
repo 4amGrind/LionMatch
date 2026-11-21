@@ -220,7 +220,7 @@ export default function PreferencesForm({
 }
 
 function FieldLabel({ children }: { children: React.ReactNode }) {
-  return <h2 className="text-xs font-medium uppercase tracking-wide text-ct-muted">{children}</h2>;
+  return <h2 className="text-xs font-semibold text-ct-muted">{children}</h2>;
 }
 
 interface ChipFieldProps {

@@ -13,7 +13,7 @@ function Fact({ label, value }: { label: string; value: string | null }) {
   if (!value) return null;
   return (
     <div>
-      <dt className="text-xs font-medium uppercase tracking-wide text-ct-muted">{label}</dt>
+      <dt className="text-xs font-semibold text-ct-muted">{label}</dt>
       <dd className="text-sm">{value}</dd>
     </div>
   );
@@ -84,13 +84,13 @@ export default async function OpportunityPage({ params }: PageProps<"/opportunit
 
         {opportunity.skills.length > 0 ? (
           <div>
-            <h2 className="mb-1.5 text-xs font-medium uppercase tracking-wide text-ct-muted">Helpful skills</h2>
+            <h2 className="mb-1.5 text-xs font-semibold text-ct-muted">Helpful skills</h2>
             <TagList items={opportunity.skills} max={10} />
           </div>
         ) : null}
 
         <div>
-          <h2 className="mb-1.5 text-xs font-medium uppercase tracking-wide text-ct-muted">Prerequisites</h2>
+          <h2 className="mb-1.5 text-xs font-semibold text-ct-muted">Prerequisites</h2>
           {prerequisites.total > 0 ? (
             <>
               <ul className="space-y-1.5">
@@ -136,7 +136,7 @@ export default async function OpportunityPage({ params }: PageProps<"/opportunit
 
       {contact ? (
         <Card>
-          <h2 className="text-xs font-medium uppercase tracking-wide text-ct-muted">Someone to talk to</h2>
+          <h2 className="text-xs font-semibold text-ct-muted">Someone to talk to</h2>
           <Link href={`/people/${contact.id}`} className="mt-1 block">
             <span className="font-semibold text-ct-navy">{contact.full_name}</span>
             <span className="block text-sm text-ct-muted">{contact.headline}</span>

@@ -1,4 +1,4 @@
--- Columbia Tinder database schema.
+-- LionMatch database schema.
 -- Run this once in Supabase: SQL Editor > New query > paste > Run.
 -- Then run `npm run seed` to load the data in src/data.
 -- Column names match src/lib/types.ts. Change both together.

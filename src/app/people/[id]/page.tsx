@@ -53,11 +53,11 @@ export default async function PersonPage({ params }: PageProps<"/people/[id]">) 
       <Card className="space-y-3">
         {person.bio ? <p className="text-sm leading-relaxed">{person.bio}</p> : null}
         <div>
-          <h2 className="mb-1.5 text-xs font-medium uppercase tracking-wide text-ct-muted">Skills</h2>
+          <h2 className="mb-1.5 text-xs font-semibold text-ct-muted">Skills</h2>
           <TagList items={person.skills} max={10} />
         </div>
         <div>
-          <h2 className="mb-1.5 text-xs font-medium uppercase tracking-wide text-ct-muted">Interests</h2>
+          <h2 className="mb-1.5 text-xs font-semibold text-ct-muted">Interests</h2>
           <TagList items={person.interests} max={10} />
         </div>
       </Card>

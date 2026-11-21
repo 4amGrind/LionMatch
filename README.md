@@ -1,4 +1,4 @@
-# Columbia Tinder
+# LionMatch
 
 Swipe on internships, clubs, research, and fellowships at Columbia. Each card shows a match score out of 10 and the reasons behind it. You can also explore a list, open a profile, and draft a coffee chat or outreach message.
 
@@ -14,6 +14,8 @@ cd columbia-tinder
 npm install
 npm run dev
 ```
+
+The app is called LionMatch. The GitHub repo still has its first name, `columbia-tinder`, until the owner renames it in the repo settings.
 
 Open http://localhost:3000. It works right away with no accounts. Until Supabase is set up, the app reads the seed files in `src/data`.
 
