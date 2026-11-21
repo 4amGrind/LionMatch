@@ -4,6 +4,8 @@ Swipe through internships, clubs, research and fellowships at Columbia. Every ca
 
 Built with Next.js, TypeScript, Tailwind and Supabase.
 
+**Try it: [lionmatch.vercel.app](https://lionmatch.vercel.app)** (best on a phone; your swipes stay in your browser)
+
 ## Run it
 
 You need Node 22.13 or newer (check with `node -v`).
