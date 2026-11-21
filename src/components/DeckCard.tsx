@@ -129,6 +129,10 @@ interface ShellProps {
   title: string;
   subtitle: string;
   facts: (string | null | undefined)[];
+  /** The blurb. Trimmed on short cards, dropped on very short ones. */
+  description?: string | null;
+  /** Why the score is what it is. The one thing on a card you cannot read off the listing. */
+  reasons: string[];
   /** Where tapping the card goes for the rest of the detail. */
   href: string;
   detailLabel: string;
@@ -148,6 +152,8 @@ function Shell({
   title,
   subtitle,
   facts,
+  description,
+  reasons,
   href,
   detailLabel,
   badges,
@@ -202,7 +208,34 @@ function Shell({
               </p>
             ) : null}
 
-            <p className="mt-3 text-xs font-semibold text-ct-navy">{detailLabel}</p>
+            {description ? (
+              <p className="deck-desc mt-3 line-clamp-3 text-[15px] leading-relaxed text-ct-ink">{description}</p>
+            ) : null}
+
+            {reasons.length > 0 ? (
+              <div className="deck-reasons mt-3.5 border-t border-ct-navy/10 pt-3">
+                <p className="text-sm font-semibold text-ct-navy">Why it fits you</p>
+                <ul className="mt-1.5 space-y-1 text-sm text-ct-ink">
+                  {reasons.map((reason) => (
+                    <li key={reason} className="flex gap-2">
+                      <svg viewBox="0 0 16 16" className="mt-[3px] size-3.5 shrink-0 text-ct-like" aria-hidden="true">
+                        <path
+                          d="M3 8.5l3 3 7-7"
+                          fill="none"
+                          stroke="currentColor"
+                          strokeWidth={2.2}
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                        />
+                      </svg>
+                      {reason}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            ) : null}
+
+            <p className="mt-3.5 text-xs font-semibold text-ct-navy">{detailLabel}</p>
           </Link>
 
           {/* mt-auto keeps the buttons on the bottom edge however tall the card is. */}
@@ -237,6 +270,8 @@ export default function DeckCard({
         title={person.full_name}
         subtitle={person.headline}
         facts={[ROLE_LABELS[person.role], person.school, person.class_year ? `Class of ${person.class_year}` : null]}
+        description={person.bio}
+        reasons={match.reasons}
         href={`/people/${person.id}`}
         detailLabel="Tap to see their profile"
         badges={
@@ -264,6 +299,8 @@ export default function DeckCard({
       title={opportunity.title}
       subtitle={opportunity.organization}
       facts={[dueLabel(opportunity), opportunity.location, opportunity.commitment]}
+      description={opportunity.description}
+      reasons={match.reasons}
       href={`/opportunities/${opportunity.id}`}
       detailLabel="Tap for the full details"
       actions={actions}
