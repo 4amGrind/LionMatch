@@ -333,19 +333,59 @@ export default function SwipeDeck({ items }: { items: DeckItem[] }) {
           </AnimatePresence>
         </div>
 
+        {top ? <SwipeHint nudge={!lastSwipe} /> : null}
+        <Controls disabled={!top} onSwipe={(direction) => swipe(direction)} />
       </div>
     </MotionConfig>
   );
 }
 
-function Controls({ disabled, onSwipe }: { disabled: boolean; onSwipe: (direction: SwipeDirection) => void }) {
-  const press = { scale: 0.9 };
-  const round =
-    "glass-strong flex size-[52px] shrink-0 items-center justify-center rounded-full transition-opacity disabled:opacity-40";
-  const stopDrag = (event: React.PointerEvent) => event.stopPropagation();
-
+/**
+ * Small text under the deck so people know they can swipe, not just tap the buttons.
+ * Until the first swipe, the arrows nudge outward to draw the eye.
+ */
+function SwipeHint({ nudge }: { nudge: boolean }) {
   return (
-    <div className="flex items-center justify-around" onPointerDown={stopDrag} onPointerDownCapture={stopDrag}>
+    <div className="lg-on-dark mb-2.5 flex items-center justify-between text-xs font-semibold text-ct-navy" aria-hidden="true">
+      <span className="glass flex items-center gap-1 rounded-full py-1 pl-1.5 pr-2.5">
+        <HintArrow direction="left" nudge={nudge} />
+        Swipe left to pass
+      </span>
+      <span className="glass flex items-center gap-1 rounded-full py-1 pl-2.5 pr-1.5">
+        Swipe right if interested
+        <HintArrow direction="right" nudge={nudge} />
+      </span>
+    </div>
+  );
+}
+
+function HintArrow({ direction, nudge }: { direction: "left" | "right"; nudge: boolean }) {
+  const away = direction === "left" ? -3 : 3;
+  return (
+    <motion.svg
+      viewBox="0 0 16 16"
+      className="size-3.5"
+      animate={nudge ? { x: [0, away, 0] } : { x: 0 }}
+      transition={nudge ? { duration: 0.9, ease: "easeInOut", repeat: Infinity, repeatDelay: 1.4 } : { duration: 0.2 }}
+    >
+      <path
+        d={direction === "left" ? "M10 3.5L5.5 8l4.5 4.5" : "M6 3.5L10.5 8 6 12.5"}
+        fill="none"
+        stroke="currentColor"
+        strokeWidth={1.8}
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+    </motion.svg>
+  );
+}
+
+function Controls({ disabled, onSwipe }: { disabled: boolean; onSwipe: (direction: SwipeDirection) => void }) {
+  const press = { scale: 0.92 };
+  const round =
+    "glass-strong flex shrink-0 items-center justify-center rounded-full transition-opacity disabled:opacity-40";
+  return (
+    <div className="lg-on-dark mt-1 flex items-center gap-3">
       <motion.button
         type="button"
         onClick={() => onSwipe("pass")}
@@ -353,13 +393,12 @@ function Controls({ disabled, onSwipe }: { disabled: boolean; onSwipe: (directio
         whileTap={press}
         aria-label="Pass"
         title="Pass (left arrow)"
-        className={`${round} text-ct-pass`}
+        className={`${round} size-14 text-ct-pass`}
       >
         <svg viewBox="0 0 24 24" className="size-6" aria-hidden="true">
           <path d="M6 6l12 12M18 6L6 18" fill="none" stroke="currentColor" strokeWidth={2.6} strokeLinecap="round" />
         </svg>
       </motion.button>
-
       <motion.button
         type="button"
         onClick={() => onSwipe("save")}
@@ -367,28 +406,27 @@ function Controls({ disabled, onSwipe }: { disabled: boolean; onSwipe: (directio
         whileTap={press}
         aria-label="Save for later"
         title="Save for later (up arrow)"
-        className={`${round} text-ct-save`}
+        className={`${round} size-12 text-ct-save`}
       >
-        <svg viewBox="0 0 24 24" className="size-[22px]" aria-hidden="true">
+        <svg viewBox="0 0 24 24" className="size-5" aria-hidden="true">
           <path d="M6 3.5h12v17l-6-4.5-6 4.5z" fill="currentColor" />
         </svg>
       </motion.button>
-
       <motion.button
         type="button"
         onClick={() => onSwipe("like")}
         disabled={disabled}
-        whileTap={press}
-        aria-label="Interested"
+        whileTap={{ scale: 0.96 }}
         title="Interested (right arrow)"
-        className={`${round} text-ct-like`}
+        className="flex h-14 flex-1 items-center justify-center gap-2 rounded-full bg-ct-blue text-base font-semibold shadow-[inset_0_1px_0_rgb(255_255_255/0.7),var(--ct-lift)] transition-[opacity,filter] hover:brightness-105 disabled:opacity-40"
       >
-        <svg viewBox="0 0 24 24" className="size-6" aria-hidden="true">
+        <svg viewBox="0 0 24 24" className="size-5" aria-hidden="true">
           <path
             d="M12 20s-7.5-4.6-7.5-10.1A4.4 4.4 0 0112 7a4.4 4.4 0 017.5 2.9C19.5 15.4 12 20 12 20z"
             fill="currentColor"
           />
         </svg>
+        Interested
       </motion.button>
     </div>
   );
@@ -472,7 +510,6 @@ function SwipeCard({
       <DeckCard
         item={item}
         depth={depth}
-        actions={isTop ? <Controls disabled={false} onSwipe={onSwipe} /> : undefined}
         overlay={
           <>
             <Stamp label="Interested" opacity={likeOpacity} className="left-4 top-6 -rotate-[10deg] border-ct-like text-ct-like" />
