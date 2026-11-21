@@ -19,8 +19,10 @@ import {
   samePreferences,
   type Preferences,
 } from "@/lib/preferences";
+import type { Vocabulary } from "@/lib/resume";
 import { usePreferences } from "@/lib/usePreferences";
 import { CATEGORIES, CATEGORY_LABELS, type Category, type Profile } from "@/lib/types";
+import ResumeImport from "./ResumeImport";
 import { Card, PageTitle } from "./ui";
 
 type Status = { kind: "saved" | "reset" | "error"; message: string } | null;
@@ -34,6 +36,8 @@ export interface PreferencesFormProps {
   skillSuggestions: string[];
   /** Common topics across the listings. */
   interestSuggestions: string[];
+  /** Everything the listings mention, which is all the resume import can look for. */
+  vocabulary: Vocabulary;
 }
 
 export default function PreferencesForm({
@@ -41,6 +45,7 @@ export default function PreferencesForm({
   sample,
   skillSuggestions,
   interestSuggestions,
+  vocabulary,
 }: PreferencesFormProps) {
   const router = useRouter();
   const { save, clear } = usePreferences();
@@ -97,6 +102,19 @@ export default function PreferencesForm({
       <PageTitle title="Preferences" subtitle="What the match score uses about you." />
 
       <div className="space-y-3">
+        <ResumeImport
+          vocabulary={vocabulary}
+          current={draft}
+          onApply={(picked) =>
+            update({
+              // cleanList drops the repeats, so importing twice is harmless.
+              skills: cleanList([...draft.skills, ...picked.skills]),
+              interests: cleanList([...draft.interests, ...picked.interests]),
+              major: picked.major ?? draft.major,
+            })
+          }
+        />
+
         <Card className="space-y-2">
           <FieldLabel>Looking for</FieldLabel>
           <p className="text-xs text-ct-muted">

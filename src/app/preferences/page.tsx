@@ -1,5 +1,4 @@
 import PreferencesForm from "@/components/PreferencesForm";
-import { OwnerNote } from "@/components/ui";
 import { DEMO_USER_ID, getCurrentUser, getOpportunities, getProfile } from "@/lib/data";
 import type { Opportunity } from "@/lib/types";
 
@@ -19,6 +18,11 @@ function common(opportunities: Opportunity[], field: "skills" | "tags", limit: n
     .map(([value]) => value);
 }
 
+/** Every value the listings use. The resume import can only look for these. */
+function allValues(opportunities: Opportunity[], field: "skills" | "tags" | "majors"): string[] {
+  return [...new Set(opportunities.flatMap((opportunity) => opportunity[field]))].sort();
+}
+
 export default async function PreferencesPage() {
   const [user, sample, opportunities] = await Promise.all([
     getCurrentUser(),
@@ -34,11 +38,12 @@ export default async function PreferencesPage() {
         sample={sample ?? user}
         skillSuggestions={common(opportunities, "skills", 16)}
         interestSuggestions={common(opportunities, "tags", 16)}
+        vocabulary={{
+          skills: allValues(opportunities, "skills"),
+          interests: allValues(opportunities, "tags"),
+          majors: allValues(opportunities, "majors"),
+        }}
       />
-      <OwnerNote owner="Jun">
-        The form is done. Resume and LinkedIn import still to come: both will fill in these same
-        fields through save() in src/lib/usePreferences.ts.
-      </OwnerNote>
     </>
   );
 }
