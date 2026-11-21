@@ -21,7 +21,7 @@ function Group({ label, items }: { label: string; items: string[] }) {
   if (items.length === 0) return null;
   return (
     <div>
-      <h3 className="mb-1.5 text-xs font-medium uppercase tracking-wide text-ct-muted">{label}</h3>
+      <h3 className="mb-1.5 text-xs font-semibold text-ct-muted">{label}</h3>
       <TagList items={items} max={8} />
     </div>
   );
@@ -97,7 +97,7 @@ export default function TastePanel({
 
           {summary.categories.length > 0 ? (
             <div>
-              <h3 className="mb-1.5 text-xs font-medium uppercase tracking-wide text-ct-muted">Listings you liked</h3>
+              <h3 className="mb-1.5 text-xs font-semibold text-ct-muted">Listings you liked</h3>
               <ul className="space-y-1.5">
                 {summary.categories.map(({ category, count }) => (
                   <li key={category} className="flex items-center gap-2 text-sm">
@@ -125,7 +125,7 @@ export default function TastePanel({
       )}
 
       <div className="space-y-2 border-t border-ct-navy/10 pt-3">
-        <h3 className="text-xs font-medium uppercase tracking-wide text-ct-muted">
+        <h3 className="text-xs font-semibold text-ct-muted">
           Try a sample taste{empty ? "" : " (replaces your history)"}
         </h3>
         <div className="grid grid-cols-3 gap-2">

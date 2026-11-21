@@ -82,7 +82,7 @@ function Select<T extends string>({
 }) {
   return (
     <label className="flex min-w-0 flex-1 flex-col gap-1">
-      <span className="text-[11px] font-medium uppercase tracking-wide text-ct-muted">{label}</span>
+      <span className="text-[11px] font-semibold text-ct-muted">{label}</span>
       <select
         value={value}
         onChange={(event) => onChange(event.target.value as T)}
@@ -115,7 +115,7 @@ function SearchBox({ value, onChange, label, placeholder }: { value: string; onC
 
 function ResultCount({ count }: { count: number }) {
   return (
-    <p className="text-xs text-ct-muted" aria-live="polite">
+    <p className="text-xs font-semibold text-ct-ink" aria-live="polite">
       {count} {count === 1 ? "result" : "results"}
     </p>
   );

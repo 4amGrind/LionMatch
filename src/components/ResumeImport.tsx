@@ -258,7 +258,7 @@ interface FoundProps {
 function Found({ label, items, isPicked, onToggle }: FoundProps) {
   return (
     <div>
-      <h3 className="mb-1.5 text-xs font-medium uppercase tracking-wide text-ct-muted">{label}</h3>
+      <h3 className="mb-1.5 text-xs font-semibold text-ct-muted">{label}</h3>
       <ul className="flex flex-wrap gap-1.5">
         {items.map((item) => {
           const on = isPicked(item);

@@ -15,7 +15,7 @@ import { Avatar, Card, SampleBadge, TagList } from "./ui";
 function Section({ label, children }: { label: string; children: ReactNode }) {
   return (
     <div>
-      <h2 className="mb-1.5 text-xs font-medium uppercase tracking-wide text-ct-muted">{label}</h2>
+      <h2 className="mb-1.5 text-xs font-semibold text-ct-muted">{label}</h2>
       {children}
     </div>
   );
@@ -100,7 +100,7 @@ export default function ProfileScreen({
       <section aria-labelledby="activity-heading">
         <h2
           id="activity-heading"
-          className="glass-surface mb-2 w-fit rounded-full px-3 py-1 text-xs font-medium uppercase tracking-wide text-ct-ink"
+          className="glass-surface mb-2 w-fit rounded-full px-3 py-1 text-xs font-semibold text-ct-ink"
         >
           Your activity
         </h2>

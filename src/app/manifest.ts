@@ -3,8 +3,8 @@ import type { MetadataRoute } from "next";
 
 export default function manifest(): MetadataRoute.Manifest {
   return {
-    name: "Columbia Tinder",
-    short_name: "Columbia Tinder",
+    name: "LionMatch",
+    short_name: "LionMatch",
     description: "Swipe on internships, clubs, research, and fellowships at Columbia.",
     start_url: "/",
     display: "standalone",

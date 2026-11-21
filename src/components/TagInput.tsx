@@ -43,7 +43,7 @@ export default function TagInput({
   return (
     <div>
       <div className="mb-1.5 flex items-baseline justify-between">
-        <label htmlFor={inputId} className="text-xs font-medium uppercase tracking-wide text-ct-muted">
+        <label htmlFor={inputId} className="text-xs font-semibold text-ct-muted">
           {label}
         </label>
         <span className="text-xs tabular-nums text-ct-muted">
