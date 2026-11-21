@@ -71,6 +71,13 @@ function Facts({ items }: { items: (string | null | undefined)[] }) {
 const DEPTH_TEXT = ["opacity-100", "opacity-40", "opacity-15", "opacity-0"];
 const DEPTH_TAB = ["opacity-100", "opacity-70", "opacity-35", "opacity-0"];
 
+/**
+ * Cards behind the top one sit a little lower, so their bottom edge always peeks out under it.
+ * Fade the bottom of their text so that strip shows a clean edge, not a ghost "See full details".
+ * The rest of the faint preview is still there while you drag the top card away.
+ */
+const BACK_CARD_FADE = "linear-gradient(to bottom, black calc(100% - 96px), transparent calc(100% - 36px))";
+
 function Shell({
   tab,
   tabClass,
@@ -96,6 +103,7 @@ function Shell({
       <div className="glass-card deck-body relative min-h-0 flex-1 overflow-hidden rounded-[26px] rounded-tl-none">
         <div
           className={`flex h-full flex-col gap-3 p-5 transition-opacity duration-300 [&>*]:shrink-0 ${DEPTH_TEXT[level]}`}
+          style={level > 0 ? { maskImage: BACK_CARD_FADE, WebkitMaskImage: BACK_CARD_FADE } : undefined}
         >
           {children}
         </div>
