@@ -1,9 +1,10 @@
 import { notFound } from "next/navigation";
 import OutreachBox from "@/components/OutreachBox";
+import PersonalMatchPanel from "@/components/PersonalMatchPanel";
 import SwipeButtons from "@/components/SwipeButtons";
-import { Card, MatchPanel, SampleBadge, TagList } from "@/components/ui";
+import { Card, SampleBadge, TagList } from "@/components/ui";
 import { toChatPerson } from "@/lib/chat-person";
-import { getCurrentUser, getProfile } from "@/lib/data";
+import { getCurrentUser, getOpportunities, getPeople, getProfile } from "@/lib/data";
 import { matchPerson } from "@/lib/match";
 
 export const dynamic = "force-dynamic";
@@ -18,7 +19,12 @@ const ROLE_LABELS = {
 
 export default async function PersonPage({ params }: PageProps<"/people/[id]">) {
   const { id } = await params;
-  const [user, person] = await Promise.all([getCurrentUser(), getProfile(id)]);
+  const [user, person, opportunities, people] = await Promise.all([
+    getCurrentUser(),
+    getProfile(id),
+    getOpportunities(),
+    getPeople(),
+  ]);
   if (!person) notFound();
 
   const match = matchPerson(user, person);
@@ -41,7 +47,7 @@ export default async function PersonPage({ params }: PageProps<"/people/[id]">) 
         <p className="mt-0.5 text-sm text-ct-muted">{facts}</p>
       </div>
 
-      <MatchPanel match={match} />
+      <PersonalMatchPanel match={match} target={{ kind: "person", person }} opportunities={opportunities} people={people} />
       <SwipeButtons targetType="person" targetId={person.id} matchScore={match.score} />
 
       <Card className="space-y-3">

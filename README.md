@@ -126,4 +126,3 @@ Tags only match when they share a word, so "consulting" does not teach the deck 
 
 - Login. `getCurrentUser()` in `src/lib/data.ts` always returns the demo profile, plus any edits saved in a cookie. Swipes, chats, and outreach are saved in the browser only. When login arrives, move them into the `swipes`, `swipe_events`, `messages`, and `outreach` tables.
 - Real replies in chat. The people in the seed data are made up, so their replies are scripted. Real users need Supabase realtime on `messages`.
-- Personalized scores on detail pages. The deck shows the score after your swipes. The opportunity and person pages still show the match score alone.
