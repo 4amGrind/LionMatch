@@ -4,147 +4,134 @@
 @custom-variant dark (&:where([data-theme="dark"], [data-theme="dark"] *));
 
 /*
-  Look and feel: Tinder, in blue.
-
-  Flat white cards on a pale page, hairline rules, one accent. No gradients
-  anywhere, and no wallpaper behind the content: Tinder has neither, and both
-  were what made this app look busy.
-
-  The palette, and nothing outside it:
-    #698EB8  mid     chips, icons, rules, quiet marks
-    #3A6596  slate   secondary text
-    #0F307D  accent  primary buttons, selected things, headlines
-    #000C29  ink     body text, and the dark page
-    #FFFFFF  white   every card
-  #EEF2F7 and #D9E2EC are tints of #698EB8, for the page and the rules. Four dark
-  blues cannot make a light surface between them, so the page needs one.
-
-  Token names are unchanged, so every screen follows along without edits.
-  The theme is set on <html data-theme> by a small script in layout.tsx.
+  Look and feel: liquid glass over a Columbia-blue wave wallpaper.
+  Light mode is Columbia blue with navy ink. Dark mode is deep navy with Columbia-blue ink.
+  Token names stay the same as before, so every screen follows along without changes.
+  The theme is set on <html data-theme> by a small script in layout.tsx before the page paints.
 */
 :root {
   color-scheme: light;
-  --ct-blue: #698eb8;
-  --ct-deep: #000c29; /* Text on a #698EB8 fill. 6.5:1. */
-  --ct-blue-deep: rgb(15 48 125 / 0.07); /* Hover and pressed wash. */
-  --ct-blue-soft: #eef2f7;
-  --ct-navy: #0f307d; /* Headlines and primary buttons. 13:1 on white. */
-  --ct-on-navy: #ffffff;
-  --ct-ink: #000c29; /* Body text. 19:1 on white. */
-  --ct-muted: #3a6596; /* Secondary text. 6.4:1 on white. */
-  --ct-line: rgb(105 142 184 / 0.22);
-  --ct-page: #eef2f7;
-  --ct-card: rgb(255 255 255 / 0.72);
+  --ct-blue: #b9d9eb; /* Columbia blue. */
+  --ct-deep: #0c2340; /* Columbia navy in both themes. For text on Columbia blue or gold. */
+  --ct-blue-deep: rgb(12 35 64 / 0.08); /* Hover and pressed wash. */
+  --ct-blue-soft: rgb(255 255 255 / 0.45);
+  --ct-navy: #0c2340; /* Headlines and primary buttons. */
+  --ct-on-navy: #ffffff; /* Text on a primary button. */
+  --ct-ink: #16304f; /* Body text. */
+  --ct-muted: #2f4763; /* Secondary text. Dark enough to read on glass over the navy waves. */
+  --ct-line: rgb(12 35 64 / 0.12);
+  --ct-page: #b9d9eb;
+  --ct-card: rgb(255 255 255 / 0.72); /* Explore and Chats rows. Still see-through, but not so much the waves compete with the text. */
   --ct-solid: #ffffff;
+  --ct-like: #17845a;
+  --ct-pass: #c4392f;
+  --ct-save: #b07905;
+
+  /* One color per kind of card. Used for the folder tab on deck cards and the category badge. */
+  --ct-cat-internship: #0c2340;
+  --ct-cat-club: #2b67ad;
+  --ct-cat-research: #0e7468;
+  --ct-cat-fellowship: #9c2f55;
+  --ct-cat-person: #d39a12;
+
+  --ct-lift: 0 2px 4px rgb(12 35 64 / 0.08), 0 16px 36px -14px rgb(12 35 64 / 0.5);
 
   /*
-    Take Tinder's pink away and its three swipe actions are told apart by icon
-    and position. These stay in the palette and differ only by depth.
+    Liquid glass.
+    tint: the fill. Kept thin so the waves show through.
+    filter: what happens to whatever is behind (blur, then saturate and brighten, like light bending).
+    rim-top / rim-bottom: the bright edges where light catches the glass.
+    glow: light pooling inside the top edge. shade: the glass getting thicker toward the bottom.
   */
-  --ct-like: #0f307d;
-  --ct-pass: #3a6596;
-  --ct-save: #698eb8;
+  --lg-tint: rgb(255 255 255 / 0.25);
+  --lg-tint-strong: rgb(255 255 255 / 0.4);
+  --lg-tint-surface: rgb(255 255 255 / 0.55);
+  /* Deck cards are solid, so nothing behind shows through. Their glass look comes from the edges. */
+  --lg-card-fill: linear-gradient(180deg, #ffffff 0%, #f5f9fc 55%, #ebf2f8 100%);
+  --lg-card-rim: rgb(255 255 255 / 1);
+  --lg-card-edge: rgb(185 217 235 / 0.75);
+  --lg-card-edge-glow: rgb(185 217 235 / 0.35);
+  --lg-card-shade: rgb(12 35 64 / 0.07);
+  /* The soft highlight in the top-left corner of glass panels. */
+  --lg-corner: rgb(255 255 255 / 0.55);
+  --lg-filter: blur(12px) saturate(1.8) brightness(1.1);
+  --lg-rim-top: rgb(255 255 255 / 0.9);
+  --lg-rim-bottom: rgb(255 255 255 / 0.45);
+  --lg-hair: rgb(255 255 255 / 0.4);
+  --lg-glow: rgb(255 255 255 / 0.55);
+  --lg-shade: rgb(12 35 64 / 0.16);
 
-  /*
-    One fill for every kind of card. Tinder colour-codes nothing in its stack,
-    and five competing hues were the loudest thing on the screen.
-  */
-  --ct-cat-internship: #698eb8;
-  --ct-cat-club: #698eb8;
-  --ct-cat-research: #698eb8;
-  --ct-cat-fellowship: #698eb8;
-  --ct-cat-person: #698eb8;
-
-  /*
-    Shadows are tinted with the ink rather than black, so edges soften into the
-    page instead of cutting against it.
-  */
-  --ct-lift: 0 1px 2px rgb(0 12 41 / 0.05), 0 8px 24px -12px rgb(15 48 125 / 0.28);
-  /* Deck cards lift further, so the stack behind them reads as depth. */
-  --ct-card-lift: 0 2px 6px rgb(0 12 41 / 0.06), 0 20px 44px -20px rgb(15 48 125 / 0.45);
-
-  /*
-    Everything is glass now. The fills get denser the more text sits on them:
-    chrome has only the page behind it, panels have rows, and a deck card has
-    the next card's text right underneath.
-  */
-  --lg-tint: rgb(255 255 255 / 0.72);
-  --lg-tint-strong: rgb(255 255 255 / 0.82);
-  --lg-filter: blur(20px) saturate(1.6);
-  --lg-tint-surface: rgb(255 255 255 / 0.8);
-  --lg-card-fill: rgb(255 255 255 / 0.66);
-  --lg-card-filter: blur(30px) saturate(1.9) brightness(1.04);
-  --lg-hair: rgb(105 142 184 / 0.3);
-  --lg-card-edge: rgb(105 142 184 / 0.3);
-  /* Where light catches the slab: bright along the top, shaded underneath. */
-  --lg-card-rim: rgb(255 255 255 / 0.95);
-  --lg-card-under: rgb(15 48 125 / 0.1);
-
-  /* Around the phone frame on wide screens. */
-  --ct-outside: #dfe6ef;
+  /* Shade laid over the wave wallpaper. None in light mode; dark mode darkens it. */
+  --wallpaper-shade: transparent;
+  /* Solid color around the phone frame on wide screens. Matches a light band of the wallpaper. */
+  --ct-outside: #b9cde6;
 }
 
 :root[data-theme="dark"] {
   color-scheme: dark;
-  /*
-    Near-black page, dark grey surfaces, light text. This is how Tinder's own
-    dark mode works, and the blues now read as accents on top of a neutral
-    rather than the page being blue itself.
-  */
-  --ct-blue-deep: rgb(255 255 255 / 0.1); /* Hover and pressed wash. */
-  --ct-blue-soft: rgb(255 255 255 / 0.06);
-  --ct-navy: #8fb3d9; /* Headlines and primary buttons go light. 8.1:1 on the card. */
-  --ct-on-navy: #0b0c0e; /* Text on a primary button. */
-  --ct-ink: #f1f2f4; /* Body text. 14.9:1 on the card. */
-  --ct-muted: #a7aeb8; /* Secondary text. 7.1:1 on the card. */
-  --ct-line: rgb(255 255 255 / 0.09);
-  --ct-page: #0b0c0e; /* Near-black, not navy. */
-  --ct-card: rgb(28 30 34 / 0.72); /* Dark grey, see-through. */
-  --ct-solid: #17181b;
+  --ct-blue-deep: rgb(185 217 235 / 0.12);
+  --ct-blue-soft: rgb(185 217 235 / 0.08);
+  --ct-navy: #e3eff7;
+  --ct-on-navy: #07152a;
+  --ct-ink: #c6d9e7;
+  --ct-muted: #9db4ca;
+  --ct-line: rgb(185 217 235 / 0.14);
+  --ct-page: #06132a;
+  --ct-card: rgb(28 58 96 / 0.45);
+  --ct-solid: #0f2645;
+  --ct-like: #45c58f;
+  --ct-pass: #f36b5f;
+  --ct-save: #f0b73e;
 
-  /* The three swipe actions, still only the palette, still only depth apart. */
-  --ct-like: #8fb3d9;
-  --ct-pass: #698eb8;
-  --ct-save: #3a6596;
+  --ct-cat-internship: #4d79ad;
+  --ct-cat-club: #2f86d6;
+  --ct-cat-research: #189c8b;
+  --ct-cat-fellowship: #c4527f;
+  --ct-cat-person: #e2a629;
 
-  /* The one place colour survives: the category pill keeps its blue. */
-  --ct-cat-internship: #698eb8;
-  --ct-cat-club: #698eb8;
-  --ct-cat-research: #698eb8;
-  --ct-cat-fellowship: #698eb8;
-  --ct-cat-person: #698eb8;
+  --ct-lift: 0 2px 4px rgb(0 0 0 / 0.3), 0 16px 36px -14px rgb(0 0 0 / 0.8);
 
-  --ct-lift: 0 1px 2px rgb(0 0 0 / 0.5), 0 8px 24px -12px rgb(0 0 0 / 0.8);
-  --ct-card-lift: 0 2px 6px rgb(0 0 0 / 0.55), 0 20px 44px -20px rgb(0 0 0 / 0.9);
+  --lg-tint: rgb(255 255 255 / 0.08);
+  --lg-tint-strong: rgb(255 255 255 / 0.13);
+  --lg-tint-surface: rgb(16 40 74 / 0.54);
+  --lg-card-fill: linear-gradient(180deg, #15305a 0%, #112a4f 55%, #0d2244 100%);
+  --lg-card-rim: rgb(185 217 235 / 0.22);
+  --lg-card-edge: rgb(185 217 235 / 0.14);
+  --lg-card-edge-glow: rgb(80 140 210 / 0.1);
+  --lg-card-shade: rgb(0 0 0 / 0.3);
+  /* No white corner highlights in dark mode. */
+  --lg-corner: transparent;
+  --lg-filter: blur(14px) saturate(1.6) brightness(1.1);
+  --lg-rim-top: rgb(255 255 255 / 0.4);
+  --lg-rim-bottom: rgb(255 255 255 / 0.16);
+  --lg-hair: rgb(255 255 255 / 0.12);
+  --lg-glow: rgb(255 255 255 / 0.12);
+  --lg-shade: rgb(0 0 0 / 0.35);
 
-  --lg-tint: rgb(23 24 27 / 0.72);
-  --lg-tint-strong: rgb(32 34 38 / 0.82);
-  --lg-tint-surface: rgb(23 24 27 / 0.82);
-  --lg-card-fill: rgb(28 30 34 / 0.7);
-  --lg-hair: rgb(255 255 255 / 0.1);
-  --lg-card-edge: rgb(255 255 255 / 0.12);
-  --lg-card-rim: rgb(255 255 255 / 0.22);
-  --lg-card-under: rgb(0 0 0 / 0.4);
-  --ct-outside: #000000;
+  /* Same waves, sunk into navy. Light text stays readable even on the palest band. */
+  --wallpaper-shade: rgb(4 14 32 / 0.64);
+  --ct-outside: #030b18;
 }
 
 /*
-  The nav, the deck buttons and the swipe hints. The name is historical: these
-  used to sit over the navy bottom of a wave wallpaper. There is no wallpaper
-  now, so they are plain solid bars like Tinder's, and only the fill changes
-  between themes.
+  The nav, the deck buttons, and the swipe hints always sit over the navy bottom of the wallpaper,
+  in both themes. Inside this scope they use clear glass with light text, the way iOS glass
+  adapts to dark content behind it.
 */
 .lg-on-dark {
-  --lg-tint: rgb(255 255 255 / 0.7);
-  --lg-tint-strong: rgb(255 255 255 / 0.84);
-}
-
-:root[data-theme="dark"] .lg-on-dark {
-  --ct-navy: #f1f2f4;
-  --ct-ink: #f1f2f4;
-  --ct-muted: #a7aeb8;
-  --lg-tint: rgb(23 24 27 / 0.72);
-  --lg-tint-strong: rgb(32 34 38 / 0.84);
+  --ct-navy: #eef5fb;
+  --ct-ink: #d6e5f0;
+  --ct-muted: #b3c8db;
+  --ct-blue-deep: rgb(255 255 255 / 0.12);
+  /* Smoky navy glass, so the light text stays readable even when light cards scroll underneath. */
+  --lg-tint: rgb(10 28 54 / 0.46);
+  --lg-tint-strong: rgb(10 28 54 / 0.54);
+  --lg-filter: blur(12px) saturate(1.8) brightness(1.05);
+  --lg-rim-top: rgb(255 255 255 / 0.55);
+  --lg-rim-bottom: rgb(255 255 255 / 0.22);
+  --lg-hair: rgb(255 255 255 / 0.16);
+  --lg-glow: rgb(255 255 255 / 0.18);
+  --lg-shade: rgb(0 0 0 / 0.3);
 }
 
 @theme inline {
@@ -180,83 +167,76 @@
 }
 
 /*
-  Surfaces, in two kinds.
-
-  Tinder's glass is translucent chrome floating over a full-bleed photo: the
-  tabs, the tag pills and the button row all let the picture through, and that
-  is what makes it feel fluid rather than stacked. There are no photos here, so
-  translucency over the flat page would reveal nothing and just go grey. It is
-  used only where something actually passes underneath: the header, the bottom
-  bar and the deck controls, which cards scroll behind.
-
-  Everything you read sits on a solid fill, because text over a blur is the
-  thing that made the old design hard to read.
-
-  No sheen, no corner highlight, no gradient in any of them. The blur and the
-  translucency do the work instead.
+  Liquid glass, in four strengths. All share the same edges:
+  a bright rim on top, a fainter one on the bottom, a hairline all round,
+  light pooling inside the top, and a little shade inside the bottom.
+  The sheen is a diagonal highlight across the top-left corner.
 */
 @utility glass {
-  background: var(--lg-tint);
+  background:
+    linear-gradient(135deg, var(--lg-glow) 0%, transparent 34%, transparent 72%, var(--lg-hair) 100%),
+    var(--lg-tint);
   -webkit-backdrop-filter: var(--lg-filter);
   backdrop-filter: var(--lg-filter);
   box-shadow:
-    inset 0 0 0 1px var(--lg-hair),
+    inset 0 1px 0.5px var(--lg-rim-top),
+    inset 0 -1px 0.5px var(--lg-rim-bottom),
+    inset 0 0 0 0.5px var(--lg-hair),
+    inset 0 10px 16px -10px var(--lg-glow),
+    inset 0 -12px 18px -12px var(--lg-shade),
     var(--ct-lift);
 }
 
+/* A little more fill, for small controls that need to stand out from the glass around them. */
 @utility glass-strong {
-  background: var(--lg-tint-strong);
+  background:
+    linear-gradient(135deg, var(--lg-glow) 0%, transparent 34%, transparent 72%, var(--lg-hair) 100%),
+    var(--lg-tint-strong);
   -webkit-backdrop-filter: var(--lg-filter);
   backdrop-filter: var(--lg-filter);
   box-shadow:
-    inset 0 0 0 1px var(--lg-hair),
+    inset 0 1px 0.5px var(--lg-rim-top),
+    inset 0 -1px 0.5px var(--lg-rim-bottom),
+    inset 0 0 0 0.5px var(--lg-hair),
+    inset 0 10px 16px -10px var(--lg-glow),
+    inset 0 -12px 18px -12px var(--lg-shade),
     var(--ct-lift);
 }
 
-/* Panels of text. */
+/* For panels of text on other screens: enough fill to read paragraphs comfortably. */
 @utility glass-surface {
-  background: var(--lg-tint-surface);
+  background:
+    linear-gradient(150deg, var(--lg-corner) 0%, transparent 30%),
+    var(--lg-tint-surface);
   -webkit-backdrop-filter: var(--lg-filter);
   backdrop-filter: var(--lg-filter);
   box-shadow:
-    inset 0 0 0 1px var(--lg-hair),
+    inset 0 1px 0.5px var(--lg-rim-top),
+    inset 0 0 0 0.5px var(--lg-hair),
+    inset 0 12px 20px -12px var(--lg-corner),
     var(--ct-lift);
 }
 
 /*
-  Deck cards, as a slab of glass.
-
-  Three things make it read as glass rather than as a pale rectangle, and all
-  three are needed: a fill thin enough that the card behind shows through, a
-  blur wide enough that what shows through is colour and not legible text, and
-  an edge that catches light. The edge is the part people actually recognise:
-  a bright line along the top where light meets the slab, a shadow inside the
-  bottom where the glass is thicker. Both are inset shadows, not gradients.
-
-  What it sees through to is the next card in the stack. With no photograph
-  behind it that is all there is, which is why the fill can only go so thin
-  before the words on top start to suffer.
+  Deck cards. Solid, so the wallpaper and the cards behind never show through.
+  They still read as glass: a bright top edge, a Columbia-blue tint all the way round the edge
+  (like light catching the thickness of a glass slab), and a little shade toward the bottom.
+  No corner highlights, so dark mode has no white glow.
 */
 @utility glass-card {
   background: var(--lg-card-fill);
-  -webkit-backdrop-filter: var(--lg-card-filter);
-  backdrop-filter: var(--lg-card-filter);
   box-shadow:
-    inset 0 1.5px 0 var(--lg-card-rim),
+    inset 0 1.5px 0.5px var(--lg-card-rim),
     inset 0 0 0 1px var(--lg-card-edge),
-    inset 0 -14px 22px -16px var(--lg-card-under),
-    var(--ct-card-lift);
+    inset 0 0 18px var(--lg-card-edge-glow),
+    inset 0 -18px 28px -18px var(--lg-card-shade),
+    var(--ct-lift);
 }
 
 /*
-  A deck card is one surface: the glass fill comes from .glass-card, and the
-  score, name, facts and buttons sit straight on it. There is no picture behind
-  it and no second panel on top of it.
-*/
-
-/*
-  A short card drops the facts line first, then trims the title. The score and
-  the name always stay.
+  Deck cards fit whatever height the phone gives them. On shorter screens the card drops
+  detail in this order: fewer description lines, then the description and facts,
+  then extra reasons. The title and the score always stay.
 */
 .deck-body {
   container: deck / size;
@@ -267,24 +247,22 @@
     -webkit-line-clamp: 2;
   }
   .deck-title {
-    font-size: 24px;
+    font-size: 26px;
   }
 }
 
-@container deck (max-height: 380px) {
-  .deck-desc {
-    display: none;
-  }
-  .deck-reasons li:nth-child(n + 4) {
+@container deck (max-height: 390px) {
+  .deck-desc,
+  .deck-tags {
     display: none;
   }
 }
 
-@container deck (max-height: 320px) {
+@container deck (max-height: 330px) {
   .deck-facts {
     display: none;
   }
-  .deck-reasons li:nth-child(n + 3) {
+  .deck-reasons li:nth-child(n + 4) {
     display: none;
   }
   .deck-title {
@@ -292,13 +270,36 @@
   }
 }
 
-/* Nothing behind the app but the page colour. Tinder puts no picture back there. */
+@container deck (max-height: 280px) {
+  .deck-reasons li:nth-child(n + 3) {
+    display: none;
+  }
+}
+
+/* Parts a card hid because they did not fit. Set by fitContent() in DeckCard.tsx. */
+[data-fit-hidden] {
+  display: none !important;
+}
+
+body {
+  background: var(--ct-outside);
+  color: var(--ct-ink);
+}
+
+/*
+  Behind the app: the blue wave wallpaper, light at the top and navy at the bottom, not blurred.
+  It stays put while content scrolls. Dark mode lays a navy shade over the same image.
+  The solid page color shows while the image loads.
+*/
 .ct-backdrop {
   position: absolute;
   inset: 0;
   z-index: -1;
   pointer-events: none;
-  background: var(--ct-page);
+  background:
+    linear-gradient(var(--wallpaper-shade), var(--wallpaper-shade)),
+    url("/backgrounds/waves.jpg") center / cover no-repeat,
+    var(--ct-page);
 }
 
 /*
@@ -311,9 +312,9 @@
 }
 
 /*
-  Rows, inputs and tiles are glass as well, not just deck cards. Without the
-  blur they were flat white cut-outs on a tinted page, which is what made the
-  list screens look hard. Paired with --ct-card, which is translucent.
+  Rows, inputs and tiles use --ct-card, which is see-through. Without a blur the waves show
+  sharp behind their text. With one they read as frosted glass, like the deck cards.
+  From Jun's redesign (PR #12). One rule instead of edits to every screen that uses it.
 */
 .bg-ct-card {
   -webkit-backdrop-filter: blur(16px) saturate(1.6);
@@ -323,16 +324,6 @@
 /* Avatars sit on Columbia blue in both themes, so their text stays navy. */
 .bg-ct-blue {
   color: var(--ct-deep);
-}
-
-/* Parts a card hid because they did not fit. Set by fitContent() in DeckCard.tsx. */
-[data-fit-hidden] {
-  display: none !important;
-}
-
-body {
-  background: var(--ct-outside);
-  color: var(--ct-ink);
 }
 
 ::selection {
