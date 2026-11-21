@@ -24,7 +24,7 @@ function Section({ label, children }: { label: string; children: ReactNode }) {
 function Stat({ value, label, href }: { value: number; label: string; href: string }) {
   return (
     <Link href={href} className="glass-surface rounded-xl px-2 py-3 text-center">
-      <span className="display block text-[26px] tabular-nums text-ct-navy">{value}</span>
+      <span className="display-num block text-[26px] text-ct-navy">{value}</span>
       <span className="block text-xs font-medium text-ct-muted">{label}</span>
     </Link>
   );

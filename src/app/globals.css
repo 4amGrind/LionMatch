@@ -45,7 +45,10 @@
   */
   --lg-tint: rgb(255 255 255 / 0.25);
   --lg-tint-strong: rgb(255 255 255 / 0.4);
-  --lg-tint-surface: rgb(255 255 255 / 0.55);
+  /* Content panels are nearly solid. The wallpaper is the 10% of colour
+     Hinge's brand rules would allow; the panels are the 90% that stays calm,
+     so a form full of chips does not sit on top of moving waves. */
+  --lg-tint-surface: rgb(255 255 255 / 0.86);
   /* Deck cards are solid, so nothing behind shows through. Their glass look comes from the edges. */
   --lg-card-fill: linear-gradient(180deg, #ffffff 0%, #f5f9fc 55%, #ebf2f8 100%);
   --lg-card-rim: rgb(255 255 255 / 1);
@@ -93,7 +96,7 @@
 
   --lg-tint: rgb(255 255 255 / 0.08);
   --lg-tint-strong: rgb(255 255 255 / 0.13);
-  --lg-tint-surface: rgb(16 40 74 / 0.54);
+  --lg-tint-surface: rgb(16 40 74 / 0.88);
   --lg-card-fill: linear-gradient(180deg, #15305a 0%, #112a4f 55%, #0d2244 100%);
   --lg-card-rim: rgb(185 217 235 / 0.22);
   --lg-card-edge: rgb(185 217 235 / 0.14);
@@ -159,11 +162,26 @@
   --font-sans: var(--font-instrument), ui-sans-serif, system-ui, sans-serif;
 }
 
-/* Headlines. Same family as the body, set semibold and a little tight. */
+/*
+  Headlines: the name of a club, a lab, a person, a screen.
+  Serif at 400, because the serif only earns its place at display sizes — below
+  about 24px it gets spindly, so nothing small should use this.
+  Everything you read to get something done stays sans. See layout.tsx.
+*/
 @utility display {
+  font-family: var(--font-instrument-serif), Georgia, "Times New Roman", serif;
+  font-weight: 400;
+  letter-spacing: -0.01em;
+  line-height: 1.06;
+}
+
+/* Headlines that are numbers, like the match score, stay sans: the serif has no
+   tabular figures, so a 7 and a 10 would shift the badge around. */
+@utility display-num {
   font-weight: 600;
   letter-spacing: -0.025em;
   line-height: 1.04;
+  font-variant-numeric: tabular-nums;
 }
 
 /*

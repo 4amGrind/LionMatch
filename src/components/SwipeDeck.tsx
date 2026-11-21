@@ -527,7 +527,7 @@ function Stamp({ label, opacity, className }: { label: string; opacity: MotionVa
     <motion.span
       aria-hidden="true"
       style={{ opacity }}
-      className={`display pointer-events-none absolute rounded-xl border-[3px] bg-ct-solid/90 px-3 pb-1 pt-1 text-[30px] ${className}`}
+      className={`display-num pointer-events-none absolute rounded-xl border-[3px] bg-ct-solid/90 px-3 pb-1 pt-1 text-[30px] ${className}`}
     >
       {label}
     </motion.span>

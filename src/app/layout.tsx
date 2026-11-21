@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from "next";
-import { Instrument_Sans } from "next/font/google";
+import { Instrument_Sans, Instrument_Serif } from "next/font/google";
 import Link from "next/link";
 import BottomNav from "@/components/BottomNav";
 import InlineScript from "@/components/InlineScript";
@@ -7,10 +7,22 @@ import ScrollArea from "@/components/ScrollArea";
 import ThemeToggle from "@/components/ThemeToggle";
 import "./globals.css";
 
-// One family for the whole app: clean and regular, set semibold for headlines.
+// Two families, doing different jobs.
+// Sans carries everything you read to get something done: labels, facts, buttons, numbers.
 const instrument = Instrument_Sans({
   subsets: ["latin"],
   variable: "--font-instrument",
+  display: "swap",
+});
+
+// Serif carries the names of things, and only at display sizes.
+// Hinge's redesign split its type the same way, to put weight on what people
+// actually wrote rather than on the interface around it. Here the written part
+// is the name of a club, a lab, or a person, so that is what gets the serif.
+const instrumentSerif = Instrument_Serif({
+  subsets: ["latin"],
+  weight: "400",
+  variable: "--font-instrument-serif",
   display: "swap",
 });
 
@@ -37,7 +49,7 @@ const themeScript = `(function(){try{var t=localStorage.getItem("ct.theme");if(t
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
     // The theme script changes <html> before React loads, so React should not warn about it.
-    <html lang="en" data-theme="light" className={`${instrument.variable} h-full antialiased`} suppressHydrationWarning>
+    <html lang="en" data-theme="light" className={`${instrument.variable} ${instrumentSerif.variable} h-full antialiased`} suppressHydrationWarning>
       <head>
         <InlineScript html={themeScript} />
       </head>
@@ -51,7 +63,12 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
             <div className="ct-backdrop" aria-hidden="true" />
             <ScrollArea>
               <header className="glass sticky top-3 z-20 mx-4 mt-3 flex shrink-0 items-center justify-between rounded-[22px] py-1.5 pl-3 pr-1.5">
-                <Link href="/" className="display flex items-center gap-2 text-[19px] text-ct-navy">
+                {/* The wordmark stays sans. At 19px the serif goes spindly and the
+                    header stops looking like part of the app. */}
+                <Link
+                  href="/"
+                  className="flex items-center gap-2 text-[19px] font-semibold tracking-tight text-ct-navy"
+                >
                   {/*
                     Columbia crown. The image is used as a stencil filled with the text color,
                     so it always matches the name beside it in light and dark mode. Decorative, so hidden from screen readers.

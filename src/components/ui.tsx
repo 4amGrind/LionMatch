@@ -53,11 +53,20 @@ export function TagList({ items, max = 6 }: { items: string[]; max?: number }) {
   );
 }
 
-/** The match score out of 10. */
+/**
+ * The match score out of 10.
+ *
+ * The number is the one place colour is spent. Hinge keeps its interface black
+ * and white and saves colour for the few things it wants you to notice, and
+ * the score is this app's version of that: it is the only thing on a card you
+ * cannot get from the listing itself. Green from 8 up, so a strong match is
+ * visible before you have read a word.
+ */
 export function ScoreBadge({ score }: { score: number }) {
+  const tone = score >= 8 ? "text-ct-like" : score >= 5 ? "text-ct-navy" : "text-ct-muted";
   return (
-    <span className="inline-flex items-baseline gap-0.5 text-ct-navy" aria-label={`Match score ${score} out of 10`}>
-      <span className="display text-[28px] tabular-nums">{score}</span>
+    <span className="inline-flex items-baseline gap-0.5" aria-label={`Match score ${score} out of 10`}>
+      <span className={`display-num text-[30px] ${tone}`}>{score}</span>
       <span className="text-xs font-semibold text-ct-muted">/10</span>
     </span>
   );
