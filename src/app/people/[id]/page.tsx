@@ -1,7 +1,8 @@
 import { notFound } from "next/navigation";
 import OutreachBox from "@/components/OutreachBox";
 import SwipeButtons from "@/components/SwipeButtons";
-import { Card, MatchPanel, OwnerNote, SampleBadge, TagList } from "@/components/ui";
+import { Card, MatchPanel, SampleBadge, TagList } from "@/components/ui";
+import { toChatPerson } from "@/lib/chat-person";
 import { getCurrentUser, getProfile } from "@/lib/data";
 import { matchPerson } from "@/lib/match";
 
@@ -20,6 +21,7 @@ export default async function PersonPage({ params }: PageProps<"/people/[id]">) 
   const [user, person] = await Promise.all([getCurrentUser(), getProfile(id)]);
   if (!person) notFound();
 
+  const match = matchPerson(user, person);
   const sharedTopic =
     person.interests.find((interest) =>
       user.interests.some((mine) => mine.toLowerCase() === interest.toLowerCase()),
@@ -39,8 +41,8 @@ export default async function PersonPage({ params }: PageProps<"/people/[id]">) 
         <p className="mt-0.5 text-sm text-ct-muted">{facts}</p>
       </div>
 
-      <MatchPanel match={matchPerson(user, person)} />
-      <SwipeButtons targetType="person" targetId={person.id} />
+      <MatchPanel match={match} />
+      <SwipeButtons targetType="person" targetId={person.id} matchScore={match.score} />
 
       <Card className="space-y-3">
         {person.bio ? <p className="text-sm leading-relaxed">{person.bio}</p> : null}
@@ -62,6 +64,7 @@ export default async function PersonPage({ params }: PageProps<"/people/[id]">) 
             fromHeadline={user.headline}
             toFirstName={person.full_name.split(" ")[0]}
             sharedTopic={sharedTopic}
+            person={toChatPerson(person)}
           />
         </Card>
       ) : (
@@ -70,9 +73,6 @@ export default async function PersonPage({ params }: PageProps<"/people/[id]">) 
         </Card>
       )}
 
-      <OwnerNote owner="Ayan">
-        Finish this profile screen. Send outreach in the app and track its status.
-      </OwnerNote>
     </div>
   );
 }

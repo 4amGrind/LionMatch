@@ -42,9 +42,11 @@ export function Tag({ children }: { children: ReactNode }) {
 
 export function TagList({ items, max = 6 }: { items: string[]; max?: number }) {
   if (items.length === 0) return null;
+  // A word can be in two lists (a skill and an interest), so show each once. Also keeps React keys unique.
+  const shown = [...new Set(items)];
   return (
     <div className="flex flex-wrap gap-1.5">
-      {items.slice(0, max).map((item) => (
+      {shown.slice(0, max).map((item) => (
         <Tag key={item}>{item}</Tag>
       ))}
     </div>
@@ -89,6 +91,24 @@ export function OwnerNote({ owner, children }: { owner: string; children: ReactN
     <div className="glass-surface mt-6 rounded-2xl border border-dashed border-ct-navy/30 p-3 text-sm text-ct-muted">
       <span className="font-semibold text-ct-navy">Owner: {owner}.</span> {children}
     </div>
+  );
+}
+
+/** A round avatar with the person's initials. Decorative: the name always sits next to it. */
+export function Avatar({ name, className = "size-11 text-base" }: { name: string; className?: string }) {
+  const initials = name
+    .split(/\s+/)
+    .map((part) => part[0])
+    .slice(0, 2)
+    .join("")
+    .toUpperCase();
+  return (
+    <span
+      aria-hidden="true"
+      className={`flex shrink-0 items-center justify-center rounded-full bg-ct-blue font-bold text-ct-deep ${className}`}
+    >
+      {initials}
+    </span>
   );
 }
 

@@ -3,6 +3,7 @@
 import { motion } from "motion/react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { useUnreadTotal } from "@/lib/chat";
 
 const TABS = [
   { href: "/", label: "Swipe", icon: "M4 5h12v14H4zM8 3h12v14" },
@@ -21,6 +22,7 @@ function isActive(pathname: string, href: string) {
 /** A floating glass dock. A brighter glass lens slides to whichever tab is open. */
 export default function BottomNav() {
   const pathname = usePathname();
+  const unread = useUnreadTotal();
 
   return (
     <nav
@@ -47,18 +49,28 @@ export default function BottomNav() {
                   active ? "text-ct-navy" : "text-ct-muted hover:text-ct-navy"
                 }`}
               >
-                <svg
-                  viewBox="0 0 24 24"
-                  className="h-[22px] w-[22px]"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth={active ? 2.25 : 1.75}
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  aria-hidden="true"
-                >
-                  <path d={tab.icon} />
-                </svg>
+                <span className="relative">
+                  <svg
+                    viewBox="0 0 24 24"
+                    className="h-[22px] w-[22px]"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth={active ? 2.25 : 1.75}
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    aria-hidden="true"
+                  >
+                    <path d={tab.icon} />
+                  </svg>
+                  {tab.href === "/chats" && unread > 0 ? (
+                    <span
+                      className="absolute -right-2 -top-1.5 flex min-w-4 items-center justify-center rounded-full bg-ct-pass px-1 text-[10px] font-bold leading-4 text-white"
+                      aria-label={`${unread} unread ${unread === 1 ? "message" : "messages"}`}
+                    >
+                      {unread}
+                    </span>
+                  ) : null}
+                </span>
                 {tab.label}
               </Link>
             </li>

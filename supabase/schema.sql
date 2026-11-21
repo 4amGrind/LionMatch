@@ -58,6 +58,23 @@ create table if not exists swipes (
   primary key (profile_id, target_type, target_id)
 );
 
+-- Everything that happened, kept forever: each swipe, undo and change of mind, with the score on
+-- the card at the time. The recommender (src/lib/recommend.ts) learns from this. The table above
+-- keeps only the latest choice per card. Matches the SwipeEvent type.
+create table if not exists swipe_events (
+  id           uuid primary key default gen_random_uuid(),
+  profile_id   text not null references profiles (id) on delete cascade,
+  target_type  text not null check (target_type in ('opportunity', 'person')),
+  target_id    text not null,
+  action       text not null check (action in ('like', 'pass', 'save', 'undo')),
+  match_score  int check (match_score between 1 and 10),
+  position     int,
+  source       text not null default 'deck' check (source in ('deck', 'detail', 'history', 'demo')),
+  created_at   timestamptz not null default now()
+);
+
+create index if not exists swipe_events_profile_idx on swipe_events (profile_id, created_at);
+
 -- Coffee chat requests and outreach messages, with a status for the tracker.
 create table if not exists outreach (
   id               uuid primary key default gen_random_uuid(),
@@ -89,6 +106,7 @@ create index if not exists messages_pair_idx on messages (from_profile_id, to_pr
 alter table profiles      enable row level security;
 alter table opportunities enable row level security;
 alter table swipes        enable row level security;
+alter table swipe_events  enable row level security;
 alter table outreach      enable row level security;
 alter table messages      enable row level security;
 
@@ -113,6 +131,10 @@ create policy "read opportunities" on opportunities for select using (true);
 
 drop policy if exists "own swipes" on swipes;
 create policy "own swipes" on swipes for all
+  using (profile_id = my_profile_id()) with check (profile_id = my_profile_id());
+
+drop policy if exists "own swipe events" on swipe_events;
+create policy "own swipe events" on swipe_events for all
   using (profile_id = my_profile_id()) with check (profile_id = my_profile_id());
 
 drop policy if exists "read own outreach" on outreach;

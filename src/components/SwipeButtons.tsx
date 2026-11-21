@@ -10,7 +10,16 @@ const OPTIONS: { direction: SwipeDirection; label: string; done: string; activeC
 ];
 
 /** Pass, Save, and Interested buttons for a detail page. Shows the current choice. */
-export default function SwipeButtons({ targetType, targetId }: { targetType: TargetType; targetId: string }) {
+export default function SwipeButtons({
+  targetType,
+  targetId,
+  matchScore,
+}: {
+  targetType: TargetType;
+  targetId: string;
+  /** The score shown on the page. Saved with the swipe so the recommender knows what the user saw. */
+  matchScore?: number;
+}) {
   const { swipes, recordSwipe, removeSwipe } = useSwipes();
   const current = swipes.find((s) => s.target_type === targetType && s.target_id === targetId)?.direction;
 
@@ -24,7 +33,9 @@ export default function SwipeButtons({ targetType, targetId }: { targetType: Tar
             type="button"
             aria-pressed={active}
             onClick={() =>
-              active ? removeSwipe(targetType, targetId) : recordSwipe(targetType, targetId, option.direction)
+              active
+                ? removeSwipe(targetType, targetId, { source: "detail" })
+                : recordSwipe(targetType, targetId, option.direction, { source: "detail", match_score: matchScore })
             }
             className={`rounded-full py-3 text-sm font-semibold transition-colors active:scale-[0.97] ${
               active ? option.activeClass : "glass-surface text-ct-navy"

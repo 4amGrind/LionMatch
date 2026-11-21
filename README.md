@@ -50,7 +50,10 @@ src/components/     Shared pieces. ui.tsx has the tags, cards, and score badge
 src/lib/types.ts    Shared types. Match the database columns
 src/lib/data.ts     All reads of opportunities and people
 src/lib/match.ts    Match score out of 10
-src/lib/swipes.ts   Saving and reading swipes
+src/lib/swipes.ts   Saving and reading swipes, plus the log of every swipe event
+src/lib/recommend.ts  Learns from swipes and orders the deck
+src/lib/chat.ts     Chats and outreach tracking (browser only for now)
+src/lib/profile-edits.ts  Profile edits, kept in a cookie until login
 src/data/           Seed data as JSON
 supabase/schema.sql Database tables and access rules
 scripts/seed.mjs    Loads the seed data into Supabase
@@ -90,6 +93,24 @@ git push -u origin max/swipe-gestures
 
 Then open a pull request on GitHub and ask one teammate to look at it. Keep pull requests small. Merge at least once a day so branches do not drift apart.
 
+## How the deck learns from swipes
+
+Every swipe is saved twice: as your latest choice on that card (what History shows), and as an event in an append-only log with the score the card had and where the swipe came from. `src/lib/recommend.ts` reads both.
+
+1. Each card becomes a list of features, like `topic:robotics` or `skill:python`.
+2. Interested and Save push those features up. Pass pushes them down, more gently. Old swipes fade, and a feature with little evidence stays near zero.
+3. The deck order blends the match score from `match.ts` with how much each card leans toward things you liked. With no swipes it is exactly the match score. After 15 swipes your swipes decide 60 percent of the order. The match score never drops out.
+4. The cards on screen never move. Only the cards behind them re-rank. Every fifth card is a wildcard from the part of the deck you have told us least about.
+5. Cards say why: "Because you liked Columbia Space Initiative (robotics, hardware)".
+
+The chips above the deck pick which kinds of cards show (Internship, Club, Research, Fellowship, People). Tapping a chip shows just that kind, more taps add kinds, and tapping the last one again shows everything. The choice is saved in the browser.
+
+History shows what the deck learned, and has sample tastes so you can see it work with no swiping. If your swipes disagree with your profile, History says so and links to Preferences.
+
+`npm run replay` checks the rules and replays made-up people through the deck. Run it after changing a number in `recommend.ts`.
+
+Tags only match when they share a word, so "consulting" does not teach the deck about "finance". Embeddings of the card descriptions would fix that. They need an API key and a server route, so they are not in yet.
+
 ## About the data
 
 - `src/data/opportunities.json` has 41 listings. Clubs, labs, and fellowships use real names taken from official Columbia pages on 2026-11-15. Each row has a `source_url`.
@@ -101,6 +122,6 @@ Then open a pull request on GitHub and ask one teammate to look at it. Keep pull
 
 ## Not built yet
 
-- Login. `getCurrentUser()` in `src/lib/data.ts` always returns the demo profile. Swipes are saved in the browser only.
-- Sending messages in the app. The `outreach` and `messages` tables exist but nothing writes to them.
-- Editing your profile.
+- Login. `getCurrentUser()` in `src/lib/data.ts` always returns the demo profile, plus any edits saved in a cookie. Swipes, chats, and outreach are saved in the browser only. When login arrives, move them into the `swipes`, `swipe_events`, `messages`, and `outreach` tables.
+- Real replies in chat. The people in the seed data are made up, so their replies are scripted. Real users need Supabase realtime on `messages`.
+- Personalized scores on detail pages. The deck shows the score after your swipes. The opportunity and person pages still show the match score alone.

@@ -22,6 +22,7 @@ export default async function OpportunityPage({ params }: PageProps<"/opportunit
   const [user, opportunity] = await Promise.all([getCurrentUser(), getOpportunity(id)]);
   if (!opportunity) notFound();
 
+  const match = matchOpportunity(user, opportunity);
   const contact = opportunity.contact_profile_id ? await getProfile(opportunity.contact_profile_id) : null;
   const link = opportunity.url ?? opportunity.source_url;
 
@@ -33,8 +34,8 @@ export default async function OpportunityPage({ params }: PageProps<"/opportunit
         <p className="mt-1 text-sm font-medium text-ct-muted">{opportunity.organization}</p>
       </div>
 
-      <MatchPanel match={matchOpportunity(user, opportunity)} />
-      <SwipeButtons targetType="opportunity" targetId={opportunity.id} />
+      <MatchPanel match={match} />
+      <SwipeButtons targetType="opportunity" targetId={opportunity.id} matchScore={match.score} />
 
       <Card className="space-y-4">
         <p className="text-sm leading-relaxed">{opportunity.description}</p>
