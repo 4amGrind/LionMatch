@@ -1,146 +1,105 @@
 # LionMatch
 
-Swipe on internships, clubs, research, and fellowships at Columbia. Each card shows a match score out of 10 and the reasons behind it. You can also explore a list, open a profile, and draft a coffee chat or outreach message.
+Swipe through internships, clubs, research and fellowships at Columbia. Every card shows a match score out of 10 and the reasons behind it, and the deck learns from what you swipe. When something fits, you can read the details, find someone to talk to, and send a coffee chat in a few taps.
 
-Built for a one-week hackathon with Next.js, TypeScript, Tailwind, and Supabase.
+Built with Next.js, TypeScript, Tailwind and Supabase.
 
 ## Run it
 
-You need Node 22.13 or newer (check with `node -v`). The PDF resume import needs it.
-
-**First time on this computer:**
+You need Node 22.13 or newer (check with `node -v`).
 
 ```bash
-cd ~
 git clone https://github.com/4amGrind/columbia-tinder.git
 cd columbia-tinder
 npm install
 npm run dev
 ```
 
-**Already have the folder?** Don't clone again. Cloning inside the project makes a second copy inside it. Update the one you have:
+Open http://localhost:3000. If port 3000 is busy, Next.js picks another port and prints it. The app works right away with no accounts, using the data in `src/data`.
 
-```bash
-cd ~/columbia-tinder
-git checkout main
-git pull
-npm install
-npm run dev
-```
+## Demo
 
-Every `npm` command has to run inside the project folder (the one with `package.json`). If you see "Missing script" or "Could not read package.json", `cd` into it first.
+[![LionMatch demo video](docs/lionmatch-poster.jpg)](docs/lionmatch-demo.mp4)
 
-Open http://localhost:3000. If something else is already using port 3000, Next picks another port and prints it, so use the address it shows. The app works right away with no accounts. Until Supabase is set up, it reads the seed files in `src/data`.
+[Watch the 86-second demo](docs/lionmatch-demo.mp4) (1080p, 60 fps, with sound). The film was made in code from the real app. Its source is in [`lionmatch-video/`](lionmatch-video/).
 
-The app is called LionMatch. The GitHub repo still has its first name, `columbia-tinder`, until the owner renames it in the repo settings.
+## What you can do
 
-Run `npm install` again whenever you pull changes that touch `package.json`. The swipe deck uses `motion` and `canvas-confetti`, and the app will not start without them. Resume import adds `pdfjs-dist`, and installing also copies its worker to `public/pdf.worker.min.mjs`. That copy is gitignored, so PDF import is the one thing that breaks if you skip the install.
+- **Swipe.** Drag a card right for Interested, left to Pass, or up to Save. The buttons and arrow keys do the same, and Undo brings the last card back. A strong match (8 or more) gets confetti.
+- **Filter the deck.** Chips above the deck switch between internships, clubs, research, fellowships and people.
+- **See why it fits.** Every card lists the reasons behind its score, such as shared skills, shared interests, your major and what you are looking for.
+- **Explore.** Search everything by name, skill, topic or course. Sort by best match, deadline or name, hide closed listings, or show only the ones whose course prerequisites you meet.
+- **Read the details.** Each listing shows location, time commitment, deadline, majors, helpful skills, prerequisites, a link to the official page, and sometimes someone to talk to.
+- **Meet people.** People profiles show why you would get along. Reach out with a coffee chat or outreach message, drafted for you and fully editable, and it lands in Chats.
+- **Watch it learn.** History shows everything you have swiped and what the deck has learned from it. Sample tastes let you see the learning with no swiping.
+- **Tell it about you.** Set your skills, interests, major and what you are looking for in Preferences, or import them from a PDF resume or LinkedIn export.
+- **Light or dark.** The sun and moon button switches themes.
 
-## Connect Supabase
+## How the match score works
 
-One person does steps 1 to 3. Everyone does step 4.
+`src/lib/match.ts` scores every listing out of 10:
 
-1. Make a project at supabase.com.
-2. Open SQL Editor, paste all of `supabase/schema.sql`, and run it.
-3. Copy `.env.example` to `.env.local`, fill in all three values, and run `npm run seed`.
-4. Copy `.env.example` to `.env.local` and fill in the URL and anon key. Teammates can leave the service role key blank.
+- Everyone starts at 3, so no card looks hopeless.
+- Shared skills add 1.5 each, up to 3.
+- Shared interests add 1 each, up to 2.
+- A listing that names your major adds 1.5. One open to every major adds 0.5.
+- A kind of listing you are looking for adds 1.
 
-Never commit `.env.local`. The service role key can change anything in the database.
+People are scored the same way, on shared skills, shared interests and the same major. Each of these shows up as a reason on the card, so the number never feels random.
 
-## Who owns what
+## How the deck learns
 
-| Person | Area | Start here |
-| --- | --- | --- |
-| Alex | Base app, data, repo | `src/lib/data.ts`, `src/data`, `supabase/schema.sql` |
-| Jun | Match score, preferences, resume import | `src/lib/match.ts`, `src/app/preferences` |
-| Max | Swipe deck and cards, look and feel | `src/components/SwipeDeck.tsx`, `src/components/DeckCard.tsx`, `src/app/globals.css` |
-| Peter | Explore, search, opportunities, prerequisites | `src/components/ExploreList.tsx`, `src/app/opportunities/[id]` |
-| Ayan | Profiles, outreach, chats, swipe history | `src/app/people/[id]`, `src/components/OutreachBox.tsx`, `src/app/chats`, `src/components/HistoryList.tsx` |
-
-Each screen has a dashed "Owner" note that says what is left. Delete the note when the screen is done.
-
-## How the code is laid out
-
-```
-src/app/            One folder per screen
-src/components/     Shared pieces. ui.tsx has the tags, cards, and score badge
-src/lib/types.ts    Shared types. Match the database columns
-src/lib/data.ts     All reads of opportunities and people
-src/lib/match.ts    Match score out of 10
-src/lib/swipes.ts   Saving and reading swipes, plus the log of every swipe event
-src/lib/recommend.ts  Learns from swipes and orders the deck
-src/lib/chat.ts     Chats and outreach tracking (browser only for now)
-src/lib/profile-edits.ts  Profile edits, kept in a cookie until login
-src/data/           Seed data as JSON
-supabase/schema.sql Database tables and access rules
-scripts/seed.mjs    Loads the seed data into Supabase
-public/             Wallpaper and the crown logo
-```
-
-Three rules keep five people from breaking each other's work:
-
-1. Read data through `src/lib/data.ts`. Do not call Supabase from a page.
-2. Use the types in `src/lib/types.ts`. If you need a new field, add it to the type, the schema, and the seed file in one pull request.
-3. Use the pieces in `src/components/ui.tsx` so screens look the same.
-
-## Look and feel
-
-The app always has phone proportions. On a laptop it shows inside a phone-shaped frame. Pages sit on a blue wave wallpaper, with glass panels on top. The sun and moon button in the header switches between light and dark mode.
-
-To keep a new screen working in both modes:
-
-- Use the `ct-` colors, like `text-ct-navy`, `text-ct-muted`, and `bg-ct-card`. They change with the mode. Fixed colors like `bg-white` or `text-black` will look wrong in dark mode.
-- For a panel, use `Card` from `ui.tsx`, or the `glass-surface` class. For a small floating control, use `glass`.
-- Outline-only buttons with no background are hard to read over the dark part of the wallpaper. Give them `glass-surface`.
-
-All the colors and glass styles live in `src/app/globals.css`.
-
-## Working together
-
-`main` should always run. Do your work on a branch.
-
-```bash
-git checkout main && git pull
-git checkout -b yourname/short-description
-# make changes
-npm run lint && npm run typecheck && npm run build
-git add -A && git commit -m "Say what changed"
-git push -u origin yourname/short-description
-```
-
-Then open a pull request on GitHub and ask one teammate to look at it. Keep pull requests small. Merge at least once a day so branches do not drift apart.
-
-## How the deck learns from swipes
-
-Every swipe is saved twice: as your latest choice on that card (what History shows), and as an event in an append-only log with the score the card had and where the swipe came from. `src/lib/recommend.ts` reads both.
+Every swipe is saved twice: as your latest choice on that card, and as an event in a log with the score the card had at the time. `src/lib/recommend.ts` reads both.
 
 1. Each card becomes a list of features, like `topic:robotics` or `skill:python`.
 2. Interested and Save push those features up. Pass pushes them down, more gently. Old swipes fade, and a feature with little evidence stays near zero.
-3. The deck order blends the match score from `match.ts` with how much each card leans toward things you liked. With no swipes it is exactly the match score. After 15 swipes your swipes decide 60 percent of the order. The match score never drops out.
-4. The cards on screen never move. Only the cards behind them re-rank. Every fifth card is a wildcard from the part of the deck you have told us least about.
-5. Cards say why: "Because you liked Columbia Space Initiative (robotics, hardware)".
+3. The deck order blends the match score with how much each card leans toward things you liked. With no swipes it is exactly the match score. After 15 swipes, your swipes decide 60 percent of the order. The match score always counts.
+4. The cards on screen never jump. Only the cards behind them re-rank. Every fifth card is a wildcard from the part of the deck you have told it least about.
+5. Cards say why, for example "Because you liked Columbia Space Initiative (robotics, hardware)".
 
-The chips above the deck pick which kinds of cards show (Internship, Club, Research, Fellowship, People). Tapping a chip shows just that kind, more taps add kinds, and tapping the last one again shows everything. The choice is saved in the browser.
+`npm run replay` replays made-up people through the deck to check the rules.
 
-History shows what the deck learned, and has sample tastes so you can see it work with no swiping. If your swipes disagree with your profile, History says so and links to Preferences.
+## Resume import
 
-`npm run replay` checks the rules and replays made-up people through the deck. Run it after changing a number in `recommend.ts`.
-
-Tags only match when they share a word, so "consulting" does not teach the deck about "finance". Embeddings of the card descriptions would fix that. They need an API key and a server route, so they are not in yet.
+The resume import reads a PDF in your browser. The file is never uploaded. It looks only for the skills and topics the listings use, and you choose which finds to add. `src/lib/resume.ts` does the matching. It recognises common ways of writing the same thing, such as "Arduino" for Electronics or "PostgreSQL" for SQL, and never adds a skill the resume does not mention.
 
 ## About the data
 
-- `src/data/opportunities.json` has 48 listings. Clubs, labs, and fellowships use real names taken from official Columbia pages on 2026-11-15. Each row has a `source_url`.
-- `verified: true` means the name was checked on an official page. It does not mean the description, deadline, or prerequisites were checked, except for the rows below.
-- 8 rows were checked in full on their official pages on 2026-11-20, including eligibility, prerequisites, and deadlines: DSI Scholars, Discover Citadel, SEO Career, the Knight Institute legal internship, Columbia Law HRIP, GET-UPP, Biology SURF, and Microsoft Explore.
-- Every other row got a deadline and, where the program page lists them, prerequisites on 2026-11-21. Most 2027 dates are not posted yet, so those are placeholders based on last cycle or the usual season, and `deadline_estimated: true` marks them. The app labels them "estimated". When a program posts its real date, update the row and set `deadline_estimated` to false. Rabi Scholars has no deadline because students are chosen at admission.
-- Prerequisites with a course code in capitals, like `COMS W3134`, are checked against the courses on your profile. Other rules, like class year or GPA, show as "check yourself".
-- One row is still `verified: false`: Career Education's Startup Internship Program, which may not run every year. Check it before relying on it.
-- Being in this list does not mean a club or lab is recruiting. Check the linked page.
-- `src/data/profiles.json` has 12 people. All of them are made up and marked `is_sample`. Do not add real people without their OK.
-- To add a listing, add a row to the JSON file and run `npm run seed`.
+- **Listings.** `src/data/opportunities.json` has 48 listings. Clubs, labs and fellowships use real names from official Columbia pages, and each row links its source.
+- **Checked rows.** 8 listings were checked in full against their official pages, including eligibility, prerequisites and deadlines. Deadlines that programs have not posted yet are shown as "estimated".
+- **Prerequisites.** Course codes like `COMS W3134` are checked against the courses on your profile. Other rules, like class year or GPA, show as "check yourself".
+- **Recruiting.** Being listed does not mean a club or lab is recruiting. The official page has the latest.
+- **People.** `src/data/profiles.json` has 12 sample people. They are made up and labelled as samples, so their chat replies are scripted.
 
-## Not built yet
+## Connect Supabase (optional)
 
-- Login. `getCurrentUser()` in `src/lib/data.ts` always returns the demo profile, plus any edits saved in a cookie. Swipes, chats, and outreach are saved in the browser only. When login arrives, move them into the `swipes`, `swipe_events`, `messages`, and `outreach` tables.
-- Real replies in chat. The people in the seed data are made up, so their replies are scripted. Real users need Supabase realtime on `messages`.
+Without Supabase the app reads the files in `src/data`. To use a database:
+
+1. Create a project at supabase.com.
+2. In SQL Editor, run all of `supabase/schema.sql`.
+3. Copy `.env.example` to `.env.local` and fill in the URL and keys.
+4. Run `npm run seed`.
+
+Keep `.env.local` out of git. The service role key can change anything in the database.
+
+## How it's built
+
+- Next.js 16 (App Router) and React 19, in TypeScript.
+- Tailwind CSS 4, with a liquid-glass theme over a Columbia-blue wave wallpaper (`src/app/globals.css`).
+- Motion for the swipe physics, and canvas-confetti for strong matches.
+- pdf.js for reading resumes in the browser.
+- Supabase, optional, for data.
+
+```
+src/app/              One folder per screen
+src/components/       Shared pieces: deck, cards, explore list, chats, preferences
+src/lib/match.ts      Match score out of 10, with reasons
+src/lib/recommend.ts  Learning from swipes and ordering the deck
+src/lib/resume.ts     Resume import
+src/lib/data.ts       All reads of listings and people
+src/data/             Listings and sample people
+supabase/schema.sql   Database tables and access rules
+lionmatch-video/      The demo film, made with Remotion
+```
+
+There is no sign-in yet. The app runs as a demo profile, and swipes, chats and profile edits are kept in your browser.
