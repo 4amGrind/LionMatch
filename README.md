@@ -6,20 +6,35 @@ Built for a one-week hackathon with Next.js, TypeScript, Tailwind, and Supabase.
 
 ## Run it
 
-You need Node 20 or newer.
+You need Node 22.13 or newer (check with `node -v`). The PDF resume import needs it.
+
+**First time on this computer:**
 
 ```bash
+cd ~
 git clone https://github.com/4amGrind/columbia-tinder.git
 cd columbia-tinder
 npm install
 npm run dev
 ```
 
+**Already have the folder?** Don't clone again. Cloning inside the project makes a second copy inside it. Update the one you have:
+
+```bash
+cd ~/columbia-tinder
+git checkout main
+git pull
+npm install
+npm run dev
+```
+
+Every `npm` command has to run inside the project folder (the one with `package.json`). If you see "Missing script" or "Could not read package.json", `cd` into it first.
+
+Open http://localhost:3000. If something else is already using port 3000, Next picks another port and prints it, so use the address it shows. The app works right away with no accounts. Until Supabase is set up, it reads the seed files in `src/data`.
+
 The app is called LionMatch. The GitHub repo still has its first name, `columbia-tinder`, until the owner renames it in the repo settings.
 
-Open http://localhost:3000. It works right away with no accounts. Until Supabase is set up, the app reads the seed files in `src/data`.
-
-Run `npm install` again whenever you pull changes that touch `package.json`. The swipe deck uses two packages, `motion` and `canvas-confetti`, and the app will not start without them. Resume import adds `pdfjs-dist`, and installing also copies its worker to `public/pdf.worker.min.mjs`. That copy is gitignored, so PDF import is the one thing that breaks if you skip the install.
+Run `npm install` again whenever you pull changes that touch `package.json`. The swipe deck uses `motion` and `canvas-confetti`, and the app will not start without them. Resume import adds `pdfjs-dist`, and installing also copies its worker to `public/pdf.worker.min.mjs`. That copy is gitignored, so PDF import is the one thing that breaks if you skip the install.
 
 ## Connect Supabase
 
@@ -86,11 +101,11 @@ All the colors and glass styles live in `src/app/globals.css`.
 
 ```bash
 git checkout main && git pull
-git checkout -b max/swipe-gestures
+git checkout -b yourname/short-description
 # make changes
 npm run lint && npm run typecheck && npm run build
-git add -A && git commit -m "Add drag gestures to the deck"
-git push -u origin max/swipe-gestures
+git add -A && git commit -m "Say what changed"
+git push -u origin yourname/short-description
 ```
 
 Then open a pull request on GitHub and ask one teammate to look at it. Keep pull requests small. Merge at least once a day so branches do not drift apart.
