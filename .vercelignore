@@ -1,0 +1,7 @@
+# Only the app is deployed. The demo film and its tools stay out of the upload.
+lionmatch-video
+docs
+node_modules
+.next
+.env*
+!.env.example
