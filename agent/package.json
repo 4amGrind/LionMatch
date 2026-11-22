@@ -12,6 +12,7 @@
     "balance": "node flashpoint.mjs balance",
     "tools": "node flashpoint.mjs tools",
     "check": "node check.mjs",
+    "probe": "node probe.mjs",
     "start": "node run.mjs",
     "mock": "node run.mjs --mock",
     "mcp": "node mcp-server.mjs",

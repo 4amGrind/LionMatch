@@ -48,6 +48,15 @@ if (account) {
     names.includes("tool_survey")
       ? ok(`Signed in to Flashpoint MCP (${names.length} tools, tool_survey is there)`)
       : no("Flashpoint has no tool_survey", `It has: ${names.join(", ")}`);
+    if (process.argv.includes("--details")) {
+      console.log("\n  Flashpoint tools:");
+      for (const t of tools) {
+        const props = Object.entries(t.inputSchema?.properties ?? {}).map(([k, v]) => `${k}${(t.inputSchema?.required ?? []).includes(k) ? "*" : ""}:${v.type ?? "?"}`);
+        console.log(`  - ${t.name}(${props.join(", ")})`);
+        if (t.name === "tool_survey") console.log(`    ${String(t.description ?? "").replace(/\s+/g, " ").slice(0, 1200)}`);
+      }
+      console.log("");
+    }
   } catch (err) {
     no("Could not sign in to Flashpoint", String(err?.message ?? err).slice(0, 300));
   }
