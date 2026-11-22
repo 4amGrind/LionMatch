@@ -71,6 +71,7 @@ export async function runAgent(opts) {
     askBeforeSend = null, // async (summary) => boolean, or null to run on its own
     surveyArgKey = "brief",
     log = (line) => console.log(line),
+    progress = null, // (text) => void, for the wait countdown
     resumeState = null,
   } = opts;
 
@@ -106,7 +107,10 @@ export async function runAgent(opts) {
     messages: [{ role: "user", content: `Objective: ${objective}\n\nStart now. Nobody will reply to you until you call finish.` }],
   };
 
-  const save = () => fs.writeFileSync(files.state, JSON.stringify(state, null, 2));
+  const save = () => {
+    fs.writeFileSync(files.state, JSON.stringify(state, null, 2));
+    opts.onSave?.(state);
+  };
   const write = (text) => {
     fs.appendFileSync(files.transcript, redact(text) + "\n");
   };
@@ -238,14 +242,11 @@ export async function runAgent(opts) {
       const m = Math.max(1, Math.min(Number(minutes) || 5, MAX_WAIT_MIN, Math.floor(room)));
       say(`- ${hhmm(clock.now())} Waiting ${m} min. ${reason ?? ""}`);
       save();
-      if (clock.fake) await clock.sleep(m * 60000);
-      else {
-        for (let i = m; i > 0; i--) {
-          process.stdout.write(`\r  waiting... ${i} min left `);
-          await clock.sleep(60000);
-        }
-        process.stdout.write("\r                              \r");
+      for (let i = m; i > 0; i--) {
+        progress?.(`waiting... ${i} min left`);
+        await clock.sleep(60000);
       }
+      progress?.("");
       return `Waited ${m} min.`;
     },
 

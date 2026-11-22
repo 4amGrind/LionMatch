@@ -1,8 +1,8 @@
 {
-  "name": "lionmatch-research-agent",
+  "name": "litmus-research-agent",
   "version": "1.0.0",
   "private": true,
-  "description": "Give it one objective. It designs a survey, sends it through Flashpoint, reads the results, runs a follow-up round, and writes the answer.",
+  "description": "Litmus: give an AI agent one objective and it runs survey research on its own through the Flashpoint MCP. Works as a CLI or as an MCP server.",
   "type": "module",
   "engines": {
     "node": ">=20"
@@ -13,13 +13,20 @@
     "tools": "node flashpoint.mjs tools",
     "start": "node run.mjs",
     "mock": "node run.mjs --mock",
+    "mcp": "node mcp-server.mjs",
     "test": "node --test test/*.test.mjs"
   },
   "dependencies": {
     "@anthropic-ai/sdk": "^1.12.0",
+    "@modelcontextprotocol/sdk": "^1.32.2",
     "@x402/evm": "^2.32.0",
     "@x402/fetch": "^2.32.0",
     "undici": "^8.13.1",
-    "viem": "^2.58.4"
+    "viem": "^2.58.4",
+    "zod": "^4.6.7"
+  },
+  "bin": {
+    "litmus": "run.mjs",
+    "litmus-mcp": "mcp-server.mjs"
   }
 }
