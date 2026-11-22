@@ -49,7 +49,7 @@ Claude is the brain. It has seven tools and chooses which to call and when:
 | `wait` | Waits for people to answer, up to 20 minutes at a time. | free |
 | `finish` | Writes the answer and the report. | free |
 
-Every Flashpoint call goes through the Flashpoint MCP server at `api.flashpoint.ai/mcp`. Litmus signs in with a Base wallet and pays per call in USDC over x402 (`flashpoint.mjs`). Two rounds cost about $6.
+Every Flashpoint call goes through the Flashpoint MCP server at `api.flashpoint.ai/mcp`. Litmus signs in with a Flashpoint API key, or with a Base wallet that pays per call in USDC over x402 (`flashpoint.mjs`). Two rounds cost about $6.
 
 ## Guardrails
 
@@ -75,7 +75,7 @@ npm test                     # 14 tests, no keys needed
 npm run mock -- --scripted   # practice run: fake Flashpoint, fixed steps, no keys
 ```
 
-1. **Wallet.** `npm run wallet` makes a Base wallet and saves its key in `.env`. Fund the address it prints (never share the key) with Flashpoint credit. `npm run balance` shows your credit.
+1. **Flashpoint login.** If your team has a Flashpoint API key, put `FLASHPOINT_API_KEY=...` in `.env`. Otherwise use a wallet: `npm run wallet` makes a Base wallet and saves its key in `.env`. Fund the address it prints with Flashpoint credit, and never share the key. `npm run balance` shows your credit.
 2. **Claude.** Add `ANTHROPIC_API_KEY=sk-ant-...` to `.env`. If you only have an OpenAI key, add `OPENAI_API_KEY=sk-...` instead and Litmus uses that as the brain.
 3. **Your list.** Copy `panel.example.csv` to `panel.csv` and add the people who agreed. Columns: `name,email` plus anything useful like `year,school`. Git ignores `panel.csv` and `.env`.
 4. **Check.** `npm run check` signs in to Flashpoint and checks the wallet, the AI key and the list. It is free and sends nothing. Add `-- --details` to see Flashpoint's tools. `npm run probe` makes one real survey-agent call ($0.50) that only drafts a test survey, so you can see a real reply before a run.

@@ -4,7 +4,7 @@
 import fs from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
-import { Flashpoint, wallet, balance } from "../flashpoint.mjs";
+import { Flashpoint, wallet, balance, authMode } from "../flashpoint.mjs";
 import { loadPanel, describePanel } from "./panel.mjs";
 import { realClock, fakeClock, briefKey, surveyKeys } from "./agent.mjs";
 import { claudeBrain, openaiBrain, scriptedBrain } from "./brain.mjs";
@@ -89,8 +89,11 @@ export async function prepare(o) {
   if (mock) {
     flashpoint = new MockFlashpoint({ clock });
   } else {
-    const account = wallet();
-    const usdc = await balance().catch(() => null);
+    const mode = authMode();
+    if (!mode) throw new Error("No Flashpoint login. Put FLASHPOINT_API_KEY=... or FLASHPOINT_WALLET_KEY=0x... in .env.");
+    const account = mode === "wallet" ? wallet() : null;
+    const usdc = account ? await balance().catch(() => null) : null;
+    if (mode === "api-key") notes.push("Signing in to Flashpoint with an API key.");
     if (usdc !== null) {
       notes.push(`Wallet ${account.address} has $${usdc.toFixed(2)} USDC on Base.`);
       if (usdc < 1) throw new Error(`The wallet ${account.address} has less than $1. Get Flashpoint credit first.`);

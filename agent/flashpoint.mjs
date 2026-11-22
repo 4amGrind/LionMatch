@@ -79,9 +79,14 @@ const post = (url, body, headers = {}, f = fetch) =>
     body: body === undefined ? undefined : JSON.stringify(body),
   });
 
-// Sign in and open an MCP session. Returns the headers to send with each call.
-export async function connect() {
-  const account = wallet();
+// How this laptop signs in: a Flashpoint API key if there is one, else the wallet.
+export function authMode() {
+  if (process.env.FLASHPOINT_API_KEY?.trim()) return "api-key";
+  if (loadKey()) return "wallet";
+  return null;
+}
+
+async function walletToken(account) {
   const ch = await (await post(`${BASE}/auth/wallet/challenge`)).json();
   const signature = await account.signMessage({ message: ch.message_to_sign });
   const res = await post(`${BASE}/auth/wallet/token`, {
@@ -90,7 +95,15 @@ export async function connect() {
     signature,
   });
   if (res.status !== 200) throw new Error(`sign-in failed: HTTP ${res.status} ${await res.text()}`);
-  const { token } = await res.json();
+  return (await res.json()).token;
+}
+
+// Sign in and open an MCP session. Returns the headers to send with each call.
+export async function connect() {
+  const mode = authMode();
+  if (!mode) throw new Error("No Flashpoint login. Put FLASHPOINT_API_KEY=... or FLASHPOINT_WALLET_KEY=0x... in .env.");
+  const account = mode === "wallet" ? wallet() : null;
+  const token = mode === "api-key" ? process.env.FLASHPOINT_API_KEY.trim() : await walletToken(account);
   const h = {
     Authorization: `Bearer ${token}`,
     Accept: "application/json, text/event-stream",
@@ -106,12 +119,17 @@ export async function connect() {
     },
     h,
   );
-  await init.text();
+  const initText = await init.text();
+  if (init.status === 401 || init.status === 403) {
+    throw new Error(`Flashpoint refused the ${mode === "api-key" ? "API key" : "wallet login"}: HTTP ${init.status} ${initText.slice(0, 200)}`);
+  }
   h["Mcp-Session-Id"] = init.headers.get("mcp-session-id");
   await (await post(`${BASE}/mcp`, { jsonrpc: "2.0", method: "notifications/initialized" }, h)).text();
-  h.paidFetch = wrapFetchWithPaymentFromConfig(fetch, {
-    schemes: [{ network: "eip155:*", client: new ExactEvmScheme(account) }],
-  });
+  // With a wallet, pay per call over x402. With an API key, the team's credit pays.
+  const payer = account ?? (loadKey() ? wallet() : null);
+  h.paidFetch = payer
+    ? wrapFetchWithPaymentFromConfig(fetch, { schemes: [{ network: "eip155:*", client: new ExactEvmScheme(payer) }] })
+    : fetch;
   return h;
 }
 

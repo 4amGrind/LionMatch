@@ -4,7 +4,7 @@
 
 import fs from "node:fs";
 import path from "node:path";
-import { loadEnv, wallet, balance, Flashpoint, ENV_FILE } from "./flashpoint.mjs";
+import { loadEnv, wallet, balance, Flashpoint, ENV_FILE, authMode } from "./flashpoint.mjs";
 import { loadPanel, describePanel } from "./lib/panel.mjs";
 import { HOME } from "./lib/setup.mjs";
 
@@ -21,26 +21,25 @@ console.log("Litmus check (free, sends nothing)\n");
 const [major] = process.versions.node.split(".").map(Number);
 major >= 20 ? ok(`Node ${process.versions.node}`) : no(`Node ${process.versions.node} is too old`, "Install Node 20 or newer.");
 
-fs.existsSync(ENV_FILE) ? ok(".env found") : no("No .env file", "Run `npm run wallet`, or create .env with FLASHPOINT_WALLET_KEY=0x... and ANTHROPIC_API_KEY=sk-ant-...");
+fs.existsSync(ENV_FILE) ? ok(".env found") : no("No .env file", "Create .env with FLASHPOINT_API_KEY=... (or FLASHPOINT_WALLET_KEY=0x...) and ANTHROPIC_API_KEY=sk-ant-...");
 
 if (process.env.ANTHROPIC_API_KEY?.startsWith("sk-ant-")) ok("Anthropic key found");
 else if (process.env.OPENAI_API_KEY) ok("OpenAI key found (Litmus will use OpenAI as the brain)");
 else no("No AI key", "Add ANTHROPIC_API_KEY=sk-ant-... to .env (or OPENAI_API_KEY=sk-...).");
 
-let account = null;
-try {
-  account = wallet();
-  ok(`Wallet ${account.address}`);
-} catch {
-  no("No Flashpoint wallet key", "Put FLASHPOINT_WALLET_KEY=0x... in .env (from the funded wallet), or run `npm run wallet` and fund it.");
-}
+const mode = authMode();
+if (mode === "api-key") ok("Flashpoint API key found");
+else if (mode === "wallet") ok(`Wallet ${wallet().address}`);
+else no("No Flashpoint login", "Put FLASHPOINT_API_KEY=... (or FLASHPOINT_WALLET_KEY=0x... from the funded wallet) in .env.");
 
-if (account) {
-  try {
-    const usdc = await balance();
-    usdc >= 3 ? ok(`$${usdc.toFixed(2)} USDC on Base`) : no(`Only $${usdc.toFixed(2)} USDC on Base`, "Two rounds cost about $6. Get more Flashpoint credit.");
-  } catch (err) {
-    no("Could not read the wallet balance", String(err?.message ?? err).slice(0, 200));
+if (mode) {
+  if (mode === "wallet") {
+    try {
+      const usdc = await balance();
+      usdc >= 3 ? ok(`$${usdc.toFixed(2)} USDC on Base`) : no(`Only $${usdc.toFixed(2)} USDC on Base`, "Two rounds cost about $6. Get more Flashpoint credit.");
+    } catch (err) {
+      no("Could not read the wallet balance", String(err?.message ?? err).slice(0, 200));
+    }
   }
   try {
     const tools = await new Flashpoint().listTools();
