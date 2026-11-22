@@ -125,3 +125,28 @@ test("reply text and argument name detection", () => {
   assert.equal(replyText({ reply: "Hello", conversation_id: "c1" }), "Hello\n(conversation_id: c1)");
   assert.equal(replyText("plain"), "plain");
 });
+
+test("old long replies are shortened for the model, recent ones are kept", async () => {
+  const { compact } = await import("../lib/agent.mjs");
+  const long = "x".repeat(5000);
+  const msgs = Array.from({ length: 12 }, (_, i) => ({ role: i % 2 ? "user" : "assistant", content: i % 2 ? [{ type: "tool_result", tool_use_id: `t${i}`, content: long }] : [{ type: "text", text: "hi" }] }));
+  const out = compact(msgs);
+  assert.ok(out[1].content[0].content.length < 1700);
+  assert.equal(out[11].content[0].content.length, 5000);
+  assert.equal(msgs[1].content[0].content.length, 5000, "the saved history is not changed");
+});
+
+test("a run that stopped mid-step can be resumed", async () => {
+  const s = setup();
+  const first = await runAgent({ ...s, brain: scriptedBrain(demoSteps().slice(0, 4)), mock: true, log: () => {}, maxTurns: 4 });
+  // Pretend it crashed right after the model asked for a tool.
+  first.state.messages.push({ role: "assistant", content: [{ type: "tool_use", id: "crash1", name: "wait", input: { minutes: 5, reason: "x" } }] });
+  const again = await runAgent({ ...s, resumeState: first.state, brain: scriptedBrain(demoSteps().slice(4)), mock: true, log: () => {} });
+  assert.equal(again.state.finished, true);
+  assert.ok(JSON.stringify(again.state.messages).includes("stopped before this step finished"));
+});
+
+test("argument names come from Flashpoint's schema", async () => {
+  const { surveyKeys } = await import("../lib/agent.mjs");
+  assert.deepEqual(surveyKeys({ inputSchema: { properties: { brief: {}, conversationId: {}, survey_id: {} } } }), { message: "brief", conversation: "conversationId", survey: "survey_id" });
+});

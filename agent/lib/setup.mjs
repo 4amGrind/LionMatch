@@ -6,7 +6,7 @@ import path from "node:path";
 import { fileURLToPath } from "node:url";
 import { Flashpoint, wallet, balance } from "../flashpoint.mjs";
 import { loadPanel, describePanel } from "./panel.mjs";
-import { realClock, fakeClock, briefKey } from "./agent.mjs";
+import { realClock, fakeClock, briefKey, surveyKeys } from "./agent.mjs";
 import { claudeBrain, openaiBrain, scriptedBrain } from "./brain.mjs";
 import { MockFlashpoint } from "./mock-flashpoint.mjs";
 import { demoSteps } from "./scripted-demo.mjs";
@@ -85,6 +85,7 @@ export async function prepare(o) {
   const notes = [];
   let flashpoint;
   let surveyArgKey = "brief";
+  let surveyKeyNames = { conversation: "conversation_id", survey: "survey_id" };
   if (mock) {
     flashpoint = new MockFlashpoint({ clock });
   } else {
@@ -100,6 +101,7 @@ export async function prepare(o) {
     const survey = tools.find((t) => t.name === "tool_survey");
     if (!survey) throw new Error(`Flashpoint has no tool_survey. It has: ${tools.map((t) => t.name).join(", ")}`);
     surveyArgKey = briefKey(survey);
+    surveyKeyNames = surveyKeys(survey);
   }
 
   const brain = pickBrain(o);
@@ -111,6 +113,6 @@ export async function prepare(o) {
     facts,
     skipped: panel.skipped.length,
     notes,
-    args: { objective, brain, flashpoint, panel, context, clock, runDir, budget, maxRounds, deadline, mock, surveyArgKey, resumeState },
+    args: { objective, brain, flashpoint, panel, context, clock, runDir, budget, maxRounds, deadline, mock, surveyArgKey, surveyKeyNames, resumeState },
   };
 }

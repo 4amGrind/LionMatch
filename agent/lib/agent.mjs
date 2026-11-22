@@ -46,6 +46,17 @@ export function replyText(result) {
   return [result[textKey], extras.length ? `\n(${extras.join("; ")})` : ""].join("");
 }
 
+// The argument names Flashpoint's tool_survey uses, read from its schema.
+export function surveyKeys(tool) {
+  const props = tool?.inputSchema?.properties ?? tool?.input_schema?.properties ?? {};
+  const pick = (names, fallback) => names.find((n) => n in props) ?? fallback;
+  return {
+    message: briefKey(tool),
+    conversation: pick(["conversation_id", "conversationId", "thread_id", "session_id"], "conversation_id"),
+    survey: pick(["survey_id", "surveyId"], "survey_id"),
+  };
+}
+
 // Pick the argument name Flashpoint's tool_survey uses for the message.
 export function briefKey(tool) {
   const props = tool?.inputSchema?.properties ?? tool?.input_schema?.properties ?? {};
@@ -70,6 +81,7 @@ export async function runAgent(opts) {
     mock = false,
     askBeforeSend = null, // async (summary) => boolean, or null to run on its own
     surveyArgKey = "brief",
+    surveyKeyNames = { conversation: "conversation_id", survey: "survey_id" },
     log = (line) => console.log(line),
     progress = null, // (text) => void, for the wait countdown
     resumeState = null,
@@ -141,6 +153,18 @@ export async function runAgent(opts) {
     fs.writeFileSync(files.replies, `# Flashpoint replies\n\nEvery reply from Flashpoint's survey agent, in order. Emails and names are hidden.\n\n`);
   } else {
     say(`\n_Resumed at ${hhmm(clock.now())}._\n`);
+    const last = state.messages[state.messages.length - 1];
+    const open = last?.role === "assistant" ? last.content.filter((b) => b.type === "tool_use") : [];
+    if (open.length) {
+      state.messages.push({
+        role: "user",
+        content: open.map((u) => ({
+          type: "tool_result",
+          tool_use_id: u.id,
+          content: "The run stopped before this step finished. It may or may not have happened. Ask Flashpoint where things stand before you repeat it.",
+        })),
+      });
+    }
   }
 
   const minutesLeft = () => (deadline - clock.now()) / 60000;
@@ -165,8 +189,8 @@ export async function runAgent(opts) {
     }
 
     const args = { [surveyArgKey]: message };
-    if (state.conversationId && !newConversation) args.conversation_id = state.conversationId;
-    if (surveyId) args.survey_id = surveyId;
+    if (state.conversationId && !newConversation) args[surveyKeyNames.conversation] = state.conversationId;
+    if (surveyId) args[surveyKeyNames.survey] = surveyId;
 
     const paidBefore = state.payments.length;
     let result;
@@ -183,7 +207,7 @@ export async function runAgent(opts) {
     }
     state.spent += PRICE.tool_survey;
     state.calls += 1;
-    state.conversationId = findField(result, ["conversation_id", "conversationId"]) ?? state.conversationId;
+    state.conversationId = findField(result, [surveyKeyNames.conversation, "conversation_id", "conversationId"]) ?? state.conversationId;
     state.surveyId = findField(result, ["survey_id", "surveyId"]) ?? state.surveyId;
     const text = redact(replyText(result));
     state.lastReply = text;
@@ -290,7 +314,7 @@ export async function runAgent(opts) {
     });
     let reply;
     try {
-      reply = await brain.next({ system, tools: TOOLS, messages: state.messages, forceFinish });
+      reply = await brain.next({ system, tools: TOOLS, messages: compact(state.messages), forceFinish });
     } catch (err) {
       say(`- ${hhmm(clock.now())} The AI model call failed: ${String(err?.message ?? err).slice(0, 300)}`);
       save();
@@ -332,6 +356,23 @@ export async function runAgent(opts) {
   }
   save();
   return { state, files };
+}
+
+// Shorten long tool results except the most recent ones, so a long run does not
+// overflow the model's context or cost too much. Full replies stay on disk.
+export function compact(messages, keepRecent = 8, limit = 1500) {
+  const cut = messages.length - keepRecent;
+  return messages.map((m, i) => {
+    if (i >= cut || !Array.isArray(m.content) || m.role !== "user") return m;
+    return {
+      ...m,
+      content: m.content.map((b) =>
+        b.type === "tool_result" && typeof b.content === "string" && b.content.length > limit
+          ? { ...b, content: `${b.content.slice(0, limit)}\n... (older reply shortened. The full text is in flashpoint-replies.md.)` }
+          : b,
+      ),
+    };
+  });
 }
 
 function indent(text) {
