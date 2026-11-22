@@ -185,8 +185,9 @@ export class Flashpoint {
       return await fn(this.h);
     }
   }
-  callTool(name, args = {}) {
-    return this.#withRetry(async (h) => parseResult(await rpc(h, "tools/call", { name, arguments: args }, h.paidFetch, this.onPaid)));
+  callTool(name, args = {}, { onPaid } = {}) {
+    const paid = onPaid ?? this.onPaid;
+    return this.#withRetry(async (h) => parseResult(await rpc(h, "tools/call", { name, arguments: args }, h.paidFetch, paid)));
   }
   listTools() {
     return this.#withRetry(async (h) => (await rpc(h, "tools/list", {})).tools);

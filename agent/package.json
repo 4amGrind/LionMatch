@@ -13,7 +13,7 @@
     "tools": "node flashpoint.mjs tools",
     "start": "node run.mjs",
     "mock": "node run.mjs --mock",
-    "test": "node --test test/"
+    "test": "node --test test/*.test.mjs"
   },
   "dependencies": {
     "@anthropic-ai/sdk": "^1.12.0",

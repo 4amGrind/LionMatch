@@ -4,19 +4,25 @@
 
 Swipe through internships, clubs, research and fellowships at Columbia. Every card shows a match score out of 10 and the reasons behind it, and the deck learns from what you swipe. When something fits, you can read the details, find someone to talk to, and send a coffee chat in a few taps.
 
+## MCP Challenge: Litmus
+
+**[Litmus](agent/README.md)** is our Flashpoint MCP Challenge entry, in the `agent/` folder. You give an AI agent one objective and a list of people who agreed to answer. The agent then works alone through the Flashpoint MCP: it decides what to ask, sends the survey, reads the results, writes a follow-up round based on what it learned, and comes back with an answer and a report. Every decision is logged with its reason.
+
+Our first objective: what should LionMatch build next so that Columbia first-years actually use it every week? **[Read how Litmus works and how to run it.](agent/README.md)**
+
 ## Demo
 
-[![LionMatch demo video](docs/lionmatch-poster.jpg)](https://github.com/4amGrind/columbia-tinder/raw/main/docs/lionmatch-demo.mp4)
+[![LionMatch demo video](docs/lionmatch-poster.jpg)](https://github.com/4amGrind/LionMatch/raw/main/docs/lionmatch-demo.mp4)
 
-**[Download the 86-second demo](https://github.com/4amGrind/columbia-tinder/raw/main/docs/lionmatch-demo.mp4)** (MP4, 22 MB, with sound)
+**[Download the 86-second demo](https://github.com/4amGrind/LionMatch/raw/main/docs/lionmatch-demo.mp4)** (MP4, 22 MB, with sound)
 
 ## Run it
 
 You need Node 22.13 or newer.
 
 ```bash
-git clone https://github.com/4amGrind/columbia-tinder.git
-cd columbia-tinder
+git clone https://github.com/4amGrind/LionMatch.git
+cd LionMatch
 npm install
 npm run dev
 ```
