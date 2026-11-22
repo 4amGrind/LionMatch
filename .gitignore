@@ -45,3 +45,9 @@ next-env.d.ts
 
 # Copied out of node_modules by scripts/copy-pdf-worker.mjs on install.
 /public/pdf.worker.min.mjs
+
+# research agent (agent/): secrets, the email list, and run state stay local
+/agent/node_modules
+/agent/.env
+/agent/panel.csv
+/agent/runs/*/state.json
