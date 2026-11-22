@@ -11,6 +11,7 @@
     "wallet": "node flashpoint.mjs wallet",
     "balance": "node flashpoint.mjs balance",
     "tools": "node flashpoint.mjs tools",
+    "check": "node check.mjs",
     "start": "node run.mjs",
     "mock": "node run.mjs --mock",
     "mcp": "node mcp-server.mjs",

@@ -7,7 +7,7 @@ import { fileURLToPath } from "node:url";
 import { Flashpoint, wallet, balance } from "../flashpoint.mjs";
 import { loadPanel, describePanel } from "./panel.mjs";
 import { realClock, fakeClock, briefKey } from "./agent.mjs";
-import { claudeBrain, scriptedBrain } from "./brain.mjs";
+import { claudeBrain, openaiBrain, scriptedBrain } from "./brain.mjs";
 import { MockFlashpoint } from "./mock-flashpoint.mjs";
 import { demoSteps } from "./scripted-demo.mjs";
 
@@ -40,6 +40,14 @@ function stamp(ms) {
   const d = new Date(ms);
   const p = (n) => String(n).padStart(2, "0");
   return `${d.getFullYear()}-${p(d.getMonth() + 1)}-${p(d.getDate())}-${p(d.getHours())}${p(d.getMinutes())}${p(d.getSeconds())}`;
+}
+
+// Claude by default. OpenAI only if there is no Anthropic key.
+export function pickBrain(o = {}) {
+  if (o.scripted) return scriptedBrain(demoSteps());
+  if (process.env.ANTHROPIC_API_KEY) return claudeBrain({ model: o.model ?? process.env.LITMUS_MODEL ?? "claude-opus-5-5" });
+  if (process.env.OPENAI_API_KEY) return openaiBrain({ model: o.model ?? process.env.LITMUS_OPENAI_MODEL ?? "gpt-5" });
+  throw new Error("No AI key. Add ANTHROPIC_API_KEY=sk-ant-... to .env (or OPENAI_API_KEY=sk-... as a backup).");
 }
 
 export function loadState(runId) {
@@ -94,7 +102,7 @@ export async function prepare(o) {
     surveyArgKey = briefKey(survey);
   }
 
-  const brain = o.scripted ? scriptedBrain(demoSteps()) : claudeBrain({ model: o.model ?? process.env.LITMUS_MODEL ?? "claude-opus-5-5" });
+  const brain = pickBrain(o);
   const runId = o.resume ?? `${stamp(Date.now())}${mock ? "-practice" : ""}`;
   const runDir = path.join(RUNS, runId);
 

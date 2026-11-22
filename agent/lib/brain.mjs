@@ -41,3 +41,64 @@ export function scriptedBrain(steps) {
     },
   };
 }
+
+// Backup brain for teams with only an OpenAI key. Same tools, same loop.
+// The loop keeps messages in Claude's format, so this converts both ways.
+export function openaiBrain({ apiKey = process.env.OPENAI_API_KEY, model = process.env.LITMUS_OPENAI_MODEL ?? "gpt-5", fetchImpl = fetch } = {}) {
+  if (!apiKey) throw new Error("No OPENAI_API_KEY.");
+  const toOpenAI = (system, messages) => {
+    const out = [{ role: "system", content: system }];
+    for (const m of messages) {
+      if (typeof m.content === "string") {
+        out.push({ role: m.role, content: m.content });
+      } else if (m.role === "assistant") {
+        const text = m.content.filter((b) => b.type === "text").map((b) => b.text).join("\n");
+        const calls = m.content
+          .filter((b) => b.type === "tool_use")
+          .map((b) => ({ id: b.id, type: "function", function: { name: b.name, arguments: JSON.stringify(b.input ?? {}) } }));
+        out.push({ role: "assistant", content: text || null, ...(calls.length ? { tool_calls: calls } : {}) });
+      } else {
+        for (const b of m.content) {
+          if (b.type === "tool_result") out.push({ role: "tool", tool_call_id: b.tool_use_id, content: String(b.content) });
+          else if (b.type === "text") out.push({ role: "user", content: b.text });
+        }
+      }
+    }
+    return out;
+  };
+  return {
+    name: `${model} (OpenAI)`,
+    async next({ system, tools, messages, forceFinish }) {
+      const body = {
+        model,
+        messages: toOpenAI(system, messages),
+        tools: tools.map((t) => ({ type: "function", function: { name: t.name, description: t.description, parameters: t.input_schema } })),
+        tool_choice: forceFinish ? { type: "function", function: { name: "finish" } } : "auto",
+        max_completion_tokens: 16000,
+      };
+      let res;
+      for (let attempt = 0; attempt < 5; attempt++) {
+        res = await fetchImpl("https://api.openai.com/v1/chat/completions", {
+          method: "POST",
+          headers: { "Content-Type": "application/json", Authorization: `Bearer ${apiKey}` },
+          body: JSON.stringify(body),
+        });
+        if (res.status !== 429 && res.status < 500) break;
+        await new Promise((r) => setTimeout(r, 2000 * (attempt + 1)));
+      }
+      const data = await res.json();
+      if (!res.ok) throw new Error(`OpenAI error ${res.status}: ${data?.error?.message ?? JSON.stringify(data).slice(0, 300)}`);
+      const msg = data.choices[0].message;
+      const content = [];
+      if (msg.content) content.push({ type: "text", text: msg.content });
+      for (const c of msg.tool_calls ?? []) {
+        let input = {};
+        try {
+          input = JSON.parse(c.function.arguments || "{}");
+        } catch {}
+        content.push({ type: "tool_use", id: c.id, name: c.function.name, input });
+      }
+      return { content, stop: data.choices[0].finish_reason };
+    },
+  };
+}

@@ -63,7 +63,7 @@ The agent acts on its own, so the limits live in code, not only in the prompt:
 - **Only people who agreed.** Use a list of people who said yes to short surveys. Never a scraped or bought list.
 - **Resumable.** State is saved after every step. If your laptop sleeps, run `node run.mjs --resume <run id>`.
 
-`npm test` checks all of this with 10 tests. They include a full two-round run against a fake Flashpoint, and one through the MCP server. They need no keys and no network.
+`npm test` checks all of this with 11 tests. They include full two-round runs against a fake Flashpoint, one through the MCP server and one with the OpenAI backup brain. They need no keys and no network.
 
 ## Set up
 
@@ -71,14 +71,15 @@ You need Node 20 or newer.
 
 ```bash
 npm install
-npm test                     # 10 tests, no keys needed
+npm test                     # 11 tests, no keys needed
 npm run mock -- --scripted   # practice run: fake Flashpoint, fixed steps, no keys
 ```
 
 1. **Wallet.** `npm run wallet` makes a Base wallet and saves its key in `.env`. Fund the address it prints (never share the key) with Flashpoint credit. `npm run balance` shows your credit.
-2. **Claude.** Add `ANTHROPIC_API_KEY=sk-ant-...` to `.env`.
+2. **Claude.** Add `ANTHROPIC_API_KEY=sk-ant-...` to `.env`. If you only have an OpenAI key, add `OPENAI_API_KEY=sk-...` instead and Litmus uses that as the brain.
 3. **Your list.** Copy `panel.example.csv` to `panel.csv` and add the people who agreed. Columns: `name,email` plus anything useful like `year,school`. Git ignores `panel.csv` and `.env`.
-4. **Practice with Claude** (fake Flashpoint, no emails, no Flashpoint cost): `npm run mock -- "Your question"`
+4. **Check.** `npm run check` signs in to Flashpoint and checks the wallet, the AI key and the list. It is free and sends nothing.
+5. **Practice with Claude** (fake Flashpoint, no emails, no Flashpoint cost): `npm run mock -- "Your question"`
 
 ## Use it from the terminal
 
@@ -136,7 +137,8 @@ Each run saves to `runs/<date-time>/`:
 | `lib/agent.mjs` | The agent loop and its tools, with every guardrail. |
 | `lib/prompt.mjs` | The agent's instructions and tool definitions. |
 | `lib/setup.mjs` | Checks the wallet, Flashpoint and the list before a run. Shared by both entry points. |
-| `lib/brain.mjs` | Claude as the brain, plus a scripted brain for tests. |
+| `lib/brain.mjs` | Claude as the brain, an OpenAI backup, and a scripted brain for tests. |
+| `check.mjs` | `npm run check`: a free check that a live run will work. |
 | `lib/panel.mjs` | Reads the list and hides names and emails. |
 | `lib/mock-flashpoint.mjs` | A fake Flashpoint survey agent for practice runs and tests. |
 | `flashpoint.mjs` | The Flashpoint MCP client: wallet sign-in, MCP session, x402 payments. |
