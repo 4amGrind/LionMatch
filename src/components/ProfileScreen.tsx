@@ -121,6 +121,23 @@ export default function ProfileScreen({
         Jun: the resume importer lives at the top of Preferences, which was two
         steps down and gave no sign it was there. This names it.
       */}
+      {/* Jun: the Flashpoint-derived onboarding. Four questions, seeds the score. */}
+      <Link href="/start" className="glass-surface flex items-center gap-3 rounded-xl px-4 py-3 text-left">
+        <svg viewBox="0 0 24 24" className="size-5 shrink-0 text-ct-navy" aria-hidden="true">
+          <path
+            d="M12 3v18M3 12h18"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth={1.7}
+            strokeLinecap="round"
+          />
+        </svg>
+        <span className="min-w-0">
+          <span className="block text-sm font-semibold text-ct-navy">Set up your deck in four questions</span>
+          <span className="block text-xs text-ct-muted">Built from our Flashpoint study of how students search.</span>
+        </span>
+      </Link>
+
       <Link
         href="/preferences"
         className="glass-surface flex items-center gap-3 rounded-xl px-4 py-3 text-left"
